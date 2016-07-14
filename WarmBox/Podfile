@@ -1,0 +1,16 @@
+platform :ios, '7.0'
+target 'WarmBox' do
+pod 'FMDB'
+pod 'AFNetworking','~>2.5.4'
+pod 'Masonry'
+pod 'SDWebImage'
+pod 'MJRefresh'
+pod 'YYModel', '~>0.9.10'
+pod 'SVProgressHUD'
+pod 'XRWaterfallLayout'
+pod 'LBBlurredImage'
+pod 'MBProgressHUD'
+pod 'UMengSocialCOM'
+pod 'KVNProgress'
+
+end

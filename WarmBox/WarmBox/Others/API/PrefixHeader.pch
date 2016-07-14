@@ -1,0 +1,128 @@
+//
+//  PrefixHeader.pch
+//  WarmBox
+//
+//  Created by qianfeng on 16/6/29.
+//  Copyright © 2016年 JiYi. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import <CoreLocation/CoreLocation.h>
+
+
+//  =========API
+//  天气
+//  APIKEY
+#define WB_WeatherKey @"8d81e986aac44075921187538e58e1c9"
+//  ===1.查询天气 城市名 APIKEY
+//#define WB_Weather @"https://api.heweather.com/x3/weather?city=%@&key=8d81e986aac44075921187538e58e1c9"
+//http://apis.baidu.com/heweather/weather/free
+#define WB_Weather @"http://apis.baidu.com/heweather/weather/free?city=%@"
+//  ===2.顶部视图的天气图片
+#define WB_WeatherTopView @"http://files.heweather.com/cond_icon/%@.png"
+//  ===3.每日图片推荐 2016-07-05
+#define WB_DayImage @"http://www.51wnl.com/Api4.3.3/GetSentenceByDate.ashx?devicetype=ios&date=%@"
+//  ===4.视频 //  第一个参数是页数，第二个是类型
+#define WB_Video @"http://api.iclient.ifeng.com/ifengvideoList?&listtype=list"
+//  ===5.新闻 （程序内定义）
+
+
+
+//  =========通知中心
+#define JYEnableHomeIterface @"JYEnableHomeIterface"
+#define JYGetDataFromDB @"JYGetDataFromDB"
+#define JYWB_StrartCityName @"WB_StrartCityName"
+#define JYChangBG @"changBG"
+#define JYChangeSelfModel @"changeSelfModel"
+#define JYAddCity @"addCity"
+#define JYScrollHome @"scrollHome"
+#define JYDownloadTheVieo @"DownloadTheVieo"
+
+
+
+
+//  =========常用工具
+#import "JYGencoder.h"
+#import "ShareConfig.h"
+#import "ResumeDownload.h"
+#import "JYWeatherTools.h"
+#import "JYBasicDataManager.h"
+#import "JYFMDBWithRunTimeManager.h"
+#define Width [[UIScreen mainScreen]bounds].size.width
+#define Height [[UIScreen mainScreen]bounds].size.height
+#define viewFrameW self.view.frame.size.width
+#define viewFrameH self.view.frame.size.height
+
+
+//  =========用户设置
+#define SkinBGImage @"1.jpg"
+
+
+//  =========常用颜色
+//  0 - 50
+#define JYColorLevelONE [UIColor colorWithRed:65/255.0 green:105/255.0 blue:255/255.0 alpha:0.3]
+//  51 - 100
+#define JYColorLevelTWO [UIColor colorWithRed:135/255.0 green:206/255.0 blue:250/255.0 alpha:0.3]
+//  101 - 150
+#define JYColorLevelTHR [UIColor colorWithRed:10/255.0 green:179/255.0 blue:131/255.0 alpha:0.3]
+//  151 - 200
+#define JYColorLevelFOU [UIColor colorWithRed:155/255.0 green:140/255.0 blue:0 alpha:0.3]
+//  201 - 300
+#define JYColorLevelFIV [UIColor colorWithRed:250/255.0 green:0 blue:0 alpha:0.3]
+//  300 - ~
+#define JYColorLevelSIX [UIColor colorWithRed:139/255.0 green:0 blue:0 alpha:0.3]
+
+
+
+//  =========Model
+#import "JYWeatherModel.h"
+#import "JYWeatherDailyModel.h"
+#import "JYWeatherNowModel.h"
+#import "JYWeatherHourlyModel.h"
+#import "JYWeatherSuggestionModel.h"
+#import "JYDateDataModel.h"
+#import "JYNewsModel.h"
+#import "JYDownloadModel.h"
+
+
+//  =========第三方库
+#import <AFNetworking.h>
+#import <SVProgressHUD.h>
+#import <YYModel.h>
+#import <Masonry.h>
+#import <AFNetworking.h>
+#import <AFURLSessionManager.h>
+#import <SDImageCache.h>
+#import <UIImageView+WebCache.h>
+#import <UIImageView+AFNetworking.h>
+#import <UIImageView+LBBlurredImage.h>
+#import <FMDB.h>
+#import <MJRefresh.h>
+#import <MBProgressHUD.h>
+#import <KVNProgress.h>
+
+
+//  =========APIKEY
+#define NewUMkey @"5780979a67e58e66cb000026"
+#define UMkey @"575d3cad67e58e1e51001fc4"
+
+#define  WXkey @"wx4a07af1ac4d279e4"
+#define  WXsecret @"7a37934aba511ece8fec158f1b559a9a"
+#define  WXRedict @"http://www.umeng.com/social"
+
+
+#define QQID   @"1105078490"
+#define QQKey  @"mdzsa3Zvbr2sa5Ox"
+
+
+#define SinaKey @"3399398696"
+#define SinaSecret @"a903addf0f120f1734c4385debac3735"
+#define SinaRedict @"http://www.kuaishou.com/hot"
+
+
+#endif /* PrefixHeader_pch */

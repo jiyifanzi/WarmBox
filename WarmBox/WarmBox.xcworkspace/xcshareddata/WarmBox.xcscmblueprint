@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "49C2DBF150E7B6E2051CB3B755814BE64DD1EE4B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "49C2DBF150E7B6E2051CB3B755814BE64DD1EE4B" : 0,
+    "EBBA6CB6DC1DC77936761B6905DA78D0D047E253" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2348C7C5-0410-4F4E-9F50-CA5619FFAB6E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "49C2DBF150E7B6E2051CB3B755814BE64DD1EE4B" : "WarmBox",
+    "EBBA6CB6DC1DC77936761B6905DA78D0D047E253" : "workspace"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "WarmBox",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "WarmBox\/WarmBox.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jiyifanzi\/WarmBox.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "49C2DBF150E7B6E2051CB3B755814BE64DD1EE4B"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jiyifanzi\/JYFreeLimit.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "EBBA6CB6DC1DC77936761B6905DA78D0D047E253"
+    }
+  ]
+}

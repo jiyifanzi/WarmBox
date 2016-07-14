@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>2348C7C5-0410-4F4E-9F50-CA5619FFAB6E</string>
+	<key>IDESourceControlProjectName</key>
+	<string>WarmBox</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>49C2DBF150E7B6E2051CB3B755814BE64DD1EE4B</key>
+		<string>https://github.com/jiyifanzi/WarmBox.git</string>
+		<key>EBBA6CB6DC1DC77936761B6905DA78D0D047E253</key>
+		<string>https://github.com/jiyifanzi/JYFreeLimit.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>WarmBox/WarmBox.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>49C2DBF150E7B6E2051CB3B755814BE64DD1EE4B</key>
+		<string>../..</string>
+		<key>EBBA6CB6DC1DC77936761B6905DA78D0D047E253</key>
+		<string>../../../workspace</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/jiyifanzi/WarmBox.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>49C2DBF150E7B6E2051CB3B755814BE64DD1EE4B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>49C2DBF150E7B6E2051CB3B755814BE64DD1EE4B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>WarmBox</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>EBBA6CB6DC1DC77936761B6905DA78D0D047E253</string>
+			<key>IDESourceControlWCCName</key>
+			<string>workspace</string>
+		</dict>
+	</array>
+</dict>
+</plist>
