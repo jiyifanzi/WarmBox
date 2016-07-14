@@ -5,12 +5,12 @@
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
     "49C2DBF150E7B6E2051CB3B755814BE64DD1EE4B" : 0,
-    "EBBA6CB6DC1DC77936761B6905DA78D0D047E253" : 0
+    "98A2B65051D48A24D76A2689CCD2405682098B9F" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2348C7C5-0410-4F4E-9F50-CA5619FFAB6E",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "49C2DBF150E7B6E2051CB3B755814BE64DD1EE4B" : "WarmBox",
-    "EBBA6CB6DC1DC77936761B6905DA78D0D047E253" : "workspace"
+    "98A2B65051D48A24D76A2689CCD2405682098B9F" : "workspace"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "WarmBox",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -24,7 +24,7 @@
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jiyifanzi\/JYFreeLimit.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "EBBA6CB6DC1DC77936761B6905DA78D0D047E253"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "98A2B65051D48A24D76A2689CCD2405682098B9F"
     }
   ]
 }

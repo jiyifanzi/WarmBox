@@ -164,7 +164,7 @@
     //  第一个元素为宽 第二个为高
     CGFloat imageW = [NSString stringWithFormat:@"%@",WHArray.firstObject].floatValue;
     CGFloat imageH = [NSString stringWithFormat:@"%@",WHArray.lastObject].floatValue;
-    return textFrame.size.height + imageH  + 20+ 30;
+    return textFrame.size.height + imageH/imageW * (Width - 10) - 10;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

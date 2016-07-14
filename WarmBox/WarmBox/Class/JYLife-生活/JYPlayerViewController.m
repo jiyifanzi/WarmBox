@@ -463,6 +463,9 @@
 
 
 
+#pragma mark - 检测滑动返回
+
+
 #pragma mark - 移除观察者
 - (void)dealloc {
     [self.playerItem removeObserver:self forKeyPath:@"status" context:nil];
@@ -472,6 +475,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 /*
 #pragma mark - Navigation

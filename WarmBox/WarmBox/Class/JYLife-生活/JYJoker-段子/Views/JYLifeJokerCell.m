@@ -60,7 +60,7 @@
     [self.contentView addSubview:_contentLabel];
     
     _iconImageView = [[UIImageView alloc] init];
-    _iconImageView.contentMode = UIViewContentModeScaleAspectFit;
+    _iconImageView.contentMode = UIViewContentModeScaleToFill;
     _iconImageView.clipsToBounds = YES;
     [self.contentView addSubview:_iconImageView];
     
@@ -121,6 +121,13 @@
             make.top.equalTo(self.contentLabel.mas_bottom).offset(5);
             make.left.equalTo(self).offset(5);
             make.right.equalTo(self).offset(-5);
+//            //  获取图片的宽高
+//            NSArray * WHArray = [self.model.pixel componentsSeparatedByString:@"*"];
+//            //  第一个元素为宽 第二个为高
+//            CGFloat imageW = [NSString stringWithFormat:@"%@",WHArray.firstObject].floatValue;
+//            CGFloat imageH = [NSString stringWithFormat:@"%@",WHArray.lastObject].floatValue;
+            make.bottom.equalTo(self).offset(-5);
+            
         }];
     }
 }

@@ -51,6 +51,7 @@
     
     NSArray* arr = @[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina,UMShareToQQ];
     
+    [UMSocialConfig hiddenNotInstallPlatforms:nil];
     [UMSocialSnsService presentSnsIconSheetView:controller appKey:UMkey shareText:content shareImage:nil shareToSnsNames:arr delegate:self];
 }
 #pragma mark - 纯图片
@@ -77,6 +78,8 @@
     
     NSArray* arr = @[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina,UMShareToQQ];
     
+    
+    [UMSocialConfig hiddenNotInstallPlatforms:nil];
     [UMSocialSnsService presentSnsIconSheetView:controller appKey:UMkey shareText:content shareImage:image shareToSnsNames:arr delegate:self];
 }
 
@@ -112,6 +115,9 @@
     
     NSArray* arr = @[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina,UMShareToQQ];
     
+    
+    
+    [UMSocialConfig hiddenNotInstallPlatforms:nil];
     [UMSocialSnsService presentSnsIconSheetView:controller appKey:UMkey shareText:content shareImage:nil shareToSnsNames:arr delegate:self];
 }
 

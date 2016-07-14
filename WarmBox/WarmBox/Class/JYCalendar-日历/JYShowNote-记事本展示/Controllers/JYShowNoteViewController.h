@@ -10,7 +10,7 @@
 
 @interface JYShowNoteViewController : JYBaseViewController
 
-
 @property (nonatomic, strong) JYDateDataModel * model;
+
 
 @end
