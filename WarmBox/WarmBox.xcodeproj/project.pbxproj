@@ -128,7 +128,6 @@
 		BC5956601D33BE4600AAEDE4 /* ZFPlayer_fullscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = BC5956381D33BE4600AAEDE4 /* ZFPlayer_fullscreen.png */; };
 		BC5956611D33BE4600AAEDE4 /* ZFPlayer_fullscreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC5956391D33BE4600AAEDE4 /* ZFPlayer_fullscreen@2x.png */; };
 		BC5956621D33BE4600AAEDE4 /* ZFPlayer_fullscreen@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC59563A1D33BE4600AAEDE4 /* ZFPlayer_fullscreen@3x.png */; };
-		BC5956631D33BE4600AAEDE4 /* ZFPlayer_loading_bgView.png in Resources */ = {isa = PBXBuildFile; fileRef = BC59563B1D33BE4600AAEDE4 /* ZFPlayer_loading_bgView.png */; };
 		BC5956641D33BE4600AAEDE4 /* ZFPlayer_lock-nor.png in Resources */ = {isa = PBXBuildFile; fileRef = BC59563C1D33BE4600AAEDE4 /* ZFPlayer_lock-nor.png */; };
 		BC5956651D33BE4600AAEDE4 /* ZFPlayer_lock-nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC59563D1D33BE4600AAEDE4 /* ZFPlayer_lock-nor@2x.png */; };
 		BC5956661D33BE4600AAEDE4 /* ZFPlayer_lock-nor@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC59563E1D33BE4600AAEDE4 /* ZFPlayer_lock-nor@3x.png */; };
@@ -235,7 +234,6 @@
 		BCA7ADEF1D23E73F008D6DBB /* top_hum.png in Resources */ = {isa = PBXBuildFile; fileRef = BCA7ADED1D23E73F008D6DBB /* top_hum.png */; };
 		BCA7ADF01D23E73F008D6DBB /* top_tmp.png in Resources */ = {isa = PBXBuildFile; fileRef = BCA7ADEE1D23E73F008D6DBB /* top_tmp.png */; };
 		BCA7ADF31D23FDD8008D6DBB /* JYWeatherForecastView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA7ADF21D23FDD8008D6DBB /* JYWeatherForecastView.m */; };
-		BCB860C51D2F6A520082A932 /* webLoading.gif in Resources */ = {isa = PBXBuildFile; fileRef = BCB860C41D2F6A520082A932 /* webLoading.gif */; };
 		BCB860CD1D2F88690082A932 /* W3.otf in Resources */ = {isa = PBXBuildFile; fileRef = BCB860CC1D2F88690082A932 /* W3.otf */; };
 		BCB860D51D2F91070082A932 /* ResumeDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB860D41D2F91070082A932 /* ResumeDownload.m */; };
 		BCB860D91D2F916F0082A932 /* NSString+MD5Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB860D81D2F916F0082A932 /* NSString+MD5Addition.m */; };
@@ -468,7 +466,6 @@
 		BC5956381D33BE4600AAEDE4 /* ZFPlayer_fullscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZFPlayer_fullscreen.png; sourceTree = "<group>"; };
 		BC5956391D33BE4600AAEDE4 /* ZFPlayer_fullscreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ZFPlayer_fullscreen@2x.png"; sourceTree = "<group>"; };
 		BC59563A1D33BE4600AAEDE4 /* ZFPlayer_fullscreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ZFPlayer_fullscreen@3x.png"; sourceTree = "<group>"; };
-		BC59563B1D33BE4600AAEDE4 /* ZFPlayer_loading_bgView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZFPlayer_loading_bgView.png; sourceTree = "<group>"; };
 		BC59563C1D33BE4600AAEDE4 /* ZFPlayer_lock-nor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ZFPlayer_lock-nor.png"; sourceTree = "<group>"; };
 		BC59563D1D33BE4600AAEDE4 /* ZFPlayer_lock-nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ZFPlayer_lock-nor@2x.png"; sourceTree = "<group>"; };
 		BC59563E1D33BE4600AAEDE4 /* ZFPlayer_lock-nor@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ZFPlayer_lock-nor@3x.png"; sourceTree = "<group>"; };
@@ -1656,7 +1653,6 @@
 				BC5956381D33BE4600AAEDE4 /* ZFPlayer_fullscreen.png */,
 				BC5956391D33BE4600AAEDE4 /* ZFPlayer_fullscreen@2x.png */,
 				BC59563A1D33BE4600AAEDE4 /* ZFPlayer_fullscreen@3x.png */,
-				BC59563B1D33BE4600AAEDE4 /* ZFPlayer_loading_bgView.png */,
 				BC59563C1D33BE4600AAEDE4 /* ZFPlayer_lock-nor.png */,
 				BC59563D1D33BE4600AAEDE4 /* ZFPlayer_lock-nor@2x.png */,
 				BC59563E1D33BE4600AAEDE4 /* ZFPlayer_lock-nor@3x.png */,
@@ -1780,7 +1776,6 @@
 				BCA7AC541D235290008D6DBB /* Resources */,
 				8B1EC5C4FAF76C9FF77FC212 /* [CP] Embed Pods Frameworks */,
 				F3015C5DF495FE60BC9EE855 /* [CP] Copy Pods Resources */,
-				BC8317541D2A567700EFA9C5 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1941,7 +1936,6 @@
 				BC5956571D33BE4600AAEDE4 /* ZFPlayer_back_full@2x.png in Resources */,
 				6CBEC12A1D351178001004EC /* Icon-iPad-29@2x.png in Resources */,
 				6CABB2971D361B37009F70E9 /* refresh35.png in Resources */,
-				BC5956631D33BE4600AAEDE4 /* ZFPlayer_loading_bgView.png in Resources */,
 				6CABB2621D35CAA7009F70E9 /* books.png in Resources */,
 				BCA7ADEA1D23D237008D6DBB /* wind.jpg in Resources */,
 				6CBEC1321D351178001004EC /* Icon-iPad-76@2x.png in Resources */,
@@ -1968,7 +1962,6 @@
 				6CABB2981D361B37009F70E9 /* right97.png in Resources */,
 				6CABB2781D35DF9B009F70E9 /* banner_1.png in Resources */,
 				BCC1640E1D26316400BEAA88 /* wb_haze.jpg in Resources */,
-				BCB860C51D2F6A520082A932 /* webLoading.gif in Resources */,
 				BCB860ED1D2FCA530082A932 /* fullScreenIconHigh@2x.png in Resources */,
 				BCB860E91D2FC7810082A932 /* clock_pause@2x.png in Resources */,
 				BCC1642A1D26316400BEAA88 /* wip_bk_sunny_n.jpg in Resources */,
@@ -2126,19 +2119,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WarmBox/Pods-WarmBox-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		BC8317541D2A567700EFA9C5 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export CODESIGN_ALLOCATE=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/codesign_allocate\n\nif [ \"${PLATFORM_NAME}\" == \"iphoneos\" ] || [ \"${PLATFORM_NAME}\" == \"ipados\" ]; then /Applications/Xcode.app/Contents/Developer/iphoneentitlements/gen_entitlements.py \"org.jiyi.$(PRODUCT_NAME:rfc1034identifier)\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\";\n\ncodesign -f -s \"iPhone Developer\" --entitlements \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/\";\n\nfi";
 		};
 		F3015C5DF495FE60BC9EE855 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2377,8 +2357,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WarmBox/WarmBox.entitlements;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = WarmBox/Others/API/PrefixHeader.pch;
 				INFOPLIST_FILE = WarmBox/Info.plist;
@@ -2396,8 +2376,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WarmBox/WarmBox.entitlements;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = WarmBox/Others/API/PrefixHeader.pch;
 				INFOPLIST_FILE = WarmBox/Info.plist;

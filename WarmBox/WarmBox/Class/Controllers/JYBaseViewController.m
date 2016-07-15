@@ -26,15 +26,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeBGImage) name:@"changBG" object:nil];
 //
 //    _backImage = [[UIImageView alloc] initWithFrame:self.view.bounds];
 //    _backImage.contentMode =UIViewContentModeScaleAspectFill;
 //    [self.view addSubview:_backImage];
-//    
+//
+    
     _WholeBlueBackImage = [[UIImageView alloc] initWithFrame:self.view.bounds];
     _WholeBlueBackImage.clipsToBounds = YES;
      _WholeBlueBackImage.alpha = 1;
@@ -52,11 +51,13 @@
         //  授权
         if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
             //  询问授权
-            [self.locationManager requestWhenInUseAuthorization];
+            [self.locationManager requestAlwaysAuthorization];
         }
     }else {
         NSLog(@"定位服务不可用");
+        [JYWeatherTools showMessageWithAlertView:@"定位服务不可用，请检查是否开启定位功能"];
     }
+    
 }
 
 #pragma mark - 改变皮肤

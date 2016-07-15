@@ -69,6 +69,7 @@
     //  添加通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startCityName) name:@"WB_StrartCityName" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSelfModle:) name:@"changeSelfModel" object:nil];
+    
 
     [self creatUI];
     //  初始加载数据
@@ -83,6 +84,17 @@
     
     if (str.length != 0) {
         [self requestDataWithCityName:str];
+    }
+
+    
+    //  首次启动界面
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"]){
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
+        
+        [self startLocation];
+    }else{
+        NSLog(@"不是第一次启动");
+
     }
 
 }

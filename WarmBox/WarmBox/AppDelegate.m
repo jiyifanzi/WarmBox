@@ -33,7 +33,7 @@
     
     //  首次启动界面
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"]){
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstStart"];
         
         JYGuideViewController *guideVC = [[JYGuideViewController alloc]init];
         

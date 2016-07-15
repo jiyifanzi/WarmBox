@@ -114,6 +114,7 @@
         make.right.equalTo(self).offset(-5);
     }];
     
+    
     if (self.model.img.length != 0) {
         //  存在图片
 //        UIImage * image = self.iconImageView.image;
@@ -127,10 +128,11 @@
 //            CGFloat imageW = [NSString stringWithFormat:@"%@",WHArray.firstObject].floatValue;
 //            CGFloat imageH = [NSString stringWithFormat:@"%@",WHArray.lastObject].floatValue;
             make.bottom.equalTo(self).offset(-5);
-            
         }];
     }
 }
+
+
 
 #pragma mark - 分享按钮
 - (void)shareThisJoker {
