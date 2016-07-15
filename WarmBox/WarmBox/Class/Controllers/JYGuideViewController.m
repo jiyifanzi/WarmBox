@@ -17,6 +17,9 @@
 //  最后的按钮
 @property (nonatomic, strong) UIButton * button;
 
+
+@property (nonatomic, strong) UIPageControl * pageControl;
+
 @end
 
 @implementation JYGuideViewController
@@ -39,6 +42,15 @@
     _scrollView.delegate = self;
     [self.view addSubview:_scrollView];
     
+    
+    _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, Height - 40, Width, 20)];
+    _pageControl.numberOfPages = 4;
+    _pageControl.currentPage = 0;
+    _pageControl.currentPageIndicatorTintColor = [UIColor grayColor];
+    _pageControl.pageIndicatorTintColor = [UIColor whiteColor];
+    [self.view addSubview:_pageControl];
+    
+    
     NSArray * imageArray = @[@"b1", @"b2", @"b3", @"b4"];
     for (int i = 0; i < imageArray.count; i++) {
         UIImageView * image = [[UIImageView alloc] init];
@@ -53,7 +65,7 @@
     [_button mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view).offset(-110);
         make.left.equalTo(self.view).offset(Width/2 - 100);
-        make.size.mas_equalTo(CGSizeMake(200, 40));
+        make.size.mas_equalTo(CGSizeMake(200, 60));
     }];
     
     [_button addTarget:self action:@selector(changeMainVC) forControlEvents:UIControlEventTouchUpInside];
@@ -61,6 +73,14 @@
     [_button setTitle:@"开启暖心之旅" forState:UIControlStateNormal];
     _button.titleLabel.textAlignment = NSTextAlignmentCenter;
     _button.titleLabel.font = [UIFont boldSystemFontOfSize:30];
+    
+    _button.clipsToBounds = YES;
+    _button.layer.cornerRadius = 10;
+//    _button.layer.borderWidth = 1;
+    _button.backgroundColor = [UIColor colorWithRed:0.667 green:0.667 blue:0.667 alpha:0.3];
+//    _button.layer.borderColor = [UIColor blackColor].CGColor;
+    
+    
     _button.hidden = YES;
 }
 
@@ -80,6 +100,9 @@
     }else {
         _button.hidden = YES;
     }
+    
+    _pageControl.currentPage = scrollView.contentOffset.x / Width;
+    
 }
 
 - (void)didReceiveMemoryWarning {
