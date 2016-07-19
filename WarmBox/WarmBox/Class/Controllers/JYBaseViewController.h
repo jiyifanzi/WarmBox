@@ -18,6 +18,7 @@
 
 //  当前的位置
 @property (nonatomic, strong) NSString * currentLocation;
+
 @property (nonatomic, strong) NSMutableArray * locationArray;
 
 @property (nonatomic, strong) UIImageView * WholeBlueBackImage;

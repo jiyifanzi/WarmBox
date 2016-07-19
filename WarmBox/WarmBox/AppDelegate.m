@@ -31,6 +31,11 @@
     
     [ShareConfig shareConfig];
     
+    //  设置LeanCloud
+    [AVOSCloud setApplicationId:@"9S8h5JVWCKt2egYDnEoq0WpF-gzGzoHsz"
+                      clientKey:@"K71AI6ndf8gLCqQNPCyzfDYA"];
+    
+    
     //  首次启动界面
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"]){
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstStart"];

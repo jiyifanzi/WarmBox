@@ -51,6 +51,12 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"tou"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"tou"]];
     
+    NSDate * now = [NSDate date];
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    formatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CH"];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    NSString * data = [formatter stringFromDate:now];
+    [self requestDayImageWithDate:data];
 }
 
 - (void)viewDidLoad {
@@ -70,8 +76,6 @@
     _backgroundImage = [[UIImageView alloc] initWithFrame:self.view.bounds];
     //  缓存
     _backgroundImage.image = [UIImage imageNamed:@"aqi_bg.jpg"];
-    
-    [self requestDayImageWithDate:data];
     
     [self.view addSubview:_backgroundImage];
     

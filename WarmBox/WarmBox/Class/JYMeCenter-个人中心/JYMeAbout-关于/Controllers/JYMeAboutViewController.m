@@ -81,7 +81,7 @@
     //  图标
     _appIcon = [[UIImageView alloc] init];
 //    _appIcon.backgroundColor = [UIColor greenColor];
-    _appIcon.image = [UIImage imageNamed:@"Icon-iPhone-40"];
+    _appIcon.image = [UIImage imageNamed:@"Icon-60"];
     
     [_appInfo addSubview:_appIcon];
     [_appIcon mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -94,7 +94,7 @@
     
     //  版本号
     _appVersion = [[UILabel alloc] init];
-    _appVersion.text = @"暖心盒子bate1.0";
+    _appVersion.text = @"暖心盒子 1.0.3";
     _appVersion.textAlignment = NSTextAlignmentCenter;
 //    _appVersion.backgroundColor = [UIColor whiteColor];
     [_appInfo addSubview:_appVersion];

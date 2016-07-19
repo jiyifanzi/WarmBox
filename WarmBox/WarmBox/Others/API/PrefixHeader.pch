@@ -105,6 +105,7 @@
 #import <MJRefresh.h>
 #import <MBProgressHUD.h>
 #import <KVNProgress.h>
+#import <AVOSCloud.h>
 
 
 //  =========APIKEY
