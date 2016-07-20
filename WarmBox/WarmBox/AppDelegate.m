@@ -35,6 +35,8 @@
     [AVOSCloud setApplicationId:@"9S8h5JVWCKt2egYDnEoq0WpF-gzGzoHsz"
                       clientKey:@"K71AI6ndf8gLCqQNPCyzfDYA"];
     
+    [JYUser registerSubclass];
+
     
     //  首次启动界面
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"]){
@@ -51,6 +53,7 @@
         self.window.rootViewController = nav;
     }
     
+    [JYWeatherTools getAllNoteData];
     
     [self.window makeKeyAndVisible];
     

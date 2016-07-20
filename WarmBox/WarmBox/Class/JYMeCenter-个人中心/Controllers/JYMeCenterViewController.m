@@ -49,6 +49,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:nil];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationItem.title = @"个人设置";
@@ -58,117 +60,20 @@
 //    [self setTopBackImage];
     
     [self.tableView reloadData];
+
+    [self getCurrentUser];
     
-    //  获取当前的登录对象
-    AVUser * currentUser =  [AVUser currentUser];
-    
-    if (currentUser) {
-        _userNameLabel.text = currentUser.username;
-        //  设置用户头像
-        //  下载数据
-//        AVQuery *query = [AVQuery queryWithClassName:@"File"];
-//        [query whereKey:@"name" containsString:[NSString stringWithFormat:@"%@UserIcon",currentUser.username]];
-//        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-//            NSArray<AVObject *> *priorityEqualsZeroTodos = objects;// 符合 priority = 0 的 Todo 数组
-//            NSLog(@"%@",priorityEqualsZeroTodos);
-//            
-//            
-//        }];
-//        
-//        // 如果这样写，第二个条件将覆盖第一个条件，查询只会返回 priority = 1 的结果
-//        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-//        }];
-        
-        
-        /*
-         NSString * filepath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/userIcon.plist"]];
-         
-         //  读取归档文件
-         NSMutableData *readData = [NSMutableData dataWithContentsOfFile:filepath];
-         
-         AVFile * userIcon = [AVFile fileWithName:[NSString stringWithFormat:@"%@userIcon",registerUser.username] data:readData];
-         
-         //  新表
-         AVObject * todo = [AVObject objectWithClassName:@"UserAllInfo"];
-         
-         [todo setObject:userIcon forKey:@"userIcon"];
-         
-         [todo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-         if (succeeded) {
-         //  成功
-         [SVProgressHUD setMinimumDismissTimeInterval:1];
-         [SVProgressHUD showSuccessWithStatus:@"注册成功"];
-         
-         }else {
-         NSLog(@"%@",error);
-         [SVProgressHUD showErrorWithStatus:@"注册失败，请重试"];
-         }
-         }];
-         */
-        
-        
-        AVQuery *query = [AVQuery queryWithClassName:@"UserAllInfo"];
-        [query whereKeyExists:@"userIcon"];
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            // objects 返回的就是有图片的
-            NSLog(@"%@",objects);
-            for (AVObject * queryObj in objects) {
-                NSDictionary *  dict = [queryObj valueForKey:@"localData"];
-                
-                AVFile * file = [dict valueForKey:@"userIcon"];
-                 
-                NSLog(@"%@",file.name);
-                
-                if ([file.name isEqualToString:[NSString stringWithFormat:@"%@userIcon",currentUser.username]]) {
-                    //  找到了
-                    [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-                        //   获取数据
-                        if (!error) {
-                            NSMutableData *readData = [NSMutableData dataWithData:file.getData];
-                            //  创建解归档
-                            NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:readData];
-                            //  decodeObjectForKey key就是名字
-                            UIImage * userImage = [unarchiver decodeObjectForKey:@"userIcon"];
-                            //  回主线程刷新
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                [_userIconBtn setBackgroundImage:userImage forState:UIControlStateNormal];
-                            });
-                        }
-                    }];
-                    
-                }
-            }
+    //  1.获取单例对象
+    NSUserDefaults * user = [NSUserDefaults standardUserDefaults];
+    //  2.读取数据
+    NSData * data = [user objectForKey:@"SkinBGImage"];
+    //  设置背景图片
+    if (data.length == 0) {
+        [_backImageView setImageToBlur:[UIImage imageNamed:@"1.jpg"] completionBlock:^{
         }];
-        
-        
-        
-        
-//        [AVFile getFileWithObjectId:@"578ceee3a34131005b7f4145" withBlock:^(AVFile *file, NSError *error) {
-//            if (error) {
-//                NSLog(@"%@",error);
-//            }else {
-//                NSMutableData *readData = [NSMutableData dataWithData:file.getData];
-//                //  创建解归档
-//                NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:readData];
-//                //  decodeObjectForKey key就是名字
-//                UIImage * userImage = [unarchiver decodeObjectForKey:@"userIcon"];
-//                //  回主线程刷新
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    [_userIconBtn setBackgroundImage:userImage forState:UIControlStateNormal];
-//                });
-//            }
-//        }];
-//        
-//        
-      
-        _isLogined = YES;
-        [_userLoginBtn setTitle:@"退出"];
-        
     }else {
-        [_userLoginBtn setTitle:@"登录"];
-        _isLogined = NO;
+        [_backImageView setImage:[UIImage imageWithData:data]];
     }
-    
 }
 
 - (void)viewDidLoad {
@@ -178,6 +83,56 @@
     [self creatTopUI];
     
     [self creatUI];
+}
+
+#pragma mark - 获取当前登录的对象
+- (void)getCurrentUser {
+    
+    //  获取当前的登录对象
+    JYUser * currentUser =  [JYUser currentUser];
+    __weak typeof(self) weakSelf = self;
+    
+    [currentUser fetchIfNeededInBackgroundWithBlock:^(AVObject *object, NSError *error) {
+        JYUser * currentUserUpdate = (JYUser *)object;
+        if (currentUserUpdate) {
+            //  发送通知
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetCurrentUser" object:nil];
+            
+            _userNameLabel.text = currentUserUpdate.username;
+            //  设置用户头像
+            //  下载数据
+            AVFile * file = [AVFile fileWithURL:currentUserUpdate.headUrl];
+            [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                if (!error) {
+                    // self.headImageView.image = [UIImage imageWithData:data];
+                    
+                    NSMutableData *readData = [NSMutableData dataWithData:data];
+                    //  创建解归档
+                    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:readData];
+                    //  decodeObjectForKey key就是名字
+                    UIImage * userImage = [unarchiver decodeObjectForKey:@"userIcon"];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [weakSelf.userIconBtn setBackgroundImage:userImage forState:UIControlStateNormal];
+                    });
+                }
+                
+            }];
+            _isLogined = YES;
+            [_userLoginBtn setTitle:@"退出"];
+            
+        }else {
+//            [_userLoginBtn setTitle:@"登录"];
+//            [_userIconBtn setBackgroundImage:nil forState:UIControlStateNormal];
+//            _isLogined = NO;
+//            
+            [_userLoginBtn setTitle:@"登录"];
+            _userNameLabel.text = @"请先登录";        //  否
+            [_userIconBtn setBackgroundImage:nil forState:UIControlStateNormal];
+             _isLogined = NO;
+        }
+    }];
+    
 }
 
 #pragma makr - 懒加载
@@ -249,6 +204,9 @@
     if (buttonIndex == 0) {
         //  是
         [AVUser logOut];
+        
+        [self getCurrentUser];
+        
         [SVProgressHUD setMinimumDismissTimeInterval:2];
         [SVProgressHUD showSuccessWithStatus:@"退出成功"];
         
@@ -256,6 +214,12 @@
         _userNameLabel.text = @"请先登录";        //  否
         [_userIconBtn setBackgroundImage:nil forState:UIControlStateNormal];
         _isLogined = NO;
+        
+        //  发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetCurrentUser" object:nil];
+        
+        //  将当前目录下面的文件删除
+        [JYWeatherTools removeAllNoteFromDB];
     }
 }
 

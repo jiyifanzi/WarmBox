@@ -21,6 +21,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    
+    [JYWeatherTools getAllNoteData];
+    
+    [JYWeatherTools pushAllNoteData];
 }
 
 - (void)viewDidLoad {

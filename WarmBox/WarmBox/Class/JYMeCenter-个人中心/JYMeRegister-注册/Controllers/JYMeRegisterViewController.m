@@ -115,69 +115,101 @@
     
     //  开始注册
     [SVProgressHUD showWithStatus:@"正在注册"];
-    AVUser * registerUser = [AVUser user];
+    
+    
+    JYUser * registerUser = [JYUser user];
     registerUser.username = userName;
     registerUser.email = userEmail;
     registerUser.password = passWord;
+//    registerUser.headUrl;
     
     
-    __weak typeof(self) weakSelf = self;
-    [registerUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    //  成功
+    //  创建新表，用来存储用户的头像
+    NSString * filepath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/userIcon.plist"]];
+    
+    //  读取归档文件
+    NSMutableData *readData = [NSMutableData dataWithContentsOfFile:filepath];
+    
+    AVFile * userIcon = [AVFile fileWithName:[NSString stringWithFormat:@"%@userIcon",registerUser.username] data:readData];
+    
+    [userIcon saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
-//            [SVProgressHUD showWithStatus:@"正在注册"];
+            //  保存成功
+            [SVProgressHUD showWithStatus:@"正在注册"];
+            registerUser.headUrl = userIcon.url;
             
-            //  成功
-            //  创建新表，用来存储用户的头像
-            NSString * filepath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/userIcon.plist"]];
-            
-            //  读取归档文件
-            NSMutableData *readData = [NSMutableData dataWithContentsOfFile:filepath];
-            
-            AVFile * userIcon = [AVFile fileWithName:[NSString stringWithFormat:@"%@userIcon",registerUser.username] data:readData];
-            
-            //  新表
-            AVObject * todo = [AVObject objectWithClassName:@"UserAllInfo"];
-            
-            [todo setObject:userIcon forKey:@"userIcon"];
-            
-            [todo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [registerUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {
-                    //  成功
+                    //            //  新表
+                    //            AVObject * todo = [AVObject objectWithClassName:@"UserAllInfo"];
+                    //
+                    //            [todo setObject:userIcon forKey:@"userIcon"];
+                    //
+                    //            [todo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    //                if (succeeded) {
+                    //                    //  成功
+                    //                    [SVProgressHUD setMinimumDismissTimeInterval:1];
+                    //                    [SVProgressHUD showSuccessWithStatus:@"注册成功"];
+                    //                    //  回到根视图
+                    //                    [self.navigationController popToRootViewControllerAnimated:YES];
+                    //
+                    //                }else {
+                    //                    NSLog(@"%@",error);
+                    //                    [SVProgressHUD showErrorWithStatus:@"注册失败，请重试"];
+                    //                }
+                    //            }];
+                    
+                    //            [AVUser logOut]
+                    
+                    //
+                    
+                    
                     [SVProgressHUD setMinimumDismissTimeInterval:1];
                     [SVProgressHUD showSuccessWithStatus:@"注册成功"];
-                    
+                    //  回到根视图
+                    [self.navigationController popToRootViewControllerAnimated:YES];
                 }else {
+                    /*
+                     如果注册不成功，请检查一下返回的错误对象。最有可能的情况是用户名已经被另一个用户注册，错误代码 202，即 _User 表中的 username 字段已存在相同的值，此时需要提示用户尝试不同的用户名来注册。同样，邮件 email 和手机号码 mobilePhoneNumber 字段也要求在各自的列中不能有重复值出现，否则会出现 203、214 错误。
+                     */
                     NSLog(@"%@",error);
-                    [SVProgressHUD showErrorWithStatus:@"注册失败，请重试"];
+                    
+                    [SVProgressHUD setMinimumDismissTimeInterval:2];
+                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@",error.localizedDescription]];
+                    
+                    
+                    //            NSString * errorStr = [NSString stringWithFormat:@"%@",error];
+                    //            NSRange range202 = [errorStr rangeOfString:@"202"];
+                    //            NSRange range203 = [errorStr rangeOfString:@"203"];
+                    //
+                    //            if (range202.length != 0) {
+                    //                //  说明是重复注册
+                    //                [SVProgressHUD setMinimumDismissTimeInterval:2];
+                    //                [SVProgressHUD showErrorWithStatus:@"当前账户已经注册"];
+                    //            }else if (range203.length != 0){
+                    //                [SVProgressHUD setMinimumDismissTimeInterval:2];
+                    //                [SVProgressHUD showErrorWithStatus:@"当前邮箱已经注册"];
+                    //            }else {
+                    //                [SVProgressHUD setMinimumDismissTimeInterval:2];
+                    //                [SVProgressHUD showErrorWithStatus:@"注册失败，请检查网络或稍后再试"];
+                    //            }
+                    //            
+                    
                 }
             }];
+
             
         }else {
-            /*
-             如果注册不成功，请检查一下返回的错误对象。最有可能的情况是用户名已经被另一个用户注册，错误代码 202，即 _User 表中的 username 字段已存在相同的值，此时需要提示用户尝试不同的用户名来注册。同样，邮件 email 和手机号码 mobilePhoneNumber 字段也要求在各自的列中不能有重复值出现，否则会出现 203、214 错误。
-             */
-            NSLog(@"%@",error);
-            
-            NSString * errorStr = [NSString stringWithFormat:@"%@",error];
-            NSRange range202 = [errorStr rangeOfString:@"202"];
-            NSRange range203 = [errorStr rangeOfString:@"203"];
-            
-            if (range202.length != 0) {
-                //  说明是重复注册
-                [SVProgressHUD setMinimumDismissTimeInterval:2];
-                [SVProgressHUD showErrorWithStatus:@"当前账户已经注册"];
-            }else if (range203.length != 0){
-                [SVProgressHUD setMinimumDismissTimeInterval:2];
-                [SVProgressHUD showErrorWithStatus:@"当前邮箱已经注册"];
-            }else {
-                [SVProgressHUD setMinimumDismissTimeInterval:2];
-                [SVProgressHUD showErrorWithStatus:@"注册失败，请检查网络或稍后再试"];
-            }
-            
-            
+            [SVProgressHUD setMinimumDismissTimeInterval:2];
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@",error.localizedDescription]];
         }
     }];
-}
+
+    
+    __weak typeof(self) weakSelf = self;
+    
+    }
 
 
 - (IBAction)cancelBtnClick:(id)sender {

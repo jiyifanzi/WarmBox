@@ -34,6 +34,11 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     [self creatUI];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardDidHideNotification object:nil];
 }
 
 #pragma mark - 创建界面
@@ -117,9 +122,158 @@
 //          将完成归档的二进制数据存储到本地 存储格式是字典 后缀为plist
         [data writeToFile:filepath atomically:NO];
         
+
+    
+        NSLog(@"%@",data);
+        
+        
+        [self saveNoteWithData:data];
+        
         [JYWeatherTools showMessageWithAlertView:@"添加成功"];
     }
     
+}
+
+#pragma mark - 保存数据到云端
+- (void)saveNoteWithData:(NSData *)data {
+    //  将这个data保存到云端 - 日期+文件
+    //  以数组的方式保存
+    NSMutableArray * fileArray = [[NSMutableArray alloc] init];
+    //  数组里面保存AVfile数据
+    
+    AVFile * tempFile = [AVFile fileWithName:[NSString stringWithFormat:@"%@+%@",self.selectedDate, self.titleField.text] data:data];
+    NSLog(@"%@",tempFile);
+    
+    [tempFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        //  将文件进行保存
+        if (succeeded) {
+            [fileArray addObject:tempFile];
+            //  获取当前登录的用户
+            JYUser * currentUser = [JYUser currentUser];
+            if (currentUser) {
+//                //  获取当前用户的noteArray
+//                NSArray * arr = [currentUser objectForKey:@"noteArray"];
+//                if (arr.count != 0) {
+//                    //  存在数据
+//                    for (AVFile * tempFileX in arr) {
+//                        AVObject * obj = [AVObject objectWithClassName:@"_File" objectId:tempFileX.objectId];
+//                        
+//                        [obj fetchInBackgroundWithBlock:^(AVObject *object, NSError *error) {
+//                            if (!error) {
+//                                AVFile * file = [AVFile fileWithAVObject:obj];
+//                                //  找到了File
+//                                NSLog(@"%@",file.name);
+//                                if ([file.name isEqualToString:tempFile.name]) {
+//                                    NSLog(@"%@",file.name);
+//                                    NSLog(@"%@",tempFile.name);
+//                                    
+//                                    //  删除原有的file
+//                                    [file deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//                                        if (succeeded) {
+//                                            //
+//                                        }else {
+//                                            NSLog(@"删除失败的原有%@",error.localizedDescription);
+//                                        }
+//                                    }];
+//                                }
+//                                
+//                            }else {
+//                                NSLog(@"网络加载%@",error.localizedDescription);
+//                            }
+//                        }];
+//
+//                    }
+//                }
+                
+                AVQuery * query = [AVQuery queryWithClassName:@"_File"];
+                
+                [query whereKey:@"name" equalTo:tempFile.name];
+                
+                [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                    
+                    if (objects.count == 0) {
+                        //  没有找到，开始存储
+//                        //  如果用户存在，进行保存
+//                        [currentUser addObjectsFromArray:fileArray forKey:@"noteArray"];
+//                        
+//                        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//                            if (succeeded) {
+//                                //  用户保存以后，应该要进行
+//                            }
+//                        }];
+                    }else {
+                        for (AVObject * object in objects) {
+                            NSLog(@"%@",object.objectId);
+                            if ([tempFile.objectId isEqualToString:object.objectId]) {
+                                //  如果存入的Id和已有的id相同，则不管
+                            }else {
+                                [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                    if (succeeded) {
+                                        NSLog(@"成功");
+                                    }else {
+                                        NSLog(@"%@",error.localizedDescription);
+                                        [self saveNoteWithData:data];
+                                    }
+                                }];
+                            }
+                        }
+                    }
+                    
+                    //  没有找到，开始存储
+                    //  如果用户存在，进行保存
+                    [currentUser addObjectsFromArray:fileArray forKey:@"noteArray"];
+                    
+                    [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        if (succeeded) {
+                            //  用户保存以后，应该要进行
+                        }else {
+                            //  失败了，删除刚刚上传的文件
+                            [tempFile deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                               //
+                                if (succeeded) {
+                                    //  删除成功
+                                }else {
+                                    //  失败
+                                }
+                            }];
+                        }
+                    }];
+                    
+                    
+                }];
+                
+                
+            }
+        }else {
+            NSLog(@"===er%@",error);
+            [self saveNoteWithData:data];
+        }
+    }];
+    
+    //  读取
+    /*
+     //  试着获取数据
+     NSArray * arr = [currentUser valueForKey:@"noteArray"];
+     
+     if (arr.count != 0) {
+     AVFile * file = [arr firstObject];
+     
+     
+     [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+     if (!error) {
+     NSMutableData *note = [NSMutableData dataWithData:data];
+     //  创建解归档
+     NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:note];
+     //  decodeObjectForKey key就是名字
+     NSAttributedString * str = [unarchiver decodeObjectForKey:@"note"];
+     
+     NSLog(@"%@",str);
+     
+     }
+     }];
+     
+     }
+     */
 }
 
 
@@ -223,31 +377,62 @@
 //    }];
 //}
 
-- (void)textViewDidBeginEditing:(UITextView *)textView {
-    CGRect frameToolBar = self.toolBar.frame;
-    frameToolBar.origin.y = frameToolBar.origin.y - 252;
+//- (void)textViewDidBeginEditing:(UITextView *)textView {
+//    CGRect frameToolBar = self.toolBar.frame;
+//    frameToolBar.origin.y = frameToolBar.origin.y - 252;
+//    
+//    CGRect frameConet = self.contentField.frame;
+//    frameConet.size.height = frameConet.size.height - 252;
+//    
+//    [UIView animateWithDuration:0.35 animations:^{
+//        self.toolBar.frame = frameToolBar;
+//        self.contentField.frame = frameConet;
+//    }];
+//}
+//- (void)textViewDidEndEditing:(UITextView *)textView {
+//    CGRect frameToolBar = self.toolBar.frame;
+//    frameToolBar.origin.y = frameToolBar.origin.y + 252;
+//    
+//    CGRect frameConet = self.contentField.frame;
+//    frameConet.size.height = frameConet.size.height + 252;
+//    
+//    [UIView animateWithDuration:0.35 animations:^{
+//        self.toolBar.frame = frameToolBar;
+//        self.contentField.frame = frameConet;
+//    }];
+//    [self.contentField resignFirstResponder];
+//}
+
+- (void) keyboardWasShown:(NSNotification *) notif
+{
+    NSDictionary *info = [notif userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
     
-    CGRect frameConet = self.contentField.frame;
-    frameConet.size.height = frameConet.size.height - 252;
+    NSLog(@"keyBoard:%f", keyboardSize.height);  //216
     
-    [UIView animateWithDuration:0.35 animations:^{
-        self.toolBar.frame = frameToolBar;
-        self.contentField.frame = frameConet;
+    //  让视图往上面移动
+    [UIView animateWithDuration:0.3 animations:^{
+        //  让整体视图往上移动
+        self.toolBar.transform = CGAffineTransformMakeTranslation(0, -keyboardSize.height);
     }];
 }
-- (void)textViewDidEndEditing:(UITextView *)textView {
-    CGRect frameToolBar = self.toolBar.frame;
-    frameToolBar.origin.y = frameToolBar.origin.y + 252;
+- (void) keyboardWasHidden:(NSNotification *) notif
+{
+    NSDictionary *info = [notif userInfo];
     
-    CGRect frameConet = self.contentField.frame;
-    frameConet.size.height = frameConet.size.height + 252;
-    
-    [UIView animateWithDuration:0.35 animations:^{
-        self.toolBar.frame = frameToolBar;
-        self.contentField.frame = frameConet;
+    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    NSLog(@"keyboardWasHidden keyBoard:%f", keyboardSize.height);
+    // keyboardWasShown = NO;
+    //  让视图恢复
+    [UIView animateWithDuration:0.3 animations:^{
+        //  让整体视图往下移动
+        self.toolBar.transform = CGAffineTransformIdentity;
     }];
-    [self.contentField resignFirstResponder];
 }
+
+
 //-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 //{
 //    if ([text isEqualToString:@"\n"]) {

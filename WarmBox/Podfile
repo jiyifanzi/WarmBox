@@ -8,9 +8,12 @@ pod 'MJRefresh'
 pod 'YYModel', '~>0.9.10'
 pod 'SVProgressHUD'
 pod 'XRWaterfallLayout'
+
 pod 'LBBlurredImage'
+
 pod 'MBProgressHUD'
 pod 'UMengSocialCOM'
 pod 'KVNProgress'
+pod 'AVOSCloud' #LeanCloud
 
 end

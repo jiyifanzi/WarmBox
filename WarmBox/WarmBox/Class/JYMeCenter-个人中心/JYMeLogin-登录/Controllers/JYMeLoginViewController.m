@@ -112,7 +112,7 @@
                 if (error) {
                     //
                     [SVProgressHUD setMinimumDismissTimeInterval:1];
-                    [SVProgressHUD showErrorWithStatus:@"账号或者密码错误"];
+                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@",error.localizedDescription]];
                 }else {
                     //  登录成功
                     [SVProgressHUD setMinimumDismissTimeInterval:1];

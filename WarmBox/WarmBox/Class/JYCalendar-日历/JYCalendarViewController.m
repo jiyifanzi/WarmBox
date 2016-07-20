@@ -261,6 +261,57 @@
         [_jy_Calendar reloadData];
         
         [self.dateForEventsTableView reloadData];
+        
+        
+        
+        //  删除之后，要把对应的远程账户下的数组元素也要清空，也可以直接删除对应的File，让ObjectID为空
+        JYUser * currentUser = [JYUser currentUser];
+        NSMutableArray * userNoteArray = [currentUser objectForKey:@"noteArray"];
+        
+        //  根据名字找Fiel，再根据File来删除noteArray的数据
+        NSString * fileName = [NSString stringWithFormat:@"%@+%@",[self.jy_Calendar stringFromDate:self.jy_Calendar.selectedDate], model.title];
+        
+        for (AVFile * tempFiel in userNoteArray) {
+            //  根据id来生成AVobejct，根据这个obejct来匹配
+            AVObject * fileObj = [AVObject objectWithClassName:@"_File" objectId:tempFiel.objectId];
+            [fileObj fetchInBackgroundWithBlock:^(AVObject *object, NSError *error) {
+                if (!error) {
+                    //  找到了
+                    //  根据AVobject生成AVfile
+                    AVFile * file = [AVFile fileWithAVObject:fileObj];
+                    NSLog(@"%@",file.name);
+                    if ([file.name isEqualToString:fileName]) {
+                        //  找到了相同的file
+                        [file deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                           //   删除
+                            if (succeeded) {
+                                NSLog(@"删除成功");
+                            }else {
+                                NSLog(@"%@",error.localizedDescription);
+                            }
+                        }];
+                        //  同时也要重新匹配数组
+                        [userNoteArray removeObject:tempFiel];
+                        //  再讲这个数组匹配给当前的用户
+                        [currentUser setObject:userNoteArray forKey:@"noteArray"];
+                        
+                        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                            if (succeeded) {
+                                //
+                                NSLog(@"保存成");
+                            }else {
+                                NSLog(@"%@",error.localizedDescription);
+                            }
+                        }];
+                    }
+                    
+                }
+                
+            }];
+        }
+        
+        NSLog(@"%@",userNoteArray);
+        
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

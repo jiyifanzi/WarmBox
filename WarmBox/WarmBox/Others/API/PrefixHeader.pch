@@ -89,6 +89,9 @@
 #import "JYNewsModel.h"
 #import "JYDownloadModel.h"
 
+//  =========自己的View
+#import "JYUser.h"
+
 
 //  =========第三方库
 #import <AFNetworking.h>

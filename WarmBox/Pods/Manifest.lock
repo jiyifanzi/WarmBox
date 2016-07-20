@@ -20,6 +20,7 @@ PODS:
   - AFNetworking/UIKit (2.5.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - AVOSCloud (3.3.5)
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
@@ -38,6 +39,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5.4)
+  - AVOSCloud
   - FMDB
   - KVNProgress
   - LBBlurredImage
@@ -52,6 +54,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  AVOSCloud: 1fe170768bee7e05bc3ea86e38d5bddb105cb957
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   KVNProgress: 541edcea5a1fef592aceac8d791a410d38cb499d
   LBBlurredImage: 700634c17922bc2d22343118e7deb6a3ca12db43
@@ -64,6 +67,6 @@ SPEC CHECKSUMS:
   XRWaterfallLayout: 8d615c21e7be46dc220e0ece45697fdd4bfa0f3b
   YYModel: 33a27f41a995f4c36ff8178421bac9f221a9c7ea
 
-PODFILE CHECKSUM: e4854ec90d207d4a8eede09ede30189adfb8871a
+PODFILE CHECKSUM: 56c6180e89aa28a916768488956c9a4f388beb68
 
 COCOAPODS: 1.0.1

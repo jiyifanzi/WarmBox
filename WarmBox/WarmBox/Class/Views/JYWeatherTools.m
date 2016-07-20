@@ -241,5 +241,233 @@
     }
 }
 
+#pragma mark - 获取远程的所有日记数据
++ (void)getAllNoteData {
+    JYUser * currentUser = [JYUser currentUser];
+    
+    [currentUser fetchInBackgroundWithBlock:^(AVObject *object, NSError *error) {
+    
+        if (currentUser) {
+            
+            /*
+             {
+             "__type": "Pointer",
+             "className": "_File",
+             "objectId": "578dc0466be3ff006cf25743"
+             }
+             */
+            
+            NSArray * arr = [currentUser objectForKey:@"noteArray"];
+            
+            for (AVFile * file in arr) {
+                
+                AVObject * obj = [AVObject objectWithClassName:@"_File" objectId:file.objectId];
+                
+                [obj fetchInBackgroundWithBlock:^(AVObject *object, NSError *error) {
+                    if (!error) {
+                        AVFile * file = [AVFile fileWithAVObject:obj];
+                        //  找到了File
+                        NSLog(@"%@",file.name);
+                        
+                        
+                        [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                            
+                            NSArray * pathAndName = [file.name componentsSeparatedByString:@"+"];
+                            
+                            NSFileManager * manager = [NSFileManager defaultManager];
+                            //                        NSError * errorX = [NSError new];
+                            NSString * path = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@",pathAndName.firstObject]];
+                            //  创建文件夹
+                            [manager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+                            
+                            //  获取到文件的路径
+                            NSString * filepath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.plist",pathAndName.firstObject,pathAndName.lastObject]];
+                            
+                            NSLog(@"%@",filepath);
+                            
+                            //  没有出现错误，进行缓存
+                            [data writeToFile:filepath atomically:NO];
+                        }];
+                    }else {
+                        NSLog(@"网络加载%@",error.localizedDescription);
+                    }
+                }];
+            }
+            
+            NSLog(@"%@",arr);
+            
+            //        [currentUser fetchInBackgroundWithBlock:^(AVObject *object, NSError *error) {
+            //           //   获取文件
+            //            NSArray * arr = [currentUser objectForKey:@"noteArray"];
+            //
+            //            AVFile * file = [arr firstObject];
+            //
+            //
+            //
+            //            AVFile * file2 = [AVFile fileWithAVObject:[AVObject get]]
+            //
+            //            NSLog(@"%@",file.url);
+            //
+            //
+            //        }];
+            
+            
+            //        NSArray * arr = [currentUser valueForKey:@"noteArray"];
+            //        NSLog(@"%@",arr);
+            //
+            //        if (arr.count != 0) {
+            //
+            //            //  获取到了数据，根据AVfile的名字来创建目录，在目录下面增加文件
+            //            for (AVFile * tempFile in arr) {
+            //
+            //                AVFile * temp = [AVFile fileWithAVObject:[AVObject objectWithObjectId:tempFile.objectId]];
+            //                [temp getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            //
+            //                     NSLog(@"===%@",temp.url);
+            //
+            //                }];
+            //
+            //                [tempFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            //                    NSLog(@"%@",error);
+            //
+            //                    if (!error) {
+            //                        NSLog(@"%@",tempFile.name);
+            //
+            //                        NSArray * pathAndName = [tempFile.name componentsSeparatedByString:@"+"];
+            //
+            //                        NSFileManager * manager = [NSFileManager defaultManager];
+            //                        NSError * error = [NSError new];
+            //                        NSString * path = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@",pathAndName.firstObject]];
+            //                        //  创建文件夹
+            //                        [manager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error];
+            //                        
+            //                        //  获取到文件的路径
+            //                        NSString * filepath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.plist",pathAndName.firstObject,pathAndName.lastObject]];
+            //                        
+            //                        NSLog(@"%@",filepath);
+            //                        
+            //                        //  没有出现错误，进行缓存
+            //                        [data writeToFile:filepath atomically:NO];
+            //                    }
+            //                }];
+            //            }
+            //        }
+            //
+        }
+
+    }];
+    
+}
+
+#pragma mark - 上传数据到云端
++ (void)pushAllNoteData {
+//    
+//    NSMutableArray * allData = [[NSMutableArray alloc] init];
+//    
+//    //  获取当天的文件目录
+//    NSString * path = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents"]];
+//    //  获取document下面的日历文件夹
+//    NSFileManager * manager = [NSFileManager defaultManager];
+//    NSError * error = nil;
+//    NSArray * contentsArray = [manager contentsOfDirectoryAtPath:path error:(&error)];
+//    NSMutableArray * fileArray = [NSMutableArray array];
+//    //  如果NSError有值，就表示出错
+//    if (!error) {
+//        //  如果没有问题，就可以遍历，数组中存储的是所有文件的全路径
+//        for (NSString * str in contentsArray) {
+//            if ([str rangeOfString:@"-"].length != 0) {
+//                [fileArray addObject:str];
+//            }
+//            NSLog(@"%@",str);
+//        }
+//    }
+//    
+//    //  fileArray里面存的是所有日历的文件夹的名字
+//    for (NSString * string in fileArray) {
+//        NSString * fileDataPath = [NSString stringWithFormat:@"%@/%@",path,string];
+//        //  遍历当前目录下的文件
+//        NSArray * fileDataContents = [manager contentsOfDirectoryAtPath:fileDataPath error:nil];
+//        NSLog(@"%@",fileDataContents);
+//        
+//        //  根据这个文件，来上传
+//        for (NSString * fileName in fileDataContents) {
+//            NSArray * fileNameArray = [fileName componentsSeparatedByString:@".plist"];
+//            if (fileNameArray.count == 2) {
+//                AVFile * tempFile = [AVFile fileWithName:[NSString stringWithFormat:@"%@+%@",string, fileNameArray.firstObject] data:[NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",fileDataPath, fileName]]];
+////                NSLog(@"%@",[NSString stringWithFormat:@"%@+%@",string, fileNameArray.firstObject]);
+////                NSLog(@"%@",[NSString stringWithFormat:@"%@/%@",fileDataPath, fileName]);
+//                [tempFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//                    if (succeeded) {
+//                        //  保存
+//                        [allData addObject:tempFile];
+//                    }else {
+//                        [self pushAllNoteData];
+//                    }
+//                }];
+//                
+//            }
+//            
+//        }
+//    }
+//    /*
+//     AVFile * tempFile = [AVFile fileWithName:[NSString stringWithFormat:@"%@+%@",self.selectedDate, self.titleField.text] data:data];
+//     NSLog(@"%@",tempFile);
+//     
+//     [tempFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//     //  将文件进行保存
+//     if (succeeded) {
+//     [fileArray addObject:tempFile];
+//     //  获取当前登录的用户
+//     JYUser * currentUser = [JYUser currentUser];
+//     if (currentUser) {
+//     //                  如果用户存在，进行保存
+//     //                    [currentUser addObjectsFromArray:fileArray forKey:@"noteArray"];
+//     
+//     [currentUser setObject:fileArray forKey:@"noteArray"];
+//     
+//     [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//     if (succeeded) {
+//     //  用户保存以后，应该要进行
+//     }
+//     }];
+//     }
+//     }else {
+//     NSLog(@"===er%@",error);
+//     }
+//     }];
+//     */
+}
+
+
+
+#pragma mark - 删除本地Doucument下面的所有日记
++ (void)removeAllNoteFromDB {
+    NSString * path = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents"]];
+    
+    NSFileManager * manager = [NSFileManager defaultManager];
+    NSError * error = nil;
+    NSArray * contentsArray = [manager contentsOfDirectoryAtPath:path error:nil];
+    NSMutableArray * fileArray = [NSMutableArray array];
+    //  如果NSError有值，就表示出错
+    if (!error) {
+        //  如果没有问题，就可以遍历，数组中存储的是所有文件的全路径
+        for (NSString * str in contentsArray) {
+            if ([str rangeOfString:@"-"].length != 0) {
+                
+                NSLog(@"%@",str);
+                [fileArray addObject:str];
+            }
+            NSLog(@"%@",str);
+        }
+    }
+    
+    for (NSString * temoStr in fileArray) {
+        NSString * filePath = [NSString stringWithFormat:@"%@/%@",path, temoStr];
+        
+        [manager removeItemAtPath:filePath error:nil];
+    }
+}
+
+
 
 @end

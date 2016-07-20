@@ -37,4 +37,15 @@
 //  删除本地缓存的电影
 + (void)removeVideoFromDBWithName:(NSString *)fileName;
 
+
+//  获取远程端的所有日记数据
++ (void)getAllNoteData;
+
+//  上传本地的数据到云端
++ (void)pushAllNoteData;
+
+//  删除本地Doucument下面的所有日记
++ (void)removeAllNoteFromDB;
+
+
 @end

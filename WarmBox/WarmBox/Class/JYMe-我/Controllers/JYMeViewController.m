@@ -19,9 +19,11 @@
 
 //  用户头像
 @property (nonatomic, strong) UIButton * iconImage;
-//  用户资料
+//  用户名称
+@property (nonatomic, strong) UILabel * userName;
+//  用户编辑
 @property (nonatomic, strong) UIButton * userDataBtn;
-//  用户设置
+//  用户添加
 @property (nonatomic, strong) UIButton * userSetBtn;
 
 //  管理城市界面的collection
@@ -34,6 +36,9 @@
 //  判断是否在抖动，（是否处在编辑的状态）
 @property (nonatomic, assign) BOOL isEditting;
 
+//  是否已经登录
+@property (nonatomic, assign) BOOL isLogined;
+
 @end
 
 @implementation JYMeViewController
@@ -44,7 +49,52 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"tou"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"tou"]];
     [self getDataFromDB];
+    //  获取当前的登录对
+    [self getCurrentUser];
 }
+
+
+#pragma mark - 获取当前的用户
+- (void)getCurrentUser {
+    
+    //  获取当前的登录对象
+    JYUser * currentUser =  [JYUser currentUser];
+    __weak typeof(self) weakSelf = self;
+    
+    _userName.text = currentUser.username;
+    
+    if (currentUser) {
+        //  设置用户头像
+        //  下载数据
+        AVFile * file = [AVFile fileWithURL:currentUser.headUrl];
+        [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            if (!error) {
+                //                self.headImageView.image = [UIImage imageWithData:data];
+                
+                NSMutableData *readData = [NSMutableData dataWithData:data];
+                //  创建解归档
+                NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:readData];
+                //  decodeObjectForKey key就是名字
+                UIImage * userImage = [unarchiver decodeObjectForKey:@"userIcon"];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf.iconImage setBackgroundImage:userImage forState:UIControlStateNormal];
+                });
+            }
+            
+        }];
+        _isLogined = YES;
+        //            [_userLoginBtn setTitle:@"退出"];
+        
+    }else {
+        //            [_userLoginBtn setTitle:@"登录"];
+        //            _userNameLabel.text = @"请先登录";        //  否
+        _userName.text = @"请先登录";
+        [_iconImage setBackgroundImage:nil forState:UIControlStateNormal];
+        _isLogined = NO;
+    }
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -52,6 +102,8 @@
     self.view.backgroundColor = [UIColor lightGrayColor];
     //  注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getDataFromDB) name:JYGetDataFromDB object:nil];
+    //  让当前的用户界面刷新
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getCurrentUser) name:@"GetCurrentUser" object:nil];
     
     [self creatUserInterface];
     
@@ -135,7 +187,7 @@
     //  创建布局
     UICollectionViewFlowLayout * layout = [[UICollectionViewFlowLayout alloc] init];
     //  创建collection
-    _citysCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 130, Width / 2, 180) collectionViewLayout:layout];
+    _citysCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 140, Width / 2, 180) collectionViewLayout:layout];
     [self.view addSubview:_citysCollectionView];
     //  设置相关的属性
     _citysCollectionView.delegate = self;
@@ -291,6 +343,18 @@
         make.size.mas_equalTo(CGSizeMake(iconW, iconH));
     }];
     
+    _userName = [[UILabel alloc] init];
+    _userName.text = @"请先登录";
+    _userName.textColor = [UIColor whiteColor];
+    [self.view addSubview:_userName];
+    [_userName mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_iconImage.mas_bottom).offset(5);
+//        make.left.equalTo(self.view).offset((screenW - iconW)/2);
+        make.centerX.equalTo(_iconImage);
+//        make.size.mas_equalTo(CGSizeMake(iconW, iconH));
+    }];
+    
+    
     //  创建用户资料和用户设置
     _userDataBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_userDataBtn setTitle:@"编辑" forState:UIControlStateNormal];
@@ -300,7 +364,7 @@
     [self.view addSubview:_userDataBtn];
     //  添加约束
     [_userDataBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(20 + iconH + 10);
+        make.top.equalTo(self.view).offset(20 + iconH + 30);
         make.left.equalTo(self.view).offset(20);
         make.size.mas_equalTo(CGSizeMake((screenW - 20 * 3)/2, 30));
     }];
@@ -312,7 +376,7 @@
     [self.view addSubview:_userSetBtn];
     //  添加约束
     [_userSetBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(20 + iconH + 10);
+        make.top.equalTo(self.view).offset(20 + iconH + 30);
         make.left.equalTo(_userDataBtn.mas_right).offset(20);
         make.size.mas_equalTo(CGSizeMake((screenW - 20 * 3)/2, 30));
     }];
@@ -378,6 +442,7 @@
 #pragma mark - 移除通知
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:JYGetDataFromDB object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetCurrentUser" object:nil];
 }
 
 /*
