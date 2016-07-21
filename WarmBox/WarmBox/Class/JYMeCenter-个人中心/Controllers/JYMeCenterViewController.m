@@ -16,6 +16,8 @@
 #import "JYMeAboutViewController.h"
 //  登录
 #import "JYMeLoginViewController.h"
+//  用户详情页
+#import "JYMeDetailViewController.h"
 
 
 
@@ -263,6 +265,9 @@
     _userIconBtn.backgroundColor = [UIColor redColor];
     _userIconBtn.clipsToBounds = YES;
     _userIconBtn.layer.cornerRadius = 40;
+    //  添加头像的点击事件
+    [_userIconBtn addTarget:self action:@selector(userClick) forControlEvents:UIControlEventTouchUpInside];
+    
     [_tableHeaderView addSubview:_userIconBtn];
     [_userIconBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_tableHeaderView.mas_top).offset(84);
@@ -274,7 +279,7 @@
     _userNameLabel.textAlignment = NSTextAlignmentCenter;
     _userNameLabel.text = @"用户昵称";
     _userNameLabel.textColor = [UIColor whiteColor];
-    _userNameLabel.font = [UIFont boldSystemFontOfSize:18];
+    _userNameLabel.font = [UIFont boldSystemFontOfSize:22];
 //    _userNameLabel.backgroundColor = [UIColor yellowColor];
     [_tableHeaderView addSubview:_userNameLabel];
     [_userNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -283,8 +288,21 @@
         make.left.equalTo(_tableHeaderView.mas_left).offset(80);
         make.right.equalTo(_tableHeaderView.mas_right).offset(-80);
     }];
-    
-    
+}
+
+#pragma mark - 用户点击了头像
+- (void)userClick {
+    if (_isLogined) {
+        //  已经登录了 进入用户详情
+        JYMeDetailViewController * detail = [[JYMeDetailViewController alloc] init];
+        detail.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:detail animated:YES];
+        
+    }else {
+        //  没有登录，提示用户是否登录
+        [SVProgressHUD setMinimumDismissTimeInterval:2];
+        [SVProgressHUD showErrorWithStatus:@"当前没有登录，请先登录再进行操作"];
+    }
 }
 
 

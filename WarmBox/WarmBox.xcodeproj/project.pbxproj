@@ -33,6 +33,8 @@
 		6C825AED1D3CDCA200679932 /* login_qq.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C825AEA1D3CDCA200679932 /* login_qq.png */; };
 		6C825AEE1D3CDCA200679932 /* login_weibo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C825AEB1D3CDCA200679932 /* login_weibo.png */; };
 		6C825AEF1D3CDCA200679932 /* login_weixin.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C825AEC1D3CDCA200679932 /* login_weixin.png */; };
+		6CA1DED71D3F6BEC00C0FC79 /* JYMeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA1DED51D3F6BEC00C0FC79 /* JYMeDetailViewController.m */; };
+		6CA1DED81D3F6BEC00C0FC79 /* JYMeDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CA1DED61D3F6BEC00C0FC79 /* JYMeDetailViewController.xib */; };
 		6CABB2611D35CAA7009F70E9 /* books_SL.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CABB2591D35CAA7009F70E9 /* books_SL.png */; };
 		6CABB2621D35CAA7009F70E9 /* books.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CABB25A1D35CAA7009F70E9 /* books.png */; };
 		6CABB2631D35CAA7009F70E9 /* calendar_SL.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CABB25B1D35CAA7009F70E9 /* calendar_SL.png */; };
@@ -349,6 +351,9 @@
 		6C825AEA1D3CDCA200679932 /* login_qq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_qq.png; sourceTree = "<group>"; };
 		6C825AEB1D3CDCA200679932 /* login_weibo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_weibo.png; sourceTree = "<group>"; };
 		6C825AEC1D3CDCA200679932 /* login_weixin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_weixin.png; sourceTree = "<group>"; };
+		6CA1DED41D3F6BEC00C0FC79 /* JYMeDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMeDetailViewController.h; sourceTree = "<group>"; };
+		6CA1DED51D3F6BEC00C0FC79 /* JYMeDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYMeDetailViewController.m; sourceTree = "<group>"; };
+		6CA1DED61D3F6BEC00C0FC79 /* JYMeDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYMeDetailViewController.xib; sourceTree = "<group>"; };
 		6CABB2591D35CAA7009F70E9 /* books_SL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = books_SL.png; sourceTree = "<group>"; };
 		6CABB25A1D35CAA7009F70E9 /* books.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = books.png; sourceTree = "<group>"; };
 		6CABB25B1D35CAA7009F70E9 /* calendar_SL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_SL.png; sourceTree = "<group>"; };
@@ -805,6 +810,9 @@
 		6C7071EF1D3DB1AA00203353 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				6CA1DED41D3F6BEC00C0FC79 /* JYMeDetailViewController.h */,
+				6CA1DED51D3F6BEC00C0FC79 /* JYMeDetailViewController.m */,
+				6CA1DED61D3F6BEC00C0FC79 /* JYMeDetailViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1915,7 +1923,7 @@
 				TargetAttributes = {
 					BCA7AC551D235290008D6DBB = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = BWP7674USN;
+						DevelopmentTeam = F3ZCSW6X45;
 						SystemCapabilities = {
 							com.apple.HealthKit = {
 								enabled = 0;
@@ -2044,6 +2052,7 @@
 				BCB860ED1D2FCA530082A932 /* fullScreenIconHigh@2x.png in Resources */,
 				6C0C41251D39449200CCD378 /* Icon-60@2x.png in Resources */,
 				BCB860E91D2FC7810082A932 /* clock_pause@2x.png in Resources */,
+				6CA1DED81D3F6BEC00C0FC79 /* JYMeDetailViewController.xib in Resources */,
 				6C825AED1D3CDCA200679932 /* login_qq.png in Resources */,
 				BCC1642A1D26316400BEAA88 /* wip_bk_sunny_n.jpg in Resources */,
 				BCC164101D26316400BEAA88 /* wb_heavy_snow.jpg in Resources */,
@@ -2245,6 +2254,7 @@
 				BC11F96F1D3340E300EAF5CB /* ShareConfig.m in Sources */,
 				BCB860D91D2F916F0082A932 /* NSString+MD5Addition.m in Sources */,
 				BC8317471D2A4EF900EFA9C5 /* FSCalendarCollectionView.m in Sources */,
+				6CA1DED71D3F6BEC00C0FC79 /* JYMeDetailViewController.m in Sources */,
 				BC6D42A61D24DDC2002CE4E4 /* JYWeatherDailyCell.m in Sources */,
 				BC8317441D2A4EF900EFA9C5 /* FSCalendarAnimator.m in Sources */,
 				BCA7ADC91D23B735008D6DBB /* JYWeatherDailyModel.m in Sources */,
@@ -2451,9 +2461,9 @@
 				INFOPLIST_FILE = WarmBox/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.jiyi.WarmBox;
+				PRODUCT_BUNDLE_IDENTIFIER = org.jiyis.WarmBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d6744be6-a08a-4f38-981a-4c4dadd6407b";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -2469,9 +2479,9 @@
 				INFOPLIST_FILE = WarmBox/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.jiyi.WarmBox;
+				PRODUCT_BUNDLE_IDENTIFIER = org.jiyis.WarmBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d6744be6-a08a-4f38-981a-4c4dadd6407b";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

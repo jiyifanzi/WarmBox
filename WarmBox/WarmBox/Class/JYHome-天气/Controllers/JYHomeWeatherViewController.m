@@ -225,6 +225,7 @@
 - (void)refershButtonClick {
     [self startLocation];
 }
+
 #pragma mark - 添加
 - (void)addButtonClick {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"addCity" object:nil];

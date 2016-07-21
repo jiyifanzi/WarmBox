@@ -160,10 +160,25 @@
 
 #pragma mark - 三方登录的按钮点击事件
 - (IBAction)login_QQClick:(id)sender {
+    
 }
 - (IBAction)login_WeiBoClick:(id)sender {
+    //  使用微博登录
+    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina];
+    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+        
+    //  获取微博用户名、uid、token等
+    if (response.responseCode == UMSResponseCodeSuccess) {
+        NSDictionary *dict = [UMSocialAccountManager socialAccountDictionary];
+        UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
+        NSLog(@"\nusername = %@,\n usid = %@,\n token = %@ iconUrl = %@,\n unionId = %@,\n thirdPlatformUserProfile = %@,\n thirdPlatformResponse = %@ \n, message = %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL, snsAccount.unionId, response.thirdPlatformUserProfile, response.thirdPlatformResponse, response.message);
+            
+    }});
 }
+
+
 - (IBAction)login_WeixinClick:(id)sender {
+    
 }
 
 
@@ -176,6 +191,8 @@
 }
 
 
+
+#pragma mark - KVO监听键盘活动事件，控制整体视图的位置
 - (void) keyboardWasShown:(NSNotification *) notif
 {
     NSDictionary *info = [notif userInfo];

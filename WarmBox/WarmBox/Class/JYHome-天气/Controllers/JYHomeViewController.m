@@ -42,7 +42,7 @@
     [super viewWillAppear:animated];
 //    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"tou"] forBarMetrics:UIBarMetricsDefault];
 //    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"tou"]];
-//    
+//
     self.navigationController.navigationBarHidden = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
 }

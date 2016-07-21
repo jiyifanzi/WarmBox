@@ -109,6 +109,10 @@
 #import <MBProgressHUD.h>
 #import <KVNProgress.h>
 #import <AVOSCloud.h>
+//  ====1.Umeng登录
+#import <UMSocial.h>
+#import <UMSocialSinaSSOHandler.h>
+
 
 
 //  =========APIKEY
@@ -125,8 +129,9 @@
 
 
 #define SinaKey @"3399398696"
+#define SinaRedict @"https://itunes.apple.com/cn"
 #define SinaSecret @"a903addf0f120f1734c4385debac3735"
-#define SinaRedict @"http://www.kuaishou.com/hot"
+//#define SinaRedict @"http://www.kuaishou.com/hot"http://sns.whalecloud.com/sina2/callback
 
 
 #endif /* PrefixHeader_pch */

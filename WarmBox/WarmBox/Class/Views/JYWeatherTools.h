@@ -48,4 +48,9 @@
 + (void)removeAllNoteFromDB;
 
 
+//  ==========常用正则
+//  是否是手机号码
++ (BOOL)isMobileNumber:(NSString *)mobileNum;
+
+
 @end

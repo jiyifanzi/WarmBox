@@ -171,8 +171,9 @@
     _jy_Calendar.appearance.cellShape = FSCalendarCellShapeCircle;
     _jy_Calendar.appearance.headerMinimumDissolvedAlpha = 0.0;
 
+
     //  创建tableView
-    _dateForEventsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _jy_Calendar.frame.origin.y + _jy_Calendar.frame.size.height + 10, viewFrameW, viewFrameH - _jy_Calendar.frame.size.height)];
+    _dateForEventsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _jy_Calendar.frame.origin.y + _jy_Calendar.frame.size.height + 10, Width, Height - _jy_Calendar.frame.size.height - _jy_Calendar.frame.origin.y - 64)];
    [self.view addSubview:_dateForEventsTableView];
     //  设置属性
     _dateForEventsTableView.backgroundColor = [UIColor clearColor];
@@ -180,8 +181,6 @@
     _dateForEventsTableView.dataSource = self;
     _dateForEventsTableView.rowHeight = 50;
     _dateForEventsTableView.separatorStyle = UITableViewCellSelectionStyleNone;
-    // 设置tableView的编辑状态
-//    [_dateForEventsTableView setEditing:YES animated:YES];
 
     //  添加Nav按钮
     [self addButtomItem];
@@ -358,8 +357,11 @@
 //  改变日历的frame
 - (void)calendar:(FSCalendar * __nonnull)calendar boundingRectWillChange:(CGRect)bounds animated:(BOOL)animated {
     calendar.frame = (CGRect){calendar.frame.origin, bounds.size};
-    _dateForEventsTableView.frame = CGRectMake(0, _jy_Calendar.frame.origin.y + _jy_Calendar.frame.size.height + 10, viewFrameW, viewFrameH - _jy_Calendar.frame.size.height);
+    _dateForEventsTableView.frame = CGRectMake(0, _jy_Calendar.frame.origin.y + _jy_Calendar.frame.size.height + 10, Width, Height - _jy_Calendar.frame.size.height - _jy_Calendar.frame.origin.y - 64);
+    //  让日历显示最上面的日记
+    _dateForEventsTableView.contentOffset = CGPointMake(0, 0);
 }
+
 //  打开农历显示
 - (NSString *)calendar:(FSCalendar * __nonnull)calendar subtitleForDate:(NSDate * __nonnull)date {
     if (1) {

@@ -28,13 +28,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    
+    //  ========友盟的相关配置
     [ShareConfig shareConfig];
     
+    
+    //  ========LeanCloud相关的配置
     //  设置LeanCloud
     [AVOSCloud setApplicationId:@"9S8h5JVWCKt2egYDnEoq0WpF-gzGzoHsz"
                       clientKey:@"K71AI6ndf8gLCqQNPCyzfDYA"];
-    
+    //  注册子类
     [JYUser registerSubclass];
 
     

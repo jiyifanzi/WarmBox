@@ -51,6 +51,16 @@
     _cityName.textColor = [UIColor whiteColor];
     _cityName.font = [UIFont systemFontOfSize:30];
     [self addSubview:_cityName];
+    
+//    _dateMonth.backgroundColor = [UIColor redColor];
+//    
+//    _dateDay.backgroundColor = [UIColor greenColor];
+//    
+//    _oneWord.backgroundColor =[UIColor yellowColor];
+//    
+//    _weather.backgroundColor = [UIColor purpleColor];
+//    
+//    _cityName.backgroundColor = [UIColor orangeColor];
 }
 
 #pragma mark - 计算子视图的frame
@@ -61,7 +71,9 @@
     [_dateDay mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).offset(10);
         make.left.equalTo(self).offset(10);
-        make.size.mas_equalTo(CGSizeMake(100, 100));
+        //  根据大小来算
+        CGRect frame = [_dateDay.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 90) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:100]} context:nil];
+        make.size.mas_equalTo(CGSizeMake(frame.size.width, 90));
     }];
     
     //  2.月
