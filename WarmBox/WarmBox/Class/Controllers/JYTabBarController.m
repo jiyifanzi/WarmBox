@@ -97,6 +97,8 @@
         [navArray addObject:navTemp];
     }
     
+    
+    
     self.viewControllers = navArray;
 
 }

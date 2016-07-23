@@ -108,6 +108,8 @@
 #import <MJRefresh.h>
 #import <MBProgressHUD.h>
 #import <KVNProgress.h>
+
+
 #import <AVOSCloud.h>
 //  ====1.Umeng登录
 #import <UMSocial.h>
@@ -128,9 +130,9 @@
 #define QQKey  @"mdzsa3Zvbr2sa5Ox"
 
 
-#define SinaKey @"3399398696"
-#define SinaRedict @"https://itunes.apple.com/cn"
-#define SinaSecret @"a903addf0f120f1734c4385debac3735"
+#define SinaKey @"16408896"
+#define SinaRedict @"http://weibo.com/u/2438032664"
+#define SinaSecret @"94fcae92aa871f6691721d2e4c0ff2f7"
 //#define SinaRedict @"http://www.kuaishou.com/hot"http://sns.whalecloud.com/sina2/callback
 
 

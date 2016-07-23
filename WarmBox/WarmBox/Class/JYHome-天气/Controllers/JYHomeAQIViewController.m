@@ -51,6 +51,7 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"tou"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"tou"]];
     
+    
     NSDate * now = [NSDate date];
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     formatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CH"];

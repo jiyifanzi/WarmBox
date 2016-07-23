@@ -55,24 +55,38 @@
         self.window.rootViewController = nav;
     }
     
+    
+    //  获取所有的笔记
     [JYWeatherTools getAllNoteData];
+    //  上传未上传完成的笔记
+    [JYWeatherTools pushAllNoteData];
+    //  删除没有删除完成的笔记
+    [JYWeatherTools removeAllNoteDelateCatch];
     
     [self.window makeKeyAndVisible];
+    
+    
     
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
+//
+//- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
+//    BOOL ret = [UMSocialSnsService handleOpenURL:url];
+//    
+//    if (ret == FALSE) {
+//        
+//    }
+//    return ret;
+//}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(id)annotation NS_DEPRECATED_IOS(4_2, 9_0, "Please use application:openURL:options:") __TVOS_PROHIBITED {
     BOOL ret = [UMSocialSnsService handleOpenURL:url];
     
     if (ret == FALSE) {
         
     }
     return ret;
-}
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(id)annotation NS_DEPRECATED_IOS(4_2, 9_0, "Please use application:openURL:options:") __TVOS_PROHIBITED {
-    
-    return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -90,7 +104,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.、
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

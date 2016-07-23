@@ -12,16 +12,7 @@
 
 @interface JYMeRegisterViewController ()<UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *totalView;
 
-@property (weak, nonatomic) IBOutlet UITextField *userName;
-
-@property (weak, nonatomic) IBOutlet UITextField *userEmail;
-
-@property (weak, nonatomic) IBOutlet UITextField *userPassword;
-
-//  用户头像
-@property (weak, nonatomic) IBOutlet UIButton *userIcon;
 
 
 @property (weak, nonatomic) IBOutlet UITextField *userRePassword;
@@ -227,19 +218,27 @@
     picker.allowsEditing = YES;
     
     
-    
     UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"请选择头像来源" preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction * actionXiangce = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            //  打开系统相册
+        //  打开系统相册
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         [appDele.window.rootViewController presentViewController:picker animated:YES completion:nil];
         
     }];
     
     UIAlertAction * actionXiangji = [UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        //  打开系统相册
-    }];
+        //  打开相机
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            //  如果支持
+            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            [appDele.window.rootViewController presentViewController:picker animated:YES completion:nil];
+        }else {
+            [SVProgressHUD setMinimumDismissTimeInterval:2];
+            [SVProgressHUD showErrorWithStatus:@"当前设备不支持相机!"];
+        }
+        
+        }];
     
     UIAlertAction * actionCancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     

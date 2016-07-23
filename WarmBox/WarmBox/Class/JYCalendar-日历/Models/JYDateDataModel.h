@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @interface JYDateDataModel : NSObject
+
+
+//  类型
+@property (nonatomic, strong) NSString * noteType;
+//  时间
+@property (nonatomic, strong) NSString * nowTime;
 //  当前时间
 @property (nonatomic, strong) NSString * date;
 //  当前标题

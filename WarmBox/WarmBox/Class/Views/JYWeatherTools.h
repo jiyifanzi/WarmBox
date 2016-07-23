@@ -41,11 +41,14 @@
 //  获取远程端的所有日记数据
 + (void)getAllNoteData;
 
-//  上传本地的数据到云端
+//  上传本地的未上传的缓存数据到云端
 + (void)pushAllNoteData;
 
 //  删除本地Doucument下面的所有日记
 + (void)removeAllNoteFromDB;
+
+//  上传本地Doucument的笔记缓存下面的数据(主要是针对于网络的缓存)
++ (void)removeAllNoteDelateCatch;
 
 
 //  ==========常用正则

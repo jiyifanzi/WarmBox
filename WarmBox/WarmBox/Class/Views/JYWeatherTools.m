@@ -248,15 +248,6 @@
     [currentUser fetchInBackgroundWithBlock:^(AVObject *object, NSError *error) {
     
         if (currentUser) {
-            
-            /*
-             {
-             "__type": "Pointer",
-             "className": "_File",
-             "objectId": "578dc0466be3ff006cf25743"
-             }
-             */
-            
             NSArray * arr = [currentUser objectForKey:@"noteArray"];
             
             for (AVFile * file in arr) {
@@ -266,13 +257,16 @@
                 [obj fetchInBackgroundWithBlock:^(AVObject *object, NSError *error) {
                     if (!error) {
                         AVFile * file = [AVFile fileWithAVObject:obj];
-                        //  找到了File
+                        //  找到了File  2016-07-21#123+1+20-03
                         NSLog(@"%@",file.name);
                         
                         
                         [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
                             
-                            NSArray * pathAndName = [file.name componentsSeparatedByString:@"+"];
+                            NSArray * pathAndName = [file.name componentsSeparatedByString:@"#"];
+                            
+                            NSLog(@"%@",pathAndName);
+                            
                             
                             NSFileManager * manager = [NSFileManager defaultManager];
                             //                        NSError * errorX = [NSError new];
@@ -295,7 +289,7 @@
             }
             
             NSLog(@"%@",arr);
-            
+    
             //        [currentUser fetchInBackgroundWithBlock:^(AVObject *object, NSError *error) {
             //           //   获取文件
             //            NSArray * arr = [currentUser objectForKey:@"noteArray"];
@@ -356,87 +350,408 @@
         }
 
     }];
-    
+
 }
 
 #pragma mark - 上传数据到云端
 + (void)pushAllNoteData {
-//    
-//    NSMutableArray * allData = [[NSMutableArray alloc] init];
-//    
-//    //  获取当天的文件目录
-//    NSString * path = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents"]];
-//    //  获取document下面的日历文件夹
-//    NSFileManager * manager = [NSFileManager defaultManager];
-//    NSError * error = nil;
-//    NSArray * contentsArray = [manager contentsOfDirectoryAtPath:path error:(&error)];
-//    NSMutableArray * fileArray = [NSMutableArray array];
-//    //  如果NSError有值，就表示出错
-//    if (!error) {
-//        //  如果没有问题，就可以遍历，数组中存储的是所有文件的全路径
-//        for (NSString * str in contentsArray) {
-//            if ([str rangeOfString:@"-"].length != 0) {
-//                [fileArray addObject:str];
-//            }
-//            NSLog(@"%@",str);
-//        }
-//    }
-//    
-//    //  fileArray里面存的是所有日历的文件夹的名字
-//    for (NSString * string in fileArray) {
-//        NSString * fileDataPath = [NSString stringWithFormat:@"%@/%@",path,string];
-//        //  遍历当前目录下的文件
-//        NSArray * fileDataContents = [manager contentsOfDirectoryAtPath:fileDataPath error:nil];
-//        NSLog(@"%@",fileDataContents);
-//        
-//        //  根据这个文件，来上传
-//        for (NSString * fileName in fileDataContents) {
-//            NSArray * fileNameArray = [fileName componentsSeparatedByString:@".plist"];
-//            if (fileNameArray.count == 2) {
-//                AVFile * tempFile = [AVFile fileWithName:[NSString stringWithFormat:@"%@+%@",string, fileNameArray.firstObject] data:[NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",fileDataPath, fileName]]];
-////                NSLog(@"%@",[NSString stringWithFormat:@"%@+%@",string, fileNameArray.firstObject]);
-////                NSLog(@"%@",[NSString stringWithFormat:@"%@/%@",fileDataPath, fileName]);
-//                [tempFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//                    if (succeeded) {
-//                        //  保存
-//                        [allData addObject:tempFile];
-//                    }else {
-//                        [self pushAllNoteData];
-//                    }
-//                }];
+    //  将本地noteCatch里面的文件上传到网络上
+    
+    //  拿到noteCatch里面的所有文件
+    //  笔记缓存目录
+    NSString * pathCatch = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/NoteCatch"]];
+    //  获取当前目录下的所有文件
+    //  读取某个文件夹下所有的文件夹或者文件
+    NSFileManager * manager = [NSFileManager defaultManager];
+    NSError * error = nil;
+    NSArray * contentsArray = [manager contentsOfDirectoryAtPath:pathCatch error:(&error)];
+    //  如果NSError有值，就表示出错
+    if (!error) {
+        //  如果没有问题，就可以遍历，数组中存储的是所有文件的全路径
+        for (NSString * str in contentsArray) {
+            if ([str isEqualToString:@".DS_Store"]) {
+                continue;
+            }
+            NSLog(@"%@",str);
+            //  2016-07-21#123+1+20-03.plist
+            //  2016-07-21#123+1+20-01
+            
+            NSArray * strArray = [str componentsSeparatedByString:@".plist"];
+            
+            NSString * fileNameStr = [strArray firstObject]; //2016-07-21#123+1+20-01
+            //  fileNameStr为日期+标题的文件 2016-07-21+123
+            
+            NSData * fileData = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",pathCatch,str]];
+            
+            NSArray * fileandDateArray = [fileNameStr componentsSeparatedByString:@"+"];
+    
+            //  获取到现在的Data
+            NSMutableArray * fileArray = [[NSMutableArray alloc] init];
+            //  数组里面保存AVfile数据
+            AVFile * tempFile = [AVFile fileWithName:fileNameStr data:fileData];
+            
+            NSLog(@"%@",tempFile.name);
+            
+            [tempFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                //  将文件进行保存
+                if (succeeded) {
+                    [fileArray addObject:tempFile];
+                    //  获取当前登录的用户
+                    JYUser * currentUser = [JYUser currentUser];
+                    if (currentUser) {
+                        AVQuery * query = [AVQuery queryWithClassName:@"_File"];
+                        [query whereKey:@"name" equalTo:tempFile.name];
+                        
+                        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                            
+                            if (objects.count == 0) {
+                                
+                            }else {
+                                for (AVObject * object in objects) {
+                                    NSLog(@"%@",object.objectId);
+                                    if ([tempFile.objectId isEqualToString:object.objectId]) {
+                                        //  如果存入的Id和已有的id相同，则不管
+                                    }else {
+                                        [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                            if (succeeded) {
+                                                NSLog(@"成功");
+                                            }else {
+                                                NSLog(@"%@",error.localizedDescription);
+                                            }
+                                        }];
+                                    }
+                                }
+                            }
+                            //  没有找到，开始存储
+                            //  如果用户存在，进行保存
+                            [currentUser addObjectsFromArray:fileArray forKey:@"noteArray"];
+                            
+                            [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                if (succeeded) {
+                                    //  笔记缓存目录
+                                    NSString * pathCatch = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/NoteCatch"]];
+                                    //  获取当前目录下的所有文件
+                                    //  读取某个文件夹下所有的文件夹或者文件
+                                    NSFileManager * manager = [NSFileManager defaultManager];
+                                    NSError * error = nil;
+                                    NSArray * contentsArray = [manager contentsOfDirectoryAtPath:pathCatch error:(&error)];
+                                    //  如果NSError有值，就表示出错
+                                    if (!error) {
+                                        //  如果没有问题，就可以遍历，数组中存储的是所有文件的全路径
+                                        for (NSString * str in contentsArray) {
+                                            NSArray * strArray = [str componentsSeparatedByString:@".plist"];
+                                            NSString * fileNameStr = [strArray firstObject];
+                                            
+                                            NSLog(@"str%@",str);
+                                            NSLog(@"%@",fileNameStr);
+                                            NSLog(@"temp%@",tempFile.name);
+                                            //  2016-07-21#123+1+20-03
+                                            if ([fileNameStr isEqualToString:tempFile.name]) {
+                                                //  上传成功，并且找到了相同的文件，就删除这个文件
+                                                [manager removeItemAtPath:[NSString stringWithFormat:@"%@/%@",pathCatch,str] error:nil];
+                                                
+                                            }
+                                        }
+                                    }
+                                    
+                                }else {
+                                    //  失败了，删除刚刚上传的文件
+                                    [tempFile deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                        //
+                                        if (succeeded) {
+                                            //  删除成功
+                                        }else {
+                                            //  失败
+                                        }
+                                    }];
+                                }
+                            }];
+                        }];
+                        
+                        
+                    }
+                }else {
+                    NSLog(@"===er%@",error.localizedDescription);
+                }
+            }];
+            
+        }
+    }
+}
+
+
+#pragma mark  - 上传本地Doucument的笔记缓存下面的数据(主要是针对于网络的缓存)
++ (void)removeAllNoteDelateCatch {
+    
+    NSString * pathCatch = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/NoteDeleteCatch"]];
+    //  获取当前目录下的所有文件
+    //  读取某个文件夹下所有的文件夹或者文件
+    NSFileManager * manager = [NSFileManager defaultManager];
+    NSError * error = nil;
+    NSArray * contentsArray = [manager contentsOfDirectoryAtPath:pathCatch error:(&error)];
+    
+    //  获取当前的用户
+    //  删除之后，要把对应的远程账户下的数组元素也要清空，也可以直接删除对应的File，让ObjectID为空
+
+    JYUser * currentUser = [JYUser currentUser];
+
+    NSMutableArray * userNoteArray = [currentUser objectForKey:@"noteArray"];
+
+
+    //  如果NSError有值，就表示出错
+    if (!error) {
+        //  如果没有问题，就可以遍历，数组中存储的是所有文件的全路径
+        for (NSString * str in contentsArray) {
+            
+            //  str就是文件夹下面存储的数据
+            NSArray * fileStr = [str componentsSeparatedByString:@".plist"];
+            NSString * fileandDateName = [fileStr firstObject];
+            
+            NSArray * fileNameArray = [fileandDateName componentsSeparatedByString:@"+"];
+            
+            //  根据名字找Fiel，再根据File来删除noteArray的数据
+            NSString * fileName = [fileStr firstObject];
+            
+            NSLog(@"%@",fileName);
+            if ([fileName isEqualToString:@".DS_Store"]) {
+                
+            }else {
+                for (AVFile * tempFiel in userNoteArray) {
+                    //  根据id来生成AVobejct，根据这个obejct来匹配
+                    NSLog(@"%@",tempFiel.objectId);
+
+                    AVObject * fileObj = [AVObject objectWithClassName:@"_File" objectId:tempFiel.objectId];
+                    [fileObj fetchInBackgroundWithBlock:^(AVObject *object, NSError *error) {
+                        if (!error) {
+                            //  找到了
+                            //  根据AVobject生成AVfile
+                            AVFile * file = [AVFile fileWithAVObject:fileObj];
+                            NSLog(@"%@",file.name);
+                            
+                            
+                            if ([file.name isEqualToString:fileName]) {
+                                //  找到了相同的file
+                                
+                                
+                                [file deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                    //   删除
+                                    if (succeeded) {
+                                        NSLog(@"删除成功");
+                                        //  删除成功的话，将NoteDeletaCatch下面的对应的文件也删除
+                                        //  删除笔记缓存目录
+                                        NSString * pathCatch = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/NoteDeleteCatch"]];
+                                        //  获取当前目录下的所有文件NoteDeleteCatch
+                                        //  读取某个文件夹下所有的文件夹或者文件
+                                        NSFileManager * manager = [NSFileManager defaultManager];
+                                        NSError * error = nil;
+                                        NSArray * contentsArray = [manager contentsOfDirectoryAtPath:pathCatch error:(&error)];
+                                        //  如果NSError有值，就表示出错
+                                        if (!error) {
+                                            //  如果没有问题，就可以遍历，数组中存储的是所有文件的全路径
+                                            for (NSString * str in contentsArray) {
+                                                NSArray * strArray = [str componentsSeparatedByString:@".plist"];
+                                                NSString * fileNameStr = [strArray firstObject];
+                                                NSLog(@"%@",str);
+                                                NSLog(@"%@",file.name);
+                                                
+                                                if ([fileNameStr isEqualToString:file.name]) {
+                                                    //  上传成功，并且找到了相同的文件，就删除这个文件
+                                                    [manager removeItemAtPath:[NSString stringWithFormat:@"%@/%@",pathCatch,str] error:nil];
+                                                }
+                                            }
+                                        }
+                                        
+                                    }else {
+                                        NSLog(@"%@",error.localizedDescription);
+                                    }
+                                }];
+                                
+                                //  同时也要重新匹配数组
+                                [userNoteArray removeObject:tempFiel];
+                                //  再讲这个数组匹配给当前的用户
+                                [currentUser setObject:userNoteArray forKey:@"noteArray"];
+                                
+                                [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                    if (succeeded) {
+                                        //
+                                        NSLog(@"保存成");
+                                    }else {
+                                        NSLog(@"%@",error.localizedDescription);
+                                    }
+                                }];
+                            }
+                            
+                        }
+                        
+                    }];
+                }
+                NSLog(@"%@",userNoteArray);
+            }
+
+            }
+            
+        }
+    }
+    
+    /*
+     JYUser * currentUser = [JYUser currentUser];
+     NSMutableArray * userNoteArray = [currentUser objectForKey:@"noteArray"];
+     
+     //  根据名字找Fiel，再根据File来删除noteArray的数据
+     NSString * fileName = [NSString stringWithFormat:@"%@#%@+%@+%@",[self.jy_Calendar stringFromDate:self.jy_Calendar.selectedDate], model.title, model.noteType, model.nowTime];
+     
+     //  2016-07-21#123+1+20-17副本
+     NSLog(@"%@",fileName);
+     
+     for (AVFile * tempFiel in userNoteArray) {
+     //  根据id来生成AVobejct，根据这个obejct来匹配
+     NSLog(@"%@",tempFiel.objectId);
+     
+     AVObject * fileObj = [AVObject objectWithClassName:@"_File" objectId:tempFiel.objectId];
+     [fileObj fetchInBackgroundWithBlock:^(AVObject *object, NSError *error) {
+     if (!error) {
+     //  找到了
+     //  根据AVobject生成AVfile
+     AVFile * file = [AVFile fileWithAVObject:fileObj];
+     NSLog(@"%@",file.name);
+     
+     
+     if ([file.name isEqualToString:fileName]) {
+     //  找到了相同的file
+     
+     
+     [file deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+     //   删除
+     if (succeeded) {
+     NSLog(@"删除成功");
+     //  删除成功的话，将NoteDeletaCatch下面的对应的文件也删除
+     //  删除笔记缓存目录
+     NSString * pathCatch = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/NoteDeleteCatch"]];
+     //  获取当前目录下的所有文件NoteDeleteCatch
+     //  读取某个文件夹下所有的文件夹或者文件
+     NSFileManager * manager = [NSFileManager defaultManager];
+     NSError * error = nil;
+     NSArray * contentsArray = [manager contentsOfDirectoryAtPath:pathCatch error:(&error)];
+     //  如果NSError有值，就表示出错
+     if (!error) {
+     //  如果没有问题，就可以遍历，数组中存储的是所有文件的全路径
+     for (NSString * str in contentsArray) {
+     NSArray * strArray = [str componentsSeparatedByString:@".plist"];
+     NSString * fileNameStr = [strArray firstObject];
+     NSLog(@"%@",str);
+     NSLog(@"%@",file.name);
+     
+     if ([fileNameStr isEqualToString:file.name]) {
+     //  上传成功，并且找到了相同的文件，就删除这个文件
+     [manager removeItemAtPath:[NSString stringWithFormat:@"%@/%@",pathCatch,str] error:nil];
+     }
+     }
+     }
+     
+     }else {
+     NSLog(@"%@",error.localizedDescription);
+     }
+     }];
+     
+     //  同时也要重新匹配数组
+     [userNoteArray removeObject:tempFiel];
+     //  再讲这个数组匹配给当前的用户
+     [currentUser setObject:userNoteArray forKey:@"noteArray"];
+     
+     [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+     if (succeeded) {
+     //
+     NSLog(@"保存成");
+     }else {
+     NSLog(@"%@",error.localizedDescription);
+     }
+     }];
+     }
+     
+     }
+     
+     }];
+     }
+     NSLog(@"%@",userNoteArray);
+     }
+
+     
+     
+     */
+//
+//
+//    //  根据名字找Fiel，再根据File来删除noteArray的数据
+//    NSString * fileName = [NSString stringWithFormat:@"%@+%@",[self.jy_Calendar stringFromDate:self.jy_Calendar.selectedDate], model.title];
+//
+//
+//    for (AVFile * tempFiel in userNoteArray) {
+//        //  根据id来生成AVobejct，根据这个obejct来匹配
+//        AVObject * fileObj = [AVObject objectWithClassName:@"_File" objectId:tempFiel.objectId];
+//        [fileObj fetchInBackgroundWithBlock:^(AVObject *object, NSError *error) {
+//            if (!error) {
+//                //  找到了
+//                //  根据AVobject生成AVfile
+//                AVFile * file = [AVFile fileWithAVObject:fileObj];
+//                NSLog(@"%@",file.name);
+//                if ([file.name isEqualToString:fileName]) {
+//                    //  找到了相同的file
+//                    [file deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//                        //   删除
+//                        if (succeeded) {
+//                            NSLog(@"删除成功");
+//                            //  删除成功的话，将NoteDeletaCatch下面的对应的文件也删除
+//                            //  删除笔记缓存目录
+//                            NSString * pathCatch = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/NoteDeleteCatch"]];
+//                            //  获取当前目录下的所有文件
+//                            //  读取某个文件夹下所有的文件夹或者文件
+//                            NSFileManager * manager = [NSFileManager defaultManager];
+//                            NSError * error = nil;
+//                            NSArray * contentsArray = [manager contentsOfDirectoryAtPath:pathCatch error:(&error)];
+//                            NSMutableArray * fileArray = [NSMutableArray array];
+//                            //  如果NSError有值，就表示出错
+//                            if (!error) {
+//                                //  如果没有问题，就可以遍历，数组中存储的是所有文件的全路径
+//                                for (NSString * str in contentsArray) {
+//                                    NSArray * strArray = [str componentsSeparatedByString:@".plist"];
+//                                    NSString * fileNameStr = [strArray firstObject];
+//                                    NSLog(@"%@",str);
+//                                    NSLog(@"%@",file.name);
+//                                    
+//                                    if ([fileNameStr isEqualToString:file.name]) {
+//                                        //  上传成功，并且找到了相同的文件，就删除这个文件
+//                                        [manager removeItemAtPath:[NSString stringWithFormat:@"%@/%@",pathCatch,str] error:nil];
+//                                    }
+//                                }
+//                            }
+//                            
+//                        }else {
+//                            NSLog(@"%@",error.localizedDescription);
+//                        }
+//                    }];
+//                    
+//                    //  同时也要重新匹配数组
+//                    [userNoteArray removeObject:tempFiel];
+//                    //  再讲这个数组匹配给当前的用户
+//                    [currentUser setObject:userNoteArray forKey:@"noteArray"];
+//                    
+//                    [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//                        if (succeeded) {
+//                            //
+//                            NSLog(@"保存成");
+//                        }else {
+//                            NSLog(@"%@",error.localizedDescription);
+//                        }
+//                    }];
+//                }
 //                
 //            }
 //            
-//        }
+//        }];
 //    }
-//    /*
-//     AVFile * tempFile = [AVFile fileWithName:[NSString stringWithFormat:@"%@+%@",self.selectedDate, self.titleField.text] data:data];
-//     NSLog(@"%@",tempFile);
-//     
-//     [tempFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//     //  将文件进行保存
-//     if (succeeded) {
-//     [fileArray addObject:tempFile];
-//     //  获取当前登录的用户
-//     JYUser * currentUser = [JYUser currentUser];
-//     if (currentUser) {
-//     //                  如果用户存在，进行保存
-//     //                    [currentUser addObjectsFromArray:fileArray forKey:@"noteArray"];
-//     
-//     [currentUser setObject:fileArray forKey:@"noteArray"];
-//     
-//     [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//     if (succeeded) {
-//     //  用户保存以后，应该要进行
-//     }
-//     }];
-//     }
-//     }else {
-//     NSLog(@"===er%@",error);
-//     }
-//     }];
-//     */
-}
+//    
+//    NSLog(@"%@",userNoteArray);
+//
+
 
 
 

@@ -152,6 +152,7 @@
             [_userCount resignFirstResponder];
             _userPassword.text = nil;
             _userCount.text = nil;
+            _firstClick = 0;
         }];
     }
 }
@@ -165,16 +166,31 @@
 - (IBAction)login_WeiBoClick:(id)sender {
     //  使用微博登录
     UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina];
+    
     snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
         
-    //  获取微博用户名、uid、token等
-    if (response.responseCode == UMSResponseCodeSuccess) {
-        NSDictionary *dict = [UMSocialAccountManager socialAccountDictionary];
-        UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
-        NSLog(@"\nusername = %@,\n usid = %@,\n token = %@ iconUrl = %@,\n unionId = %@,\n thirdPlatformUserProfile = %@,\n thirdPlatformResponse = %@ \n, message = %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL, snsAccount.unionId, response.thirdPlatformUserProfile, response.thirdPlatformResponse, response.message);
+        //          获取微博用户名、uid、token等
+        
+        if (response.responseCode == UMSResponseCodeSuccess) {
             
-    }});
+            NSDictionary *dict = [UMSocialAccountManager socialAccountDictionary];
+            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
+            NSLog(@"\nusername = %@,\n usid = %@,\n token = %@ iconUrl = %@,\n unionId = %@,\n thirdPlatformUserProfile = %@,\n thirdPlatformResponse = %@ \n, message = %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL, snsAccount.unionId, response.thirdPlatformUserProfile, response.thirdPlatformResponse, response.message);
+            
+            //  从数据库找有没有相同的usid
+            
+            //  拿到昵称
+            //  usid
+            //  iconUrl
+            //  去设置
+//            JYMeRegisterViewController * registerConteoller = [[JYMeRegisterViewController alloc] init];
+//            
+//            registerConteoller.userName.text = snsAccount.userName;
+//            registerConteoller.userIcon setBackgroundImage:[] forState:1
+            
+        }});
 }
+
 
 
 - (IBAction)login_WeixinClick:(id)sender {
@@ -196,7 +212,7 @@
 - (void) keyboardWasShown:(NSNotification *) notif
 {
     NSDictionary *info = [notif userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGSize keyboardSize = [value CGRectValue].size;
     
     NSLog(@"keyBoard:%f", keyboardSize.height);  //216

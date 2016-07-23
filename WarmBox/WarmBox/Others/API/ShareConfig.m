@@ -36,6 +36,7 @@
     //打开新浪微博的SSO开关，设置新浪微博回调地址，这里必须要和你在新浪微博后台设置的回调地址一致。
     [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:SinaKey secret:SinaSecret RedirectURL:SinaRedict];
 }
+
 #pragma mark - 纯文本
 - (void)shareToPlatformWithTitle:(NSString *)title andContent:(NSString *)content ViewController:(UIViewController *)controller {
     //  设置样式

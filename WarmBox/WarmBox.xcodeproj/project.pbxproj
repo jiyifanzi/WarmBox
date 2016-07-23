@@ -26,8 +26,15 @@
 		6C0C41311D39449200CCD378 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C0C41201D39449200CCD378 /* Icon@2x.png */; };
 		6C1935EA1D3CEA9D00BDA88F /* JYMeRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1935E81D3CEA9D00BDA88F /* JYMeRegisterViewController.m */; };
 		6C1935EB1D3CEA9D00BDA88F /* JYMeRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C1935E91D3CEA9D00BDA88F /* JYMeRegisterViewController.xib */; };
+		6C2B95E41D40CD880029C85F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C2B95E31D40CD880029C85F /* ImageIO.framework */; };
+		6C2B95E91D40E3440029C85F /* JYCalendarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2B95E71D40E3440029C85F /* JYCalendarTableViewCell.m */; };
+		6C2B95EA1D40E3440029C85F /* JYCalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C2B95E81D40E3440029C85F /* JYCalendarTableViewCell.xib */; };
 		6C3CE6931D3C9D1200DDD600 /* JYMeLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3CE6911D3C9D1200DDD600 /* JYMeLoginViewController.m */; };
 		6C3CE6941D3C9D1200DDD600 /* JYMeLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C3CE6921D3C9D1200DDD600 /* JYMeLoginViewController.xib */; };
+		6C67DB501D41C4080080E44C /* 樱花瓣2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C67DB4F1D41C4080080E44C /* 樱花瓣2.png */; };
+		6C67DBE71D4237670080E44C /* XTPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C67DBE61D4237670080E44C /* XTPopView.m */; };
+		6C67DBEA1D423DC40080E44C /* JYCalendarBirthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C67DBE91D423DC40080E44C /* JYCalendarBirthViewController.m */; };
+		6C67DBED1D423E560080E44C /* JYCalendarNotiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C67DBEC1D423E560080E44C /* JYCalendarNotiViewController.m */; };
 		6C7580601D34ECBE000579FB /* downLoadMe.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C75805F1D34ECBE000579FB /* downLoadMe.png */; };
 		6C7580651D34EDF5000579FB /* JYMeAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C7580641D34EDF5000579FB /* JYMeAboutViewController.m */; };
 		6C825AED1D3CDCA200679932 /* login_qq.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C825AEA1D3CDCA200679932 /* login_qq.png */; };
@@ -342,9 +349,20 @@
 		6C1935E71D3CEA9D00BDA88F /* JYMeRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMeRegisterViewController.h; sourceTree = "<group>"; };
 		6C1935E81D3CEA9D00BDA88F /* JYMeRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYMeRegisterViewController.m; sourceTree = "<group>"; };
 		6C1935E91D3CEA9D00BDA88F /* JYMeRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYMeRegisterViewController.xib; sourceTree = "<group>"; };
+		6C2B95E31D40CD880029C85F /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		6C2B95E61D40E3440029C85F /* JYCalendarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYCalendarTableViewCell.h; sourceTree = "<group>"; };
+		6C2B95E71D40E3440029C85F /* JYCalendarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYCalendarTableViewCell.m; sourceTree = "<group>"; };
+		6C2B95E81D40E3440029C85F /* JYCalendarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYCalendarTableViewCell.xib; sourceTree = "<group>"; };
 		6C3CE6901D3C9D1200DDD600 /* JYMeLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMeLoginViewController.h; sourceTree = "<group>"; };
 		6C3CE6911D3C9D1200DDD600 /* JYMeLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYMeLoginViewController.m; sourceTree = "<group>"; };
 		6C3CE6921D3C9D1200DDD600 /* JYMeLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYMeLoginViewController.xib; sourceTree = "<group>"; };
+		6C67DB4F1D41C4080080E44C /* 樱花瓣2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "樱花瓣2.png"; sourceTree = "<group>"; };
+		6C67DBE51D4237670080E44C /* XTPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XTPopView.h; path = "../JYShowNote-记事本展示/Controllers/XTPopView.h"; sourceTree = "<group>"; };
+		6C67DBE61D4237670080E44C /* XTPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XTPopView.m; path = "../JYShowNote-记事本展示/Controllers/XTPopView.m"; sourceTree = "<group>"; };
+		6C67DBE81D423DC40080E44C /* JYCalendarBirthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYCalendarBirthViewController.h; sourceTree = "<group>"; };
+		6C67DBE91D423DC40080E44C /* JYCalendarBirthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYCalendarBirthViewController.m; sourceTree = "<group>"; };
+		6C67DBEB1D423E560080E44C /* JYCalendarNotiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYCalendarNotiViewController.h; sourceTree = "<group>"; };
+		6C67DBEC1D423E560080E44C /* JYCalendarNotiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYCalendarNotiViewController.m; sourceTree = "<group>"; };
 		6C75805F1D34ECBE000579FB /* downLoadMe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downLoadMe.png; sourceTree = "<group>"; };
 		6C7580631D34EDF5000579FB /* JYMeAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMeAboutViewController.h; sourceTree = "<group>"; };
 		6C7580641D34EDF5000579FB /* JYMeAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYMeAboutViewController.m; sourceTree = "<group>"; };
@@ -718,6 +736,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C2B95E41D40CD880029C85F /* ImageIO.framework in Frameworks */,
 				BC5F4F091D33470A00EA52B5 /* libz.tbd in Frameworks */,
 				BC5F4F071D33470200EA52B5 /* libstdc++.tbd in Frameworks */,
 				BC5F4F051D3346FB00EA52B5 /* CoreTelephony.framework in Frameworks */,
@@ -750,6 +769,7 @@
 		26CA5155843133E62E74D9EA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6C2B95E31D40CD880029C85F /* ImageIO.framework */,
 				BC5F4F081D33470A00EA52B5 /* libz.tbd */,
 				BC5F4F061D33470200EA52B5 /* libstdc++.tbd */,
 				BC5F4F041D3346FB00EA52B5 /* CoreTelephony.framework */,
@@ -779,6 +799,16 @@
 				6C1935E91D3CEA9D00BDA88F /* JYMeRegisterViewController.xib */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		6C2B95E51D40E30F0029C85F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6C2B95E61D40E3440029C85F /* JYCalendarTableViewCell.h */,
+				6C2B95E71D40E3440029C85F /* JYCalendarTableViewCell.m */,
+				6C2B95E81D40E3440029C85F /* JYCalendarTableViewCell.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		6C3CE68E1D3C9CCC00DDD600 /* JYMeLogin-登录 */ = {
@@ -1297,6 +1327,8 @@
 		BC8317531D2A4F1E00EFA9C5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				6C67DBE51D4237670080E44C /* XTPopView.h */,
+				6C67DBE61D4237670080E44C /* XTPopView.m */,
 				BC8317501D2A4F1900EFA9C5 /* JYCalendarViewController.h */,
 				BC8317511D2A4F1900EFA9C5 /* JYCalendarViewController.m */,
 			);
@@ -1325,6 +1357,10 @@
 			children = (
 				BC83175B1D2A5E2F00EFA9C5 /* JYCalendarNoteViewController.h */,
 				BC83175C1D2A5E2F00EFA9C5 /* JYCalendarNoteViewController.m */,
+				6C67DBE81D423DC40080E44C /* JYCalendarBirthViewController.h */,
+				6C67DBE91D423DC40080E44C /* JYCalendarBirthViewController.m */,
+				6C67DBEB1D423E560080E44C /* JYCalendarNotiViewController.h */,
+				6C67DBEC1D423E560080E44C /* JYCalendarNotiViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1487,6 +1523,7 @@
 		BCA7ACD11D236A4B008D6DBB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				6C67DB4F1D41C4080080E44C /* 樱花瓣2.png */,
 				BC6D42B01D24EA0B002CE4E4 /* JYHomeViewController.h */,
 				BC6D42B11D24EA0B002CE4E4 /* JYHomeViewController.m */,
 				BCA7ACD71D236B2C008D6DBB /* JYHomeWeatherViewController.h */,
@@ -1827,6 +1864,7 @@
 		BCC202A11D2A191E006060B5 /* JYCalendar-日历 */ = {
 			isa = PBXGroup;
 			children = (
+				6C2B95E51D40E30F0029C85F /* Views */,
 				BC2B21CC1D2BDEAD00352A1A /* JYShowNote-记事本展示 */,
 				BC8317591D2A5DEA00EFA9C5 /* JYCalendarNote-记事本 */,
 				BC8317551D2A5B6900EFA9C5 /* Models */,
@@ -1993,6 +2031,7 @@
 				BCEC77801D3081DB00611623 /* icon_skin_sort_01.png in Resources */,
 				BCB860E21D2F9A010082A932 /* landscape_fullscreen.png in Resources */,
 				BCEC77861D3085AA00611623 /* wea_home page_refresh.png in Resources */,
+				6C2B95EA1D40E3440029C85F /* JYCalendarTableViewCell.xib in Resources */,
 				BC5956701D33BE4600AAEDE4 /* ZFPlayer_play@3x.png in Resources */,
 				BC0FA1C31D2E2784001F681C /* bottom_bg_up.png in Resources */,
 				6CABB2651D35CAA7009F70E9 /* setting_SL.png in Resources */,
@@ -2054,6 +2093,7 @@
 				BCB860E91D2FC7810082A932 /* clock_pause@2x.png in Resources */,
 				6CA1DED81D3F6BEC00C0FC79 /* JYMeDetailViewController.xib in Resources */,
 				6C825AED1D3CDCA200679932 /* login_qq.png in Resources */,
+				6C67DB501D41C4080080E44C /* 樱花瓣2.png in Resources */,
 				BCC1642A1D26316400BEAA88 /* wip_bk_sunny_n.jpg in Resources */,
 				BCC164101D26316400BEAA88 /* wb_heavy_snow.jpg in Resources */,
 				6C0C41211D39449200CCD378 /* Icon-40.png in Resources */,
@@ -2255,6 +2295,7 @@
 				BCB860D91D2F916F0082A932 /* NSString+MD5Addition.m in Sources */,
 				BC8317471D2A4EF900EFA9C5 /* FSCalendarCollectionView.m in Sources */,
 				6CA1DED71D3F6BEC00C0FC79 /* JYMeDetailViewController.m in Sources */,
+				6C67DBE71D4237670080E44C /* XTPopView.m in Sources */,
 				BC6D42A61D24DDC2002CE4E4 /* JYWeatherDailyCell.m in Sources */,
 				BC8317441D2A4EF900EFA9C5 /* FSCalendarAnimator.m in Sources */,
 				BCA7ADC91D23B735008D6DBB /* JYWeatherDailyModel.m in Sources */,
@@ -2263,9 +2304,11 @@
 				BC83174B1D2A4EF900EFA9C5 /* FSCalendarHeader.m in Sources */,
 				BC6D42B21D24EA0B002CE4E4 /* JYHomeViewController.m in Sources */,
 				6CABB2731D35D8B3009F70E9 /* BannerViewController.m in Sources */,
+				6C67DBED1D423E560080E44C /* JYCalendarNotiViewController.m in Sources */,
 				BCA7ADCF1D23B767008D6DBB /* JYWeatherNowModel.m in Sources */,
 				BCC1642E1D26320900BEAA88 /* JYWeatherTools.m in Sources */,
 				BC5643631D2CBB1D008C77CF /* JYNewsModel.m in Sources */,
+				6C67DBEA1D423DC40080E44C /* JYCalendarBirthViewController.m in Sources */,
 				BC2B21031D2B3CAE00352A1A /* JYFMDBWithRunTimeManager.m in Sources */,
 				BCEC778B1D30860400611623 /* JYSkinViewController.m in Sources */,
 				BC83174C1D2A4EF900EFA9C5 /* FSCalendarScopeHandle.m in Sources */,
@@ -2318,6 +2361,7 @@
 				BCC164481D26628100BEAA88 /* JYMeSearchCityViewController.m in Sources */,
 				BC6D42361D24A1FB002CE4E4 /* JYMeViewController.m in Sources */,
 				BCA7AC5B1D235291008D6DBB /* main.m in Sources */,
+				6C2B95E91D40E3440029C85F /* JYCalendarTableViewCell.m in Sources */,
 				BC8317581D2A5BA900EFA9C5 /* JYDateDataModel.m in Sources */,
 				BCA7ADDC1D23C87F008D6DBB /* JYWeatherNowHeaderView.m in Sources */,
 				BC0FA1B61D2E21CD001F681C /* JYLifeVideoViewController.m in Sources */,
@@ -2461,6 +2505,92 @@
 				INFOPLIST_FILE = WarmBox/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"AFNetworking\"",
+					"-l\"APOpenSdk\"",
+					"-l\"AVOSCloud\"",
+					"-l\"FMDB\"",
+					"-l\"KVNProgress\"",
+					"-l\"LBBlurredImage\"",
+					"-l\"LWApiSDK\"",
+					"-l\"MBProgressHUD\"",
+					"-l\"MJRefresh\"",
+					"-l\"Masonry\"",
+					"-l\"SDWebImage\"",
+					"-l\"SVProgressHUD\"",
+					"-l\"SocialAlipayShare\"",
+					"-l\"SocialFacebook\"",
+					"-l\"SocialInstagram\"",
+					"-l\"SocialLaiWang\"",
+					"-l\"SocialLine\"",
+					"-l\"SocialQQ\"",
+					"-l\"SocialSinaSSO\"",
+					"-l\"SocialTumblr\"",
+					"-l\"SocialTwitter\"",
+					"-l\"SocialWechat\"",
+					"-l\"SocialWhatsapp\"",
+					"-l\"UMSocial_Sdk_5.2.1\"",
+					"-l\"UMSocial_Sdk_Comment_5.2.1\"",
+					"-l\"WeChatSDK\"",
+					"-l\"WeiboSDK\"",
+					"-l\"XRWaterfallLayout\"",
+					"-l\"YYModel\"",
+					"-l\"iconv\"",
+					"-l\"icucore\"",
+					"-l\"sqlite3\"",
+					"-l\"stdc++\"",
+					"-l\"z\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"Accounts\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreData\"",
+					"-framework",
+					"\"CoreFoundation\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FBSDKCoreKit\"",
+					"-framework",
+					"\"FBSDKLoginKit\"",
+					"-framework",
+					"\"FBSDKShareKit\"",
+					"-framework",
+					"\"Fabric\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"GLKit\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"Social\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"TencentOpenAPI\"",
+					"-framework",
+					"\"TwitterCore\"",
+					"-framework",
+					"\"TwitterKit\"",
+					"-framework",
+					"\"UIKit\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.jiyis.WarmBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2479,6 +2609,92 @@
 				INFOPLIST_FILE = WarmBox/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"AFNetworking\"",
+					"-l\"APOpenSdk\"",
+					"-l\"AVOSCloud\"",
+					"-l\"FMDB\"",
+					"-l\"KVNProgress\"",
+					"-l\"LBBlurredImage\"",
+					"-l\"LWApiSDK\"",
+					"-l\"MBProgressHUD\"",
+					"-l\"MJRefresh\"",
+					"-l\"Masonry\"",
+					"-l\"SDWebImage\"",
+					"-l\"SVProgressHUD\"",
+					"-l\"SocialAlipayShare\"",
+					"-l\"SocialFacebook\"",
+					"-l\"SocialInstagram\"",
+					"-l\"SocialLaiWang\"",
+					"-l\"SocialLine\"",
+					"-l\"SocialQQ\"",
+					"-l\"SocialSinaSSO\"",
+					"-l\"SocialTumblr\"",
+					"-l\"SocialTwitter\"",
+					"-l\"SocialWechat\"",
+					"-l\"SocialWhatsapp\"",
+					"-l\"UMSocial_Sdk_5.2.1\"",
+					"-l\"UMSocial_Sdk_Comment_5.2.1\"",
+					"-l\"WeChatSDK\"",
+					"-l\"WeiboSDK\"",
+					"-l\"XRWaterfallLayout\"",
+					"-l\"YYModel\"",
+					"-l\"iconv\"",
+					"-l\"icucore\"",
+					"-l\"sqlite3\"",
+					"-l\"stdc++\"",
+					"-l\"z\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"Accounts\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreData\"",
+					"-framework",
+					"\"CoreFoundation\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FBSDKCoreKit\"",
+					"-framework",
+					"\"FBSDKLoginKit\"",
+					"-framework",
+					"\"FBSDKShareKit\"",
+					"-framework",
+					"\"Fabric\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"GLKit\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"Social\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"TencentOpenAPI\"",
+					"-framework",
+					"\"TwitterCore\"",
+					"-framework",
+					"\"TwitterKit\"",
+					"-framework",
+					"\"UIKit\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.jiyis.WarmBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

@@ -12,6 +12,11 @@
 
 //  展示标题
 @property (nonatomic, strong) UILabel * titleLabel;
+//  展示类型
+@property (nonatomic, strong) UILabel * noteType;
+//  展示具体时间
+@property (nonatomic, strong) UILabel * nowTime;
+
 //  展示时间
 @property (nonatomic, strong) UILabel * dateLabel;
 //  展示内容
@@ -24,28 +29,56 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
     
     [self willShowTheBGImgae:NO];
     
 }
 #pragma mark - 创建界面
 - (void)creatUI {
-    _titleLabel = [[UILabel alloc] init];
-    _titleLabel.textAlignment = NSTextAlignmentCenter;
-//    _titleLabel.backgroundColor =[UIColor redColor];
-//    _titleLabel.textColor = [UIColor whiteColor];
-    [self.view addSubview:_titleLabel];
+    //  类型
+    _noteType = [[UILabel alloc] init];
+    _noteType.textAlignment = NSTextAlignmentCenter;
+    _noteType.backgroundColor = [UIColor whiteColor];
+    _noteType.font = [UIFont systemFontOfSize:12];
+    [self.view addSubview:_noteType];
     
-    [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+ 
+    
+    [_noteType mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view).offset(80);
         make.left.equalTo(self.view).offset(10);
+        make.size.mas_equalTo(CGSizeMake(50, 15));
+    }];
+    
+    _nowTime = [[UILabel alloc] init];
+    _nowTime.textAlignment = NSTextAlignmentCenter;
+    _nowTime.backgroundColor = [UIColor whiteColor];
+    _nowTime.font = [UIFont systemFontOfSize:12];
+    [self.view addSubview:_nowTime];
+    
+    
+    
+    [_nowTime mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view).offset(95);
+        make.left.equalTo(self.view).offset(10);
+        make.size.mas_equalTo(CGSizeMake(50, 15));
+    }];
+    
+    
+    _titleLabel = [[UILabel alloc] init];
+    _titleLabel.textAlignment = NSTextAlignmentCenter;
+    _titleLabel.backgroundColor =[UIColor whiteColor];
+    [self.view addSubview:_titleLabel];
+    [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view).offset(80);
+        make.left.equalTo(self.view).offset(60);
         make.right.equalTo(self.view).offset(-10);
         make.size.mas_equalTo(CGSizeMake(Width - 20, 30));
     }];
     
     _contentView = [[UITextView alloc] init];
-//    _contentView.backgroundColor =[UIColor greenColor];
+    _contentView.backgroundColor =[UIColor whiteColor];
     _contentView.editable = NO;
 //    _contentView.textColor = [UIColor whiteColor];
     [self.view addSubview:_contentView];
@@ -54,13 +87,20 @@
         make.top.equalTo(_titleLabel.mas_bottom).offset(10);
         make.left.equalTo(self.view).offset(10);
         make.right.equalTo(self.view).offset(-10);
-        make.bottom.equalTo(self.view.mas_bottom).offset(5);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-10);
     }];
 }
 
 - (void)setModel:(JYDateDataModel *)model {
     _model = model;
     [self creatUI];
+    
+    if ([model.noteType isEqualToString:@"1"]) {
+        _noteType.text = @"记事";
+    }
+    
+    NSArray * timeArray = [model.nowTime componentsSeparatedByString:@"-"];
+    _nowTime.text = [NSString stringWithFormat:@"%@:%@",timeArray.firstObject, timeArray.lastObject];
     
     _titleLabel.text = [NSString stringWithFormat:@"%@-%@",model.title, model.date];
     NSLog(@"%@",_titleLabel.text);

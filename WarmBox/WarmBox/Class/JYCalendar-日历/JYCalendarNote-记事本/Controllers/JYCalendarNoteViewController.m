@@ -18,6 +18,8 @@
 @property (nonatomic, strong) UITextField * titleField;
 //  内容栏
 @property (nonatomic, strong) UITextView * contentField;
+//  类型
+@property (nonatomic, strong) NSString * noteType;
 
 //  时间栏
 //  工具栏
@@ -28,18 +30,27 @@
 
 @implementation JYCalendarNoteViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self willShowTheBGImgae:NO];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = [UIColor whiteColor];
-    [self creatUI];
+    self.view.backgroundColor = [UIColor lightGrayColor];
     
+    [self creatUI];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
     
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardDidHideNotification object:nil];
+    
+    self.noteType = @"1";
 }
+
 
 #pragma mark - 创建界面
 - (void)creatUI {
@@ -62,6 +73,21 @@
     _contentField.showsHorizontalScrollIndicator = YES;
     _contentField.showsVerticalScrollIndicator = YES;
     _contentField.autocapitalizationType  = UITextAutocapitalizationTypeNone;
+    
+    _toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
+    _toolBar.tintColor = [UIColor whiteColor];
+    _toolBar.barStyle = UIBarStyleBlack;
+    //  添加三个按钮
+    UIBarButtonItem * selectImage = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"toolBar_photo"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleDone target:self action:@selector(selectImageBtnClick)];
+    UIBarButtonItem * voice = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"toolBar_voice"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleDone target:self action:@selector(voiceBtnClick)];
+    UIBarButtonItem * share = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"toolBar_share"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleDone target:self action:@selector(shareBtnClick)];
+    
+    [_toolBar setItems:@[selectImage, voice, share] animated:YES];
+    
+//    [self.view addSubview:_toolBar];
+//    [_toolBar bringSubviewToFront:_contentField];
+    
+    _contentField.inputAccessoryView = _toolBar;
     
     [self creatSaveBtn];
     [self creatToolBar];
@@ -92,12 +118,23 @@
     //  创建文件夹
     [manager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error];
     
+    
+    //  保存前，判断标题是否为空
+    if (self.titleField.text.length == 0) {
+        
+        [SVProgressHUD setMinimumDismissTimeInterval:1];
+        [SVProgressHUD showErrorWithStatus:@"标题或内容不能为空"];
+        
+        return;
+    }
+    
     //  保存前，先判断标题名称是否已经保存
     NSArray * contentsArray = [manager contentsOfDirectoryAtPath:path error:nil];
     int flag = 1;
     for (NSString * tempPath in contentsArray) {
+        NSArray * noteAllNameArray = [tempPath componentsSeparatedByString:@"+"];
         NSLog(@"====%@",tempPath);
-        if ([tempPath isEqualToString:[NSString stringWithFormat:@"%@.plist",self.titleField.text]]) {
+        if ([noteAllNameArray.firstObject isEqualToString:[NSString stringWithFormat:@"%@",self.titleField.text]]) {
             [JYWeatherTools showMessageWithAlertView:@"标题重复，请重新填写"];
             flag = 0;
             break;
@@ -107,7 +144,12 @@
     }
     if (flag) {
         
-        NSString * filepath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.plist",self.selectedDate,self.titleField.text]];
+        
+        NSString * nowTime = [JYWeatherTools getNowDataWithFormate:@"HH-mm"];
+        
+        
+        //  存入格式 标题+类型+记录时间.plist
+        NSString * filepath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@+%@+%@.plist",self.selectedDate,self.titleField.text,self.noteType,nowTime]];
         //  借助NSData中转存储
         
         NSLog(@"path = %@",path);
@@ -121,13 +163,25 @@
         //  NSLog(@"%@",data);
 //          将完成归档的二进制数据存储到本地 存储格式是字典 后缀为plist
         [data writeToFile:filepath atomically:NO];
-        
-
     
-        NSLog(@"%@",data);
         
         
-        [self saveNoteWithData:data];
+        
+        //  ========处理上传的问题，在日记缓存目录里面再新建文件来处理缓存文件
+        NSString * pathCatch = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/NoteCatch"]];
+        //  创建文件夹
+        [manager createDirectoryAtPath:pathCatch withIntermediateDirectories:YES attributes:nil error:&error];
+        
+        //  存入到noteCatch 日期#标题+类型+时间.plist
+        
+        [data writeToFile:[NSString stringWithFormat:@"%@/%@#%@+%@+%@.plist",pathCatch,self.selectedDate,self.titleField.text, self.noteType, nowTime] atomically:NO];
+        
+        
+        
+        
+        //  保存数据到云端
+        
+        [self saveNoteWithData:data andTime:nowTime];
         
         [JYWeatherTools showMessageWithAlertView:@"添加成功"];
     }
@@ -135,13 +189,13 @@
 }
 
 #pragma mark - 保存数据到云端
-- (void)saveNoteWithData:(NSData *)data {
+- (void)saveNoteWithData:(NSData *)data andTime:(NSString *)time{
+    
     //  将这个data保存到云端 - 日期+文件
     //  以数组的方式保存
     NSMutableArray * fileArray = [[NSMutableArray alloc] init];
     //  数组里面保存AVfile数据
-    
-    AVFile * tempFile = [AVFile fileWithName:[NSString stringWithFormat:@"%@+%@",self.selectedDate, self.titleField.text] data:data];
+    AVFile * tempFile = [AVFile fileWithName:[NSString stringWithFormat:@"%@#%@+%@+%@",self.selectedDate,self.titleField.text,self.noteType,time] data:data];
     NSLog(@"%@",tempFile);
     
     [tempFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -212,7 +266,6 @@
                                         NSLog(@"成功");
                                     }else {
                                         NSLog(@"%@",error.localizedDescription);
-                                        [self saveNoteWithData:data];
                                     }
                                 }];
                             }
@@ -225,7 +278,32 @@
                     
                     [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                         if (succeeded) {
-                            //  用户保存以后，应该要进行
+                            //  笔记缓存目录
+                            NSString * pathCatch = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/NoteCatch"]];
+                            //  获取当前目录下的所有文件
+                            //  读取某个文件夹下所有的文件夹或者文件
+                            NSFileManager * manager = [NSFileManager defaultManager];
+                            NSError * error = nil;
+                            NSArray * contentsArray = [manager contentsOfDirectoryAtPath:pathCatch error:(&error)];
+                            //  如果NSError有值，就表示出错
+                            if (!error) {
+                                //  如果没有问题，就可以遍历，数组中存储的是所有文件的全路径
+                                for (NSString * str in contentsArray) {
+                                    NSArray * strArray = [str componentsSeparatedByString:@".plist"];
+                                    NSString * fileNameStr = [strArray firstObject];
+                                    
+                                    NSLog(@"str%@",str);
+                                    NSLog(@"%@",fileNameStr);
+                                    NSLog(@"temp%@",tempFile.name);
+                                    //  2016-07-21#123+1+20-03
+                                    if ([fileNameStr isEqualToString:tempFile.name]) {
+                                        //  上传成功，并且找到了相同的文件，就删除这个文件
+                                        [manager removeItemAtPath:[NSString stringWithFormat:@"%@/%@",pathCatch,str] error:nil];
+                                        
+                                    }
+                                }
+                            }
+                            
                         }else {
                             //  失败了，删除刚刚上传的文件
                             [tempFile deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -238,59 +316,31 @@
                             }];
                         }
                     }];
-                    
-                    
                 }];
                 
                 
             }
         }else {
             NSLog(@"===er%@",error);
-            [self saveNoteWithData:data];
         }
     }];
-    
-    //  读取
-    /*
-     //  试着获取数据
-     NSArray * arr = [currentUser valueForKey:@"noteArray"];
-     
-     if (arr.count != 0) {
-     AVFile * file = [arr firstObject];
-     
-     
-     [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-     if (!error) {
-     NSMutableData *note = [NSMutableData dataWithData:data];
-     //  创建解归档
-     NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:note];
-     //  decodeObjectForKey key就是名字
-     NSAttributedString * str = [unarchiver decodeObjectForKey:@"note"];
-     
-     NSLog(@"%@",str);
-     
-     }
-     }];
-     
-     }
-     */
 }
 
 
 #pragma mark - 创建ToolBar
 - (void)creatToolBar {
-    _toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, viewFrameH - 44, viewFrameW, 44)];
-    _toolBar.tintColor = [UIColor whiteColor];
-    _toolBar.barStyle = UIBarStyleBlack;
-    //  添加三个按钮
-    UIBarButtonItem * selectImage = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"toolBar_photo"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleDone target:self action:@selector(selectImageBtnClick)];
-    UIBarButtonItem * voice = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"toolBar_voice"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleDone target:self action:@selector(voiceBtnClick)];
-    UIBarButtonItem * share = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"toolBar_share"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleDone target:self action:@selector(shareBtnClick)];
-    
-    [_toolBar setItems:@[selectImage, voice, share] animated:YES];
-    
-    [self.view addSubview:_toolBar];
-    [_toolBar bringSubviewToFront:_contentField];
+//    _toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, viewFrameH - 44, viewFrameW, 44)];
+//    _toolBar.tintColor = [UIColor whiteColor];
+//    _toolBar.barStyle = UIBarStyleBlack;
+//    //  添加三个按钮
+//    UIBarButtonItem * selectImage = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"toolBar_photo"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleDone target:self action:@selector(selectImageBtnClick)];
+//    UIBarButtonItem * voice = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"toolBar_voice"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleDone target:self action:@selector(voiceBtnClick)];
+//    UIBarButtonItem * share = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"toolBar_share"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleDone target:self action:@selector(shareBtnClick)];
+//    
+//    [_toolBar setItems:@[selectImage, voice, share] animated:YES];
+//    
+//    [self.view addSubview:_toolBar];
+//    [_toolBar bringSubviewToFront:_contentField];
 }
 
 #pragma mark - ToolBar的按钮
@@ -406,7 +456,7 @@
 - (void) keyboardWasShown:(NSNotification *) notif
 {
     NSDictionary *info = [notif userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGSize keyboardSize = [value CGRectValue].size;
     
     NSLog(@"keyBoard:%f", keyboardSize.height);  //216
@@ -414,7 +464,8 @@
     //  让视图往上面移动
     [UIView animateWithDuration:0.3 animations:^{
         //  让整体视图往上移动
-        self.toolBar.transform = CGAffineTransformMakeTranslation(0, -keyboardSize.height);
+//        self.toolBar.transform = CGAffineTransformMakeTranslation(0, -keyboardSize.height);
+        _contentField.frame =CGRectMake(0, 46 + 64, self.view.bounds.size.width, self.view.bounds.size.height - 64 - 44 - 44 - keyboardSize.height);
     }];
 }
 - (void) keyboardWasHidden:(NSNotification *) notif
@@ -428,19 +479,11 @@
     //  让视图恢复
     [UIView animateWithDuration:0.3 animations:^{
         //  让整体视图往下移动
-        self.toolBar.transform = CGAffineTransformIdentity;
+//        self.toolBar.transform = CGAffineTransformIdentity;
+        _contentField.frame =CGRectMake(0, 46 + 64, self.view.bounds.size.width, self.view.bounds.size.height - 64 - 44 - 44);
+        
     }];
 }
-
-
-//-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-//{
-//    if ([text isEqualToString:@"\n"]) {
-//        [textView resignFirstResponder];
-//        return NO;
-//    }
-//    return YES;
-//}
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView {
     [textView resignFirstResponder];
