@@ -99,7 +99,14 @@
     _weatherImage.tintColor = [UIColor whiteColor];
     
     _weatherImage.image = [_weatherImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    [_weatherImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:WB_WeatherTopView,model.now.cond.code]] placeholderImage:nil];
+    
+//    [_weatherImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:WB_WeatherTopView,model.now.cond.code]] placeholderImage:nil];
+    [_weatherImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:WB_WeatherTopView,model.now.cond.code]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
+        _weatherImage.tintColor = [UIColor whiteColor];
+        _weatherImage.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    }];
+    
     _weatherImage.image = [_weatherImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
     

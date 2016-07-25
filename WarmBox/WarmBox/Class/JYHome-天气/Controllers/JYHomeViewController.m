@@ -82,6 +82,13 @@
 }
 
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    if (scrollView.contentOffset.x / Width == 1) {
+//        NSLog(@"第二");
+        [_homeAQI requestDayImageWithDate:[JYWeatherTools getNowDataWithFormate:@"yyyy-MM-dd"]];
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

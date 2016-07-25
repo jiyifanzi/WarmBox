@@ -14,5 +14,6 @@
 //  本界面的数据不需要重新做网络请求，直接从天气界面获取
 @property (nonatomic, strong) JYWeatherModel * model;
 
+- (void)requestDayImageWithDate:(NSString *)date;
 
 @end

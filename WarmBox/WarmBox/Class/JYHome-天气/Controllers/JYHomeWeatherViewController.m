@@ -10,7 +10,8 @@
 
 #import "JYWeatherNowHeaderView.h"
 
-#import "JYWeatherHourCell.h"
+#import "JYWeatherNewHourCell.h"
+
 #import "JYWeatherDailyCell.h"
 #import "JYWeatherAQISugCell.h"
 
@@ -43,6 +44,10 @@
 @property (nonatomic, strong) UIBarButtonItem * refreshBtnItem;
 //  添加按钮
 @property (nonatomic, strong) UIBarButtonItem * addBtnItem;
+
+
+
+@property (nonatomic, strong) CAEmitterLayer * fireEmitter;
 
 @end
 
@@ -96,7 +101,6 @@
         NSLog(@"不是第一次启动");
 
     }
-
 }
 
 #pragma mark - 懒加载
@@ -117,13 +121,14 @@
     
     [self requestDataWithCityName:[notification object]];
     [UIView animateWithDuration:0.3 animations:^{
+        //  让顶部视图位
+        self.topView.frame = CGRectMake(0, 64, Width, 200);
         self.weatherTableView.contentOffset = CGPointMake(0, 0);
     }];
 }
 
 #pragma mark - 请求数据
 - (void)requestDataWithCityName:(NSString *)cityName {
-    NSLog(@"====%@",cityName);
 
     //  更改编码
     NSString * cityNameStr = [cityName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -161,7 +166,7 @@
 #pragma mark - 创建界面
 - (void)creatUI {
     //  创建UINavgationBarItem
-    UIImage * image = [[UIImage alloc] init];
+//    UIImage * image = [[UIImage alloc] init];
     
     _refreshBtnItem.tintColor = [UIColor whiteColor];
     _refreshBtnItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"auto_location_icon_img"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]  style:UIBarButtonItemStyleDone target:self action:@selector(refershButtonClick)];
@@ -204,21 +209,25 @@
 
     //  注册cell
     //  1.小时预告
-    [_weatherTableView registerNib:[UINib nibWithNibName:@"JYWeatherHourCell" bundle:nil] forCellReuseIdentifier:@"hourCell"];
+    //  1.1新小时预报
+    [_weatherTableView registerNib:[UINib nibWithNibName:@"JYWeatherNewHourCell" bundle:nil] forCellReuseIdentifier:@"hourCell"];
+    
     //  2.每天预告
     [_weatherTableView registerNib:[UINib nibWithNibName:@"JYWeatherDailyCell" bundle:nil] forCellReuseIdentifier:@"dailyCell"];
     //  3.每日建议
     [_weatherTableView registerNib:[UINib nibWithNibName:@"JYWeatherAQISugCell" bundle:nil] forCellReuseIdentifier:@"sugCell"];
     
     //  设置相关的headerView
-    UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Width, 164)];
+    UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Width, 200)];
     view.backgroundColor = [UIColor clearColor];
     _weatherTableView.tableHeaderView = view;
 
-    _topView = [[JYWeatherNowHeaderView alloc] initWithFrame:CGRectMake(0, 64, Width, 160)];
+    _topView = [[JYWeatherNowHeaderView alloc] initWithFrame:CGRectMake(0, 64, Width, 200)];
     _topView.clipsToBounds = YES;
     _topView.backgroundColor = [UIColor clearColor];
     [self.viewTotal addSubview:_topView];
+    
+//    _topView.backgroundColor = [UIColor grayColor];
 }
 
 #pragma mark - 刷新
@@ -249,11 +258,10 @@
         [_blurImageView setImageToBlur:backImage completionBlock:nil];
     }
     
-    
     [_topView removeFromSuperview];
     [_aqiHeaderView removeFromSuperview];
     
-    _topView = [[JYWeatherNowHeaderView alloc] initWithFrame:CGRectMake(0, 64, Width, 160)];
+    _topView = [[JYWeatherNowHeaderView alloc] initWithFrame:CGRectMake(0, 64, Width, 200)];
     _topView.clipsToBounds = YES;
     _topView.backgroundColor = [UIColor clearColor];
     _topView.model = model;
@@ -282,7 +290,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     JYWeatherModel * model = [self.weathDataSource firstObject];
     if (section == 0) {
-        return model.hourly_forecast.count;
+        return 1;
     }else if (section == 1) {
         return 1;
     }else if (section == 2) {
@@ -291,25 +299,76 @@
         }
         return 0;
     }
-    return 3;
+    return 2;
 }
+//
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    if (section == 0) {
+//        //  小时预报时有返回
+//        UIView * hourDescView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20)];
+//        
+//        NSArray * labelName = @[@"  时间", @"温度", @"湿度", @"降水概率"];
+//        for (int i = 0; i < 4; i++) {
+//            UILabel * tempLabel = [[UILabel alloc] initWithFrame:CGRectMake(i * self.view.frame.size.width / 4, 0, self.view.frame.size.width / 4, 20)];
+//            tempLabel.text = labelName[i];
+//            tempLabel.textAlignment = NSTextAlignmentCenter;
+//            tempLabel.textColor = [UIColor whiteColor];
+//            [hourDescView addSubview:tempLabel];
+//        }
+//        
+//        
+//        return hourDescView;
+//    }
+//    
+//    return nil;
+//}
+
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//    if (section == 0) {
+//        JYWeatherModel * model = [self.weathDataSource firstObject];
+//        if (model.hourly_forecast.count == 0) {
+//            return 0;
+//        }
+//        
+//        return 0;
+//    }
+//    return 0;
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     JYWeatherModel * model = [self.weathDataSource firstObject];
 
     //  如果是第一段，表示是小时预报
     if (indexPath.section == 0) {
-        JYWeatherHourCell * cell = [tableView dequeueReusableCellWithIdentifier:@"hourCell" forIndexPath:indexPath];
         
-               //  设置背景图片的透明度
+        
+//        JYWeatherHourCell * cell = [tableView dequeueReusableCellWithIdentifier:@"hourCell" forIndexPath:indexPath];
+//        
+//               //  设置背景图片的透明度
+//        if (model) {
+//            cell.bgImageView.alpha = 1;
+//        }
+//        cell.hourlyModel = model.hourly_forecast[indexPath.row];
+//        cell.backgroundColor = [UIColor clearColor];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        
+//        return cell;
+        JYWeatherNewHourCell * cell = [tableView dequeueReusableCellWithIdentifier:@"hourCell" forIndexPath:indexPath];
+        
+        //  设置背景图片的透明度
         if (model) {
             cell.bgImageView.alpha = 1;
         }
-        cell.hourlyModel = model.hourly_forecast[indexPath.row];
+        
+        cell.modelArray = model.hourly_forecast;
+        
+        NSLog(@"%@",cell.modelArray);
+        
         cell.backgroundColor = [UIColor clearColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
+        
     }else if (indexPath.section == 1) {
         //  如果是第二段，表示是每天的预报
         JYWeatherDailyCell * cell = [tableView dequeueReusableCellWithIdentifier:@"dailyCell" forIndexPath:indexPath];
@@ -353,7 +412,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
      JYWeatherModel * model = [self.weathDataSource firstObject];
     if (indexPath.section == 0) {
-        return 60;
+        if (model.hourly_forecast.count == 0) {
+            return 0;
+        }
+        return 200;
     }else if (indexPath.section == 1) {
         return 260;
     }else if (indexPath.section == 2) {
@@ -371,17 +433,19 @@
 
 #pragma mark - scrollView的代理方法
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
     if (self.weatherTableView.contentOffset.y < 0) {
+        
         CGRect frame = self.topView.frame;
-        frame.size.height = 160 - scrollView.contentOffset.y;
+        frame.size.height = 200 - scrollView.contentOffset.y;
         self.topView.frame = frame;
         self.weatherTableView.frame = CGRectMake(0, 64, Width, Height);
         
-    }else if(self.weatherTableView.contentOffset.y >0 && self.weatherTableView.contentOffset.y < 160){
+    }else if(self.weatherTableView.contentOffset.y > 0 && self.weatherTableView.contentOffset.y < 200){
         
         
         CGRect frame = self.topView.frame;
-        frame.size.height = 160 - scrollView.contentOffset.y;
+        frame.size.height = 200 - scrollView.contentOffset.y;
         self.topView.frame = frame;
     }
 

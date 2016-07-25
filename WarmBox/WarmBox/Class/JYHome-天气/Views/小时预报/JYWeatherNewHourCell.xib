@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="144" id="KGk-i7-Jjw" customClass="JYWeatherNewHourCell">
+            <rect key="frame" x="0.0" y="0.0" width="358" height="144"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="358" height="143"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hourCellBG.png" translatesAutoresizingMaskIntoConstraints="NO" id="gg0-L4-XQd">
+                        <rect key="frame" x="5" y="0.0" width="348" height="143"/>
+                    </imageView>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="i4a-sy-67b">
+                        <rect key="frame" x="10" y="0.0" width="338" height="143"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Bct-sS-96e">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                    </collectionView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="gg0-L4-XQd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="BTQ-Hq-ZeI"/>
+                    <constraint firstAttribute="bottom" secondItem="i4a-sy-67b" secondAttribute="bottom" id="EFG-qc-Ny0"/>
+                    <constraint firstItem="i4a-sy-67b" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Ns9-ct-chx"/>
+                    <constraint firstItem="gg0-L4-XQd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Qv1-LJ-pLa"/>
+                    <constraint firstAttribute="bottom" secondItem="gg0-L4-XQd" secondAttribute="bottom" id="TiZ-bv-uBl"/>
+                    <constraint firstAttribute="trailing" secondItem="gg0-L4-XQd" secondAttribute="trailing" constant="5" id="XGG-Dz-Fyr"/>
+                    <constraint firstItem="i4a-sy-67b" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="XvI-6I-4z6"/>
+                    <constraint firstAttribute="trailing" secondItem="i4a-sy-67b" secondAttribute="trailing" constant="10" id="t32-Xc-7X3"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="bgImageView" destination="gg0-L4-XQd" id="zXN-xo-u5B"/>
+                <outlet property="hourCollectionView" destination="i4a-sy-67b" id="c67-7h-cab"/>
+            </connections>
+            <point key="canvasLocation" x="227" y="196"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="hourCellBG.png" width="175" height="132"/>
+    </resources>
+</document>

@@ -129,6 +129,7 @@
         _homeScrollView.contentOffset = CGPointMake(Width /2, 0);
     }];
 }
+
 - (void)addCity {
     [UIView animateWithDuration:0.4 animations:^{
         _homeScrollView.contentOffset = CGPointMake(0, 0);

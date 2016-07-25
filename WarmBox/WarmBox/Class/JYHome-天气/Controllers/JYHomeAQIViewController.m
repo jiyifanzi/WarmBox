@@ -129,11 +129,15 @@
 }
 #pragma mark - 获取每日推荐图片
 - (void)requestDayImageWithDate:(NSString *)date {
+    
+    if (_oneWorld.length != 0 && _backgroundImage.image) {
+        return;
+    }
+    
     [self.requestManager GET:[NSString stringWithFormat:WB_DayImage,date] parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         //  解析每日图片的东西
         NSDictionary * tempDick = responseObject[@"data"];
         NSString * url = tempDick[@"largeImg"];
-        
         [_backgroundImage sd_setImageWithURL:[NSURL URLWithString:url]];
         //  添加一句话
         _oneWorld = tempDick[@"s"];

@@ -31,6 +31,10 @@
 		6C2B95EA1D40E3440029C85F /* JYCalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C2B95E81D40E3440029C85F /* JYCalendarTableViewCell.xib */; };
 		6C3CE6931D3C9D1200DDD600 /* JYMeLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3CE6911D3C9D1200DDD600 /* JYMeLoginViewController.m */; };
 		6C3CE6941D3C9D1200DDD600 /* JYMeLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C3CE6921D3C9D1200DDD600 /* JYMeLoginViewController.xib */; };
+		6C5D9B621D4316EA0035D2FC /* JYWeatherNewHourCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D9B601D4316EA0035D2FC /* JYWeatherNewHourCell.m */; };
+		6C5D9B631D4316EA0035D2FC /* JYWeatherNewHourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C5D9B611D4316EA0035D2FC /* JYWeatherNewHourCell.xib */; };
+		6C5D9B671D4318DC0035D2FC /* JYWeatherNewHourEverCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D9B651D4318DC0035D2FC /* JYWeatherNewHourEverCell.m */; };
+		6C5D9B681D4318DC0035D2FC /* JYWeatherNewHourEverCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C5D9B661D4318DC0035D2FC /* JYWeatherNewHourEverCell.xib */; };
 		6C67DB501D41C4080080E44C /* 樱花瓣2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C67DB4F1D41C4080080E44C /* 樱花瓣2.png */; };
 		6C67DBE71D4237670080E44C /* XTPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C67DBE61D4237670080E44C /* XTPopView.m */; };
 		6C67DBEA1D423DC40080E44C /* JYCalendarBirthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C67DBE91D423DC40080E44C /* JYCalendarBirthViewController.m */; };
@@ -356,6 +360,12 @@
 		6C3CE6901D3C9D1200DDD600 /* JYMeLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMeLoginViewController.h; sourceTree = "<group>"; };
 		6C3CE6911D3C9D1200DDD600 /* JYMeLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYMeLoginViewController.m; sourceTree = "<group>"; };
 		6C3CE6921D3C9D1200DDD600 /* JYMeLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYMeLoginViewController.xib; sourceTree = "<group>"; };
+		6C5D9B5F1D4316EA0035D2FC /* JYWeatherNewHourCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYWeatherNewHourCell.h; sourceTree = "<group>"; };
+		6C5D9B601D4316EA0035D2FC /* JYWeatherNewHourCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYWeatherNewHourCell.m; sourceTree = "<group>"; };
+		6C5D9B611D4316EA0035D2FC /* JYWeatherNewHourCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYWeatherNewHourCell.xib; sourceTree = "<group>"; };
+		6C5D9B641D4318DC0035D2FC /* JYWeatherNewHourEverCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYWeatherNewHourEverCell.h; sourceTree = "<group>"; };
+		6C5D9B651D4318DC0035D2FC /* JYWeatherNewHourEverCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYWeatherNewHourEverCell.m; sourceTree = "<group>"; };
+		6C5D9B661D4318DC0035D2FC /* JYWeatherNewHourEverCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYWeatherNewHourEverCell.xib; sourceTree = "<group>"; };
 		6C67DB4F1D41C4080080E44C /* 樱花瓣2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "樱花瓣2.png"; sourceTree = "<group>"; };
 		6C67DBE51D4237670080E44C /* XTPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XTPopView.h; path = "../JYShowNote-记事本展示/Controllers/XTPopView.h"; sourceTree = "<group>"; };
 		6C67DBE61D4237670080E44C /* XTPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XTPopView.m; path = "../JYShowNote-记事本展示/Controllers/XTPopView.m"; sourceTree = "<group>"; };
@@ -1237,6 +1247,12 @@
 				BC6D42A81D24DDCB002CE4E4 /* JYWeatherHourCell.h */,
 				BC6D42A91D24DDCB002CE4E4 /* JYWeatherHourCell.m */,
 				BC6D42AA1D24DDCB002CE4E4 /* JYWeatherHourCell.xib */,
+				6C5D9B5F1D4316EA0035D2FC /* JYWeatherNewHourCell.h */,
+				6C5D9B601D4316EA0035D2FC /* JYWeatherNewHourCell.m */,
+				6C5D9B611D4316EA0035D2FC /* JYWeatherNewHourCell.xib */,
+				6C5D9B641D4318DC0035D2FC /* JYWeatherNewHourEverCell.h */,
+				6C5D9B651D4318DC0035D2FC /* JYWeatherNewHourEverCell.m */,
+				6C5D9B661D4318DC0035D2FC /* JYWeatherNewHourEverCell.xib */,
 			);
 			path = "小时预报";
 			sourceTree = "<group>";
@@ -2022,11 +2038,13 @@
 				BC59565C1D33BE4600AAEDE4 /* ZFPlayer_close@2x.png in Resources */,
 				6C7580601D34ECBE000579FB /* downLoadMe.png in Resources */,
 				BCA7ADDE1D23C897008D6DBB /* JYWeatherNowHeaderView.xib in Resources */,
+				6C5D9B681D4318DC0035D2FC /* JYWeatherNewHourEverCell.xib in Resources */,
 				BCC164111D26316400BEAA88 /* wb_na.jpg in Resources */,
 				BC5956671D33BE4600AAEDE4 /* ZFPlayer_management_mask@2x.png in Resources */,
 				BC59565B1D33BE4600AAEDE4 /* ZFPlayer_close.png in Resources */,
 				6CABB2701D35D6F0009F70E9 /* lan.png in Resources */,
 				BC5956651D33BE4600AAEDE4 /* ZFPlayer_lock-nor@2x.png in Resources */,
+				6C5D9B631D4316EA0035D2FC /* JYWeatherNewHourCell.xib in Resources */,
 				BCB860DE1D2F99F80082A932 /* landscape_cache.png in Resources */,
 				BCEC77801D3081DB00611623 /* icon_skin_sort_01.png in Resources */,
 				BCB860E21D2F9A010082A932 /* landscape_fullscreen.png in Resources */,
@@ -2297,6 +2315,7 @@
 				6CA1DED71D3F6BEC00C0FC79 /* JYMeDetailViewController.m in Sources */,
 				6C67DBE71D4237670080E44C /* XTPopView.m in Sources */,
 				BC6D42A61D24DDC2002CE4E4 /* JYWeatherDailyCell.m in Sources */,
+				6C5D9B671D4318DC0035D2FC /* JYWeatherNewHourEverCell.m in Sources */,
 				BC8317441D2A4EF900EFA9C5 /* FSCalendarAnimator.m in Sources */,
 				BCA7ADC91D23B735008D6DBB /* JYWeatherDailyModel.m in Sources */,
 				BC1A31631D2D2ED700064161 /* JYWebViewController.m in Sources */,
@@ -2358,6 +2377,7 @@
 				BCA7ADD21D23B773008D6DBB /* JYWeatherSuggestionModel.m in Sources */,
 				BC6D42B81D252645002CE4E4 /* JYHomeAQIWeatherView.m in Sources */,
 				BC6D42AB1D24DDCB002CE4E4 /* JYWeatherHourCell.m in Sources */,
+				6C5D9B621D4316EA0035D2FC /* JYWeatherNewHourCell.m in Sources */,
 				BCC164481D26628100BEAA88 /* JYMeSearchCityViewController.m in Sources */,
 				BC6D42361D24A1FB002CE4E4 /* JYMeViewController.m in Sources */,
 				BCA7AC5B1D235291008D6DBB /* main.m in Sources */,

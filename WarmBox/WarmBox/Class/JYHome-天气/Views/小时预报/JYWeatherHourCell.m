@@ -28,41 +28,59 @@
 - (void)awakeFromNib {
     // Initialization code
 }
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    //  设置文本属性
+    //  _source.font = [UIFont fontWithName:@"Hiragino Sans GB" size:17.0];
+    _dateLabel.font = [UIFont fontWithName:@"Hiragino Sans GB" size:17.0];
+    _tmpLabel.font = [UIFont fontWithName:@"Hiragino Sans GB" size:17.0];
+    _humLabel.font = [UIFont fontWithName:@"Hiragino Sans GB" size:17.0];
+    _popLabel.font = [UIFont fontWithName:@"Hiragino Sans GB" size:17.0];
+}
+
 
 - (void)setHourlyModel:(JYWeatherHourlyModel *)hourlyModel {
     _hourlyModel = hourlyModel;
     
     //  设置本cell的相关属性
-    NSArray * dataStrArray = [hourlyModel.date componentsSeparatedByString:@"-"];
+//    NSArray * dataStrArray = [hourlyModel.date componentsSeparatedByString:@"-"];
+//    
+//    NSMutableString * dataStr = [NSMutableString string];
+//    
+//    for (NSString * str in dataStrArray) {
+//        if (str.length == 4) {
+//            
+//        }else {
+//            [dataStr appendString:str];
+//        }
+//    }
     
-    NSMutableString * dataStr = [NSMutableString string];
+//    _dateLabel.text = [dataStr copy];
+    NSArray * timeArray = [hourlyModel.date componentsSeparatedByString:@" "];
     
-    for (NSString * str in dataStrArray) {
-        if (str.length == 4) {
-            
-        }else {
-            [dataStr appendString:str];
-        }
-    }
-    _dateLabel.text = [dataStr copy];
+    _dateLabel.text = [timeArray lastObject];
     
     _tmpLabel.text = [NSString stringWithFormat:@"%@℃",hourlyModel.tmp];
     
     if (hourlyModel.hum.length == 0) {
         
     }else {
-        _humLabel.attributedText = [self mixImage:[UIImage imageNamed:@"top_hum"] andText:hourlyModel.hum];
+//        _humLabel.attributedText = [self mixImage:[UIImage imageNamed:@"top_hum"] andText:hourlyModel.hum];
+        _humLabel.text = [NSString stringWithFormat:@"湿度%@",hourlyModel.hum];
     }
     
     if (hourlyModel.pop.length == 0) {
         
     }else {
-        _popLabel.attributedText = [self mixImage:[UIImage imageNamed:@"top_tmp"] andText:hourlyModel.pop];
+//        _popLabel.attributedText = [self mixImage:[UIImage imageNamed:@"top_tmp"] andText:hourlyModel.pop];
+        _popLabel.text = [NSString stringWithFormat:@"降水率%@",hourlyModel.pop];
     }
     
     //_humLabel.text = hourlyModel.hum;
     //_popLabel.text = hourlyModel.pop;
 }
+
 
 #pragma mark - 富文本的排列方式
 - (NSAttributedString *)mixImage:(UIImage *)image andText:(NSString *)text

@@ -48,6 +48,7 @@
 @property (nonatomic, strong) UITableView * dateForEventsTableView;
 @property (nonatomic, strong) NSMutableArray * dateEventsDataSource;
 
+
 //  PopView
 @property (nonatomic, strong) XTPopView * popView;
 

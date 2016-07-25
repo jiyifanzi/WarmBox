@@ -26,6 +26,8 @@
 //  风力状况
 @property (nonatomic, strong) JYWeatherHourlyWindModel * wind;
 
+@property (nonatomic,assign) NSInteger row;
+
 @end
 
 
