@@ -108,6 +108,18 @@
         }
     }
 }
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView.tag == 11111) {
+        //        NSLog(@"%.1f",scrollView.contentOffset.x);
+        if (scrollView.contentOffset.x == 0) {
+            //  让界面的tabView不能滑动
+            [[NSNotificationCenter defaultCenter] postNotificationName:JYEnableHomeIterface object:@"1"];
+            
+        }else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:JYEnableHomeIterface object:@"0"];
+        }
+    }
+}
 
 #pragma mark - tabBar的代理
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {

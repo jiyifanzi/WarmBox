@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JYMeLoginViewController">
             <connections>
+                <outlet property="bgImageView" destination="W2U-At-TgR" id="RHj-Qt-csR"/>
                 <outlet property="hhView" destination="TcY-qw-MmS" id="Ydh-ZA-A0O"/>
                 <outlet property="loginBtn" destination="L2a-yE-X3h" id="Q99-Ja-Hhu"/>
                 <outlet property="login_QQ" destination="78U-gr-peK" id="OuY-Kj-Sj1"/>
@@ -24,7 +25,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="b4.png" translatesAutoresizingMaskIntoConstraints="NO" id="W2U-At-TgR">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="b4.png" translatesAutoresizingMaskIntoConstraints="NO" id="W2U-At-TgR" customClass="YGG">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TcY-qw-MmS">

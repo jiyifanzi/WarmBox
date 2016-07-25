@@ -33,6 +33,10 @@
 
 @property (nonatomic, assign) NSInteger firstClick;
 
+
+@property (weak, nonatomic) IBOutlet UIImageView *bgImageView;
+
+
 @end
 
 @implementation JYMeLoginViewController
@@ -60,10 +64,12 @@
     
     [self willShowTheBGImgae:NO];
     
-    
     [self creatUI];
     
     NSLog(@"%@",self.hhView.subviews);
+    
+    
+    
 }
 
 #pragma mark - 创建界面

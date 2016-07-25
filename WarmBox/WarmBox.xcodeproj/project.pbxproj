@@ -31,6 +31,7 @@
 		6C2B95EA1D40E3440029C85F /* JYCalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C2B95E81D40E3440029C85F /* JYCalendarTableViewCell.xib */; };
 		6C3CE6931D3C9D1200DDD600 /* JYMeLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3CE6911D3C9D1200DDD600 /* JYMeLoginViewController.m */; };
 		6C3CE6941D3C9D1200DDD600 /* JYMeLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C3CE6921D3C9D1200DDD600 /* JYMeLoginViewController.xib */; };
+		6C4EC8751D45AC0E0039A855 /* WeatherHourDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C4EC8741D45AC0E0039A855 /* WeatherHourDrawView.m */; };
 		6C5D9B621D4316EA0035D2FC /* JYWeatherNewHourCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D9B601D4316EA0035D2FC /* JYWeatherNewHourCell.m */; };
 		6C5D9B631D4316EA0035D2FC /* JYWeatherNewHourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C5D9B611D4316EA0035D2FC /* JYWeatherNewHourCell.xib */; };
 		6C5D9B671D4318DC0035D2FC /* JYWeatherNewHourEverCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D9B651D4318DC0035D2FC /* JYWeatherNewHourEverCell.m */; };
@@ -39,6 +40,7 @@
 		6C67DBE71D4237670080E44C /* XTPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C67DBE61D4237670080E44C /* XTPopView.m */; };
 		6C67DBEA1D423DC40080E44C /* JYCalendarBirthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C67DBE91D423DC40080E44C /* JYCalendarBirthViewController.m */; };
 		6C67DBED1D423E560080E44C /* JYCalendarNotiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C67DBEC1D423E560080E44C /* JYCalendarNotiViewController.m */; };
+		6C71C4B11D46181E001A2236 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C71C4B01D46181E001A2236 /* CoreMotion.framework */; };
 		6C7580601D34ECBE000579FB /* downLoadMe.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C75805F1D34ECBE000579FB /* downLoadMe.png */; };
 		6C7580651D34EDF5000579FB /* JYMeAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C7580641D34EDF5000579FB /* JYMeAboutViewController.m */; };
 		6C825AED1D3CDCA200679932 /* login_qq.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C825AEA1D3CDCA200679932 /* login_qq.png */; };
@@ -360,6 +362,8 @@
 		6C3CE6901D3C9D1200DDD600 /* JYMeLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMeLoginViewController.h; sourceTree = "<group>"; };
 		6C3CE6911D3C9D1200DDD600 /* JYMeLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYMeLoginViewController.m; sourceTree = "<group>"; };
 		6C3CE6921D3C9D1200DDD600 /* JYMeLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYMeLoginViewController.xib; sourceTree = "<group>"; };
+		6C4EC8731D45AC0E0039A855 /* WeatherHourDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherHourDrawView.h; sourceTree = "<group>"; };
+		6C4EC8741D45AC0E0039A855 /* WeatherHourDrawView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherHourDrawView.m; sourceTree = "<group>"; };
 		6C5D9B5F1D4316EA0035D2FC /* JYWeatherNewHourCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYWeatherNewHourCell.h; sourceTree = "<group>"; };
 		6C5D9B601D4316EA0035D2FC /* JYWeatherNewHourCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYWeatherNewHourCell.m; sourceTree = "<group>"; };
 		6C5D9B611D4316EA0035D2FC /* JYWeatherNewHourCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYWeatherNewHourCell.xib; sourceTree = "<group>"; };
@@ -373,6 +377,7 @@
 		6C67DBE91D423DC40080E44C /* JYCalendarBirthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYCalendarBirthViewController.m; sourceTree = "<group>"; };
 		6C67DBEB1D423E560080E44C /* JYCalendarNotiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYCalendarNotiViewController.h; sourceTree = "<group>"; };
 		6C67DBEC1D423E560080E44C /* JYCalendarNotiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYCalendarNotiViewController.m; sourceTree = "<group>"; };
+		6C71C4B01D46181E001A2236 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		6C75805F1D34ECBE000579FB /* downLoadMe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downLoadMe.png; sourceTree = "<group>"; };
 		6C7580631D34EDF5000579FB /* JYMeAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMeAboutViewController.h; sourceTree = "<group>"; };
 		6C7580641D34EDF5000579FB /* JYMeAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYMeAboutViewController.m; sourceTree = "<group>"; };
@@ -746,6 +751,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C71C4B11D46181E001A2236 /* CoreMotion.framework in Frameworks */,
 				6C2B95E41D40CD880029C85F /* ImageIO.framework in Frameworks */,
 				BC5F4F091D33470A00EA52B5 /* libz.tbd in Frameworks */,
 				BC5F4F071D33470200EA52B5 /* libstdc++.tbd in Frameworks */,
@@ -779,6 +785,7 @@
 		26CA5155843133E62E74D9EA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6C71C4B01D46181E001A2236 /* CoreMotion.framework */,
 				6C2B95E31D40CD880029C85F /* ImageIO.framework */,
 				BC5F4F081D33470A00EA52B5 /* libz.tbd */,
 				BC5F4F061D33470200EA52B5 /* libstdc++.tbd */,
@@ -1244,6 +1251,8 @@
 		BC6D429C1D24DD3C002CE4E4 /* 小时预报 */ = {
 			isa = PBXGroup;
 			children = (
+				6C4EC8731D45AC0E0039A855 /* WeatherHourDrawView.h */,
+				6C4EC8741D45AC0E0039A855 /* WeatherHourDrawView.m */,
 				BC6D42A81D24DDCB002CE4E4 /* JYWeatherHourCell.h */,
 				BC6D42A91D24DDCB002CE4E4 /* JYWeatherHourCell.m */,
 				BC6D42AA1D24DDCB002CE4E4 /* JYWeatherHourCell.xib */,
@@ -2357,6 +2366,7 @@
 				6C7580651D34EDF5000579FB /* JYMeAboutViewController.m in Sources */,
 				BC8317461D2A4EF900EFA9C5 /* FSCalendarCell.m in Sources */,
 				6C1935EA1D3CEA9D00BDA88F /* JYMeRegisterViewController.m in Sources */,
+				6C4EC8751D45AC0E0039A855 /* WeatherHourDrawView.m in Sources */,
 				BC59562A1D339D7200AAEDE4 /* JYDownloadedCell.m in Sources */,
 				BC83174D1D2A4EF900EFA9C5 /* FSCalendarStickyHeader.m in Sources */,
 				BC8317451D2A4EF900EFA9C5 /* FSCalendarAppearance.m in Sources */,

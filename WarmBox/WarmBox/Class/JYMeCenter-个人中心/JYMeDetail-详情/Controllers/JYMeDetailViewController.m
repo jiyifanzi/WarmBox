@@ -649,7 +649,6 @@
     
     CGFloat height = 140;
     CGFloat position = MAX(-scrollView.contentOffset.y, 0.0);
-    // 2
     CGFloat percent = MIN(position / height, 1.0);
     
     _backImageVisualEffect.alpha = 1 - percent;
