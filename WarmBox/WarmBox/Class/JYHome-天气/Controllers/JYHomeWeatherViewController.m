@@ -424,7 +424,7 @@
         }
         return 0;
     }
-    return 50;
+    return 80;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

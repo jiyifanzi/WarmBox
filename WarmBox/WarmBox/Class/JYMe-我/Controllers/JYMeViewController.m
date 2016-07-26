@@ -90,7 +90,7 @@
         //            [_userLoginBtn setTitle:@"登录"];
         //            _userNameLabel.text = @"请先登录";        //  否
         _userName.text = @"请先登录";
-        [_iconImage setBackgroundImage:nil forState:UIControlStateNormal];
+        [_iconImage setBackgroundImage:[UIImage imageNamed:@"userHead_default_3"] forState:UIControlStateNormal];
         _isLogined = NO;
     }
 }
@@ -332,7 +332,7 @@
     
     //  创建用户头像
     _iconImage = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_iconImage setBackgroundImage:[UIImage imageNamed:@"yunduo.jpg"] forState:UIControlStateNormal];
+    [_iconImage setBackgroundImage:[UIImage imageNamed:@"userHead_default_3"] forState:UIControlStateNormal];
     _iconImage.layer.masksToBounds = YES;
     _iconImage.layer.cornerRadius = 30;
     [self.view addSubview:_iconImage];

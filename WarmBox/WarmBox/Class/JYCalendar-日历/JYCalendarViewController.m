@@ -101,7 +101,7 @@
 }
 - (NSArray *)lunarChars {
     if (!_lunarChars) {
-        _lunarChars = @[@"初一",@"初二",@"初三",@"初四",@"初五",@"初六",@"初七",@"初八",@"初九",@"初十",@"十一",@"十二",@"十三",@"十四",@"十五",@"十六",@"十七",@"十八",@"十九",@"二十",@"二一",@"二二",@"二三",@"二四",@"二五",@"二六",@"二七",@"二八",@"二九",@"三十"];
+        _lunarChars = @[@"初一",@"初二",@"初三",@"初四",@"初五",@"初六",@"初七",@"初八",@"初九",@"初十",@"十一",@"十二",@"十三",@"十四",@"十五",@"十六",@"十七",@"十八",@"十九",@"二十",@"廿一",@"廿二",@"廿三",@"廿四",@"廿五",@"廿六",@"廿七",@"廿八",@"廿九",@"三十"];
     }
     return _lunarChars;
 }
@@ -547,6 +547,7 @@
     NSLog(@"did select date %@",[calendar stringFromDate:date format:@"yyyy/MM/dd"]);
     //  此时的date就是选中的天数
     [self getDateFromSelectedDay:date withCalendar:calendar];
+    
 }
 
 #pragma mark - 获取选中天数中，保存的事件
@@ -621,6 +622,19 @@
     
     //  刷新界面
     [self.dateForEventsTableView reloadData];
+    
+    if (self.dateEventsDataSource.count == 0) {
+        //  当天没有数据
+        
+        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        
+        imageView.image = [UIImage imageNamed:@"no_Note_2"];
+    
+        self.dateForEventsTableView.backgroundView = imageView;
+    }else {
+        self.dateForEventsTableView.backgroundView = nil;
+    }
 }
 
 - (NSInteger)calendar:(FSCalendar *)calendar numberOfEventsForDate:(NSDate *)date

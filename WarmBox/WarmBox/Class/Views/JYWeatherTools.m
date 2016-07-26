@@ -39,7 +39,7 @@
         imageName = @"wb_tropicalstorm.jpg";
     }else if (imageCode == 301 || imageCode == 300 ||(imageCode >= 305 && imageCode <=312)) {
         //  小于
-        imageName = @"wb_rain.jpg";
+        imageName = @"wb_rain_1.jpg";
     }
     else if (imageCode == 302) {
         //  雷阵雨

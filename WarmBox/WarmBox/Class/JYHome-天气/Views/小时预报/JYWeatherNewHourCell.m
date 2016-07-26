@@ -64,8 +64,8 @@
     }else {
         JYWeatherHourlyModel * model = modelArray.firstObject;
         
-        NSInteger pointStart = (60 - model.tmp.floatValue) * 2.8f + 8;
-        NSInteger pointX = self.frame.size.width / self.dailyDataSource.count / 2 - 2;
+//        NSInteger pointStart = (60 - model.tmp.floatValue) * 2.8f + 8;
+//        NSInteger pointX = self.frame.size.width / self.dailyDataSource.count / 2 - 2;
         
         _drawScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(_hourCollectionView.frame.origin.x, _hourCollectionView.frame.origin.y, 0, 0)];
         _drawScrollView.contentSize = CGSizeMake((self.frame.size.width - 20) / 4 * modelArray.count, self.frame.size.height - 10);
@@ -77,7 +77,7 @@
         _drawScrollView.tag = 100;
         [_drawScrollView addSubview:drawView];
         
-        [UIView animateWithDuration:0.4 animations:^{
+        [UIView animateWithDuration:0.6 animations:^{
             _drawScrollView.frame = _hourCollectionView.frame;
         }];
 
@@ -134,6 +134,8 @@
     if (scrollView.tag == 100) {
         //
         _hourCollectionView.contentOffset = scrollView.contentOffset;
+    }else {
+        _drawScrollView.contentOffset =  scrollView.contentOffset;
     }
 }
 

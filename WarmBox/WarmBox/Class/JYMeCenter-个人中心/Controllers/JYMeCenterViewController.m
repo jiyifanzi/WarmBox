@@ -130,7 +130,7 @@
 //            
             [_userLoginBtn setTitle:@"登录"];
             _userNameLabel.text = @"请先登录";        //  否
-            [_userIconBtn setBackgroundImage:nil forState:UIControlStateNormal];
+            [_userIconBtn setBackgroundImage:[UIImage imageNamed:@"userHead_default_3"] forState:UIControlStateNormal];
              _isLogined = NO;
         }
     }];
@@ -214,7 +214,7 @@
         
         [_userLoginBtn setTitle:@"登录"];
         _userNameLabel.text = @"请先登录";        //  否
-        [_userIconBtn setBackgroundImage:nil forState:UIControlStateNormal];
+        [_userIconBtn setBackgroundImage:[UIImage imageNamed:@"userHead_default_3"] forState:UIControlStateNormal];
         _isLogined = NO;
         
         //  发送通知
@@ -262,9 +262,9 @@
     
     //  头像
     _userIconBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _userIconBtn.backgroundColor = [UIColor redColor];
     _userIconBtn.clipsToBounds = YES;
     _userIconBtn.layer.cornerRadius = 40;
+    [_userIconBtn setBackgroundImage:[[UIImage imageNamed:@"userHead_default_3"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
     //  添加头像的点击事件
     [_userIconBtn addTarget:self action:@selector(userClick) forControlEvents:UIControlEventTouchUpInside];
     
@@ -277,7 +277,7 @@
     //  名称
     _userNameLabel = [[UILabel alloc] init];
     _userNameLabel.textAlignment = NSTextAlignmentCenter;
-    _userNameLabel.text = @"用户昵称";
+    _userNameLabel.text = @"请先登录";
     _userNameLabel.textColor = [UIColor whiteColor];
     _userNameLabel.font = [UIFont boldSystemFontOfSize:22];
 //    _userNameLabel.backgroundColor = [UIColor yellowColor];
