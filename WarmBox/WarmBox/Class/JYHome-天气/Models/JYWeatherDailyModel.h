@@ -14,7 +14,7 @@
 @class JYWeatherDailyWindModel;
 
 //  每天的天气预报模型
-@interface JYWeatherDailyModel : NSObject
+@interface JYWeatherDailyModel : NSObject <NSCoding>
 
 //  时间
 @property (nonatomic, copy) NSString * date;
@@ -41,7 +41,7 @@
 
 
 //  ===========日出日落情况
-@interface JYWeatherDailyAstroModel : NSObject
+@interface JYWeatherDailyAstroModel : NSObject<NSCoding>
 
 //  日出时间
 @property (nonatomic, strong) NSString * sr;
@@ -53,7 +53,7 @@
 
 
 //  ===========天气情况
-@interface JYWeatherDailyCondModel : NSObject
+@interface JYWeatherDailyCondModel : NSObject<NSCoding>
 
 //  白天天气代码
 @property (nonatomic, strong) NSString * code_d;
@@ -69,7 +69,7 @@
 
 
 //  ===========温度情况
-@interface JYWeatherDailyTmpModel : NSObject
+@interface JYWeatherDailyTmpModel : NSObject<NSCoding>
 
 //  最高温度
 @property (nonatomic, strong) NSString * max;
@@ -80,7 +80,7 @@
 
 
 //  ===========风力情况
-@interface JYWeatherDailyWindModel : NSObject
+@interface JYWeatherDailyWindModel : NSObject<NSCoding>
 //  风向 角度
 @property (nonatomic, strong) NSString * deg;
 //  风向 方向

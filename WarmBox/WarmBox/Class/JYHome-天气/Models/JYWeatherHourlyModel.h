@@ -11,7 +11,7 @@
 @class JYWeatherHourlyWindModel;
 
 
-@interface JYWeatherHourlyModel : NSObject
+@interface JYWeatherHourlyModel : NSObject <NSCoding>
 
 //  时间
 @property (nonatomic, copy) NSString * date;
@@ -32,7 +32,7 @@
 
 
 //  ===========风力情况
-@interface JYWeatherHourlyWindModel : NSObject
+@interface JYWeatherHourlyWindModel : NSObject <NSCoding>
 //  风向 角度
 @property (nonatomic, strong) NSString * deg;
 //  风向 方向

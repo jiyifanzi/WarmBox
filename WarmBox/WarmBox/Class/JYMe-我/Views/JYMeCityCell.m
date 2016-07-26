@@ -50,6 +50,7 @@
     _weaherDesc.text = model.now.cond.txt;
     
     _weatherImage.image = [UIImage imageNamed:[JYWeatherTools getBackImageNameWithWeatherNumber:model.now.cond.code]];
+    
 }
 - (void)setCityName:(NSString *)cityName {
     

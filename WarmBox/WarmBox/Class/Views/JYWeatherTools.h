@@ -38,6 +38,8 @@
 + (void)removeVideoFromDBWithName:(NSString *)fileName;
 
 
+
+//  ==========日记操作
 //  获取远程端的所有日记数据
 + (void)getAllNoteData;
 
@@ -51,9 +53,13 @@
 + (void)removeAllNoteDelateCatch;
 
 
+
+
 //  ==========常用正则
 //  是否是手机号码
 + (BOOL)isMobileNumber:(NSString *)mobileNum;
 
+
+//  ==========天气界面缓存
 
 @end

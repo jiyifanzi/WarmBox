@@ -172,8 +172,9 @@
     [self.requestManager GET:[NSString stringWithFormat:WB_Weather,cityNameStr] parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSArray * dataArray = responseObject[@"HeWeather data service 3.0"];
-        NSArray * modelArray = [NSArray yy_modelArrayWithClass:[JYWeatherModel class] json:dataArray];
         
+        NSArray * modelArray = [NSArray yy_modelArrayWithClass:[JYWeatherModel class] json:dataArray];
+
         [self.cityDataSource addObject:[modelArray firstObject]];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

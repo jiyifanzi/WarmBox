@@ -74,6 +74,7 @@
     _backgroundImageView = [[UIImageView alloc] init];
     [self addSubview:_backgroundImageView];
     
+    
     _cityNameLabel = [[UILabel alloc] init];
     _cityNameLabel.textColor = [UIColor whiteColor];
     _cityNameLabel.font = [UIFont systemFontOfSize:45];

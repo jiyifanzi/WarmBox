@@ -16,7 +16,7 @@
 @class JYWeatherAQIDataModel;
 
 //  天气总的Model
-@interface JYWeatherModel : NSObject<YYModel>
+@interface JYWeatherModel : NSObject<YYModel, NSCoding>
 
 //  api 空气质量指数 -- 有的城市没有
 @property (nonatomic, strong) JYWeatherAQICityModel * aqi;
@@ -36,13 +36,13 @@
 
 
 //  空气质量指数AQI
-@interface JYWeatherAQICityModel :NSObject<YYModel>
+@interface JYWeatherAQICityModel :NSObject<YYModel, NSCoding>
 
 @property (nonatomic, strong) JYWeatherAQIDataModel * city;
 
 @end
 
-@interface JYWeatherAQIDataModel :NSObject<YYModel>
+@interface JYWeatherAQIDataModel :NSObject<YYModel, NSCoding>
 /*
  "aqi": "82",
  "co": "1",
@@ -71,7 +71,7 @@
 
 
 //  城市基本信息
-@interface JYWeatherBasicModel : NSObject <YYModel>
+@interface JYWeatherBasicModel : NSObject <YYModel, NSCoding>
 
 //  城市名称
 @property (nonatomic, copy) NSString * city;

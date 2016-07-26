@@ -77,6 +77,7 @@
     
 
     [self creatUI];
+    
     //  初始加载数据
     NSArray * dataArr = [[JYBasicDataManager new] getAllData];
     NSMutableArray * dataArrFor = [NSMutableArray array];
@@ -87,7 +88,13 @@
     //  查询数据 找出定位的数据
     NSString * str = [[JYBasicDataManager new] findLocationInDB];
     
+    //  根据定位信息请求数据
     if (str.length != 0) {
+        
+        //  程序进入，先从本地查找，看是否存在相应的数据(以前是否有存储，如果有，就读取，然后做网络请求，就算失败，此时界面依然会有显示，成功，就将最新的数据，存储；如果没有，就直接从网络请求，然后存取到本地)
+        //  本地数据判断
+        [self getDataFromLocalDBWithCityName:str];
+        
         [self requestDataWithCityName:str];
     }
 
@@ -113,19 +120,71 @@
 
 #pragma mark - 通知中心的方法
 - (void)startCityName {
+    //  从本地获取
+    [self getDataFromLocalDBWithCityName:self.currentLocation];
+    [self.weatherTableView reloadData];
     [self requestDataWithCityName:self.currentLocation];
 }
 
 - (void)changeSelfModle:(NSNotification *)notification {
     NSLog(@"%@",[notification object]);
     
+    //  从本地获取
+    [self getDataFromLocalDBWithCityName:[notification object]];
+    [self.weatherTableView reloadData];
+    
     [self requestDataWithCityName:[notification object]];
+    
+    
     [UIView animateWithDuration:0.3 animations:^{
         //  让顶部视图位
         self.topView.frame = CGRectMake(0, 64, Width, 200);
         self.weatherTableView.contentOffset = CGPointMake(0, 0);
     }];
 }
+
+#pragma mark - 进入界面的本地数据判断
+- (void)getDataFromLocalDBWithCityName:(NSString *)cityName {
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+    NSString * cityFilePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/WeatherData"];
+    //  创建文件夹
+    [fileManager createDirectoryAtPath:cityFilePath withIntermediateDirectories:YES attributes:nil error:nil];
+
+    //  从文件夹中找相应的数据，如果有，就读取
+    NSArray * fileContents = [fileManager contentsOfDirectoryAtPath:cityFilePath error:nil];
+    if ((fileContents.count == 1 && [fileContents.firstObject isEqualToString:@".DS_Store"]) || fileContents.count == 0) {
+        //  没有数据，从网络请求
+        return;
+    }else {
+        for (NSString * tempName in fileContents) {
+            //  遍历，根据cityName去找
+            NSArray * tempNameArray = [tempName componentsSeparatedByString:@".plist"];
+            if ([tempNameArray.firstObject isEqualToString:cityName]) {
+                //  找到相同的东西，解归档，存入当前数据源
+                NSLog(@"%@",[NSString stringWithFormat:@"%@/%@",cityFilePath, tempName]);
+                
+                NSMutableData * readData = [NSMutableData dataWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",cityFilePath, tempName]];
+                NSKeyedUnarchiver * unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:readData];
+                JYWeatherModel * model = [unarchiver decodeObjectForKey:@"WeatherModel"];
+                
+                //  写入笨数据源
+                [self.weathDataSource removeAllObjects];
+                [self.weathDataSource addObject:model];
+                [self.weatherTableView reloadData];
+                
+                //  设置顶部的图片
+                [self setTopViewImage];
+                
+                //  让代理去设置model
+                [self.delegate setAqiModel:[self.weathDataSource firstObject]];
+                
+                return;
+            }
+        }
+    }
+    
+}
+
 
 #pragma mark - 请求数据
 - (void)requestDataWithCityName:(NSString *)cityName {
@@ -147,6 +206,18 @@
         
         //  添加数据
         [self.weathDataSource addObjectsFromArray:modelArray];
+        
+        //  将数据保存到本地
+        JYWeatherModel * model = self.weathDataSource.firstObject;
+        NSString * cityFilePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/WeatherData"];
+        NSMutableData * data = [NSMutableData data];
+        NSKeyedArchiver * modelArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+        [modelArchiver encodeObject:model forKey:@"WeatherModel"];
+        [modelArchiver finishEncoding];
+        //  写入
+        [data writeToFile:[NSString stringWithFormat:@"%@/%@.plist",cityFilePath, cityName] atomically:NO];
+        
+        
         
         //  设置顶部的图片
         [self setTopViewImage];
@@ -290,8 +361,14 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     JYWeatherModel * model = [self.weathDataSource firstObject];
     if (section == 0) {
+        if (model.hourly_forecast.count == 0) {
+            return 0;
+        }
         return 1;
     }else if (section == 1) {
+        if (model.daily_forecast.count == 0) {
+            return 0;
+        }
         return 1;
     }else if (section == 2) {
         if (model.suggestion) {
@@ -341,18 +418,6 @@
     //  如果是第一段，表示是小时预报
     if (indexPath.section == 0) {
         
-        
-//        JYWeatherHourCell * cell = [tableView dequeueReusableCellWithIdentifier:@"hourCell" forIndexPath:indexPath];
-//        
-//               //  设置背景图片的透明度
-//        if (model) {
-//            cell.bgImageView.alpha = 1;
-//        }
-//        cell.hourlyModel = model.hourly_forecast[indexPath.row];
-//        cell.backgroundColor = [UIColor clearColor];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        
-//        return cell;
         JYWeatherNewHourCell * cell = [tableView dequeueReusableCellWithIdentifier:@"hourCell" forIndexPath:indexPath];
         
         //  设置背景图片的透明度

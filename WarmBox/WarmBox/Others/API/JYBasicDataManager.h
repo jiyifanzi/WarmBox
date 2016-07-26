@@ -19,15 +19,13 @@
 //  2.判断指定的数据是否存在
 - (BOOL)checkIsInDBWithCityName:(NSString *)city;
 
-//  2.判断指定的数据是否存在 -- 找出定位的数据
+//  3.判断指定的数据是否存在 -- 找出定位的数据
 - (NSString *)findLocationInDB;
 
-//  3.获取数据库中所有的数据
+//  4.获取数据库中所有的数据
 - (NSArray *)getAllData;
 
-//  
-
-//  4.删除指定的数据
+//  5.删除指定的数据
 - (void)deleteDataWithCityName:(NSString *)city;
 
 //  =========日程数据库
@@ -45,5 +43,12 @@
                      andDate:(NSString *)date;
 //  获取数据库的所有数据
 - (NSArray *)getAllDataInDateDB;
+
+
+//  ========天气数据库
+//  插入数据库
+- (void)insertDataWithWeatherModelDict:(NSDictionary *)weatherDict;
+//
+
 
 @end

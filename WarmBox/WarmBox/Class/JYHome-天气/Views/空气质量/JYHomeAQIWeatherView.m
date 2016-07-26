@@ -103,6 +103,8 @@
 //    [_weatherImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:WB_WeatherTopView,model.now.cond.code]] placeholderImage:nil];
     [_weatherImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:WB_WeatherTopView,model.now.cond.code]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
+        _weatherImage.contentMode = UIViewContentModeScaleAspectFill;
+        
         _weatherImage.tintColor = [UIColor whiteColor];
         _weatherImage.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     }];
@@ -120,6 +122,8 @@
 #pragma mark - 初始化子控件
 - (void)initSubViews {
     _backgroundImage = [[UIImageView alloc] init];
+    _backgroundImage.contentMode = UIViewContentModeScaleAspectFill;
+    
     [self addSubview:_backgroundImage];
     
     _weatherImage = [[UIImageView alloc] init];

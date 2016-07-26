@@ -76,6 +76,39 @@
     [self creatUI];
     
     [self getDataFromCurrentUser];
+    
+    [self share];
+}
+
+#pragma mark - 7.26分享内容
+- (void)share {
+    /*
+     参数1：创建
+     参数2：最大的字符串长度，0表示无限制
+     参数3：将要转换的字符串（C的字符串）
+     */
+    CFMutableStringRef stringOut = CFStringCreateMutableCopy(NULL, 0, CFSTR("成都"));
+    
+    
+    /*
+     参数1：待转换的字符串 tempString
+     参数2：将要转换的范围 如果为NULL，则为全部转换
+     参数3：转换的方式 kCFStringTransformMandarinLatin中文->拼音
+     参数4：转换是否必须是可逆向的转换
+     
+     返回值：是否转换成功 true为成功 flase为失败
+     */
+    CFStringTransform(stringOut, NULL, kCFStringTransformMandarinLatin, NO);
+    
+    //    CFStringTransform(stringOut, NULL, kCFStringTransformStripDiacritics, NO);
+    
+    //  CFStringRef aCFString = (CFStringRef)aNSString;
+    //  NSString *aNSString = (NSString *)aCFString;
+    
+    NSString * pinYin = (__bridge NSString *)stringOut;
+    
+    
+    NSLog(@"%@", pinYin);
 }
 
 

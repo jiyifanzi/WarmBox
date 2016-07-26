@@ -28,6 +28,8 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    
+    [self creatUI];
 }
 
 #pragma mark - 懒加载
@@ -49,9 +51,6 @@
 
 - (void)setModelArray:(NSArray *)modelArray {
     
-    [self creatUI];
-    
-    
     [self.dailyDataSource removeAllObjects];
     [self.dailyDataSource addObjectsFromArray:modelArray];
     
@@ -62,11 +61,6 @@
     if (modelArray.count == 0) {
         
     }else {
-        JYWeatherHourlyModel * model = modelArray.firstObject;
-        
-//        NSInteger pointStart = (60 - model.tmp.floatValue) * 2.8f + 8;
-//        NSInteger pointX = self.frame.size.width / self.dailyDataSource.count / 2 - 2;
-        
         _drawScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(_hourCollectionView.frame.origin.x, _hourCollectionView.frame.origin.y, 0, 0)];
         _drawScrollView.contentSize = CGSizeMake((self.frame.size.width - 20) / 4 * modelArray.count, self.frame.size.height - 10);
         WeatherHourDrawView * drawView = [[WeatherHourDrawView alloc] initWithFrame:CGRectMake(0, 0, (self.frame.size.width - 20) / 4 * modelArray.count, self.frame.size.height - 10)];
@@ -80,13 +74,13 @@
         [UIView animateWithDuration:0.6 animations:^{
             _drawScrollView.frame = _hourCollectionView.frame;
         }];
-
+        [self.contentView addSubview:_drawScrollView];
+        
+        [self.contentView sendSubviewToBack:_drawScrollView];
     }
     
     
-    [self.contentView addSubview:_drawScrollView];
-
-    [self.contentView sendSubviewToBack:_drawScrollView];
+   
     
     [self.hourCollectionView reloadData];
 }

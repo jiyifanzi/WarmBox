@@ -11,7 +11,7 @@
 @class JYWeatherNowCondModel;
 
 
-@interface JYWeatherNowModel : NSObject
+@interface JYWeatherNowModel : NSObject<NSCoding>
 
 //  当前天气
 @property (nonatomic, strong) JYWeatherNowCondModel * cond;
@@ -33,7 +33,7 @@
 @end
 
 //  ===========天气情况
-@interface JYWeatherNowCondModel : NSObject
+@interface JYWeatherNowCondModel : NSObject<NSCoding>
 
 //  天气代码
 @property (nonatomic, strong) NSString * code;
@@ -45,7 +45,8 @@
 
 
 //  ===========风力情况
-@interface JYWeatherNowWindModel : NSObject
+@interface JYWeatherNowWindModel : NSObject<NSCoding>
+
 //  风向 角度
 @property (nonatomic, strong) NSString * deg;
 //  风向 方向

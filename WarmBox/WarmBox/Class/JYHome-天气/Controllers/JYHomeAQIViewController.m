@@ -18,10 +18,6 @@
 
 @interface JYHomeAQIViewController ()<UITableViewDataSource, UITableViewDelegate>
 
-//  顶部的天气视图
-@property (nonatomic, strong) JYHomeAQIWeatherView * aqiHeaderView;
-//  顶部的AQI数据视图
-@property (nonatomic, strong) JYHomeAQIDataView * aqiDataView;
 //  最后的建议视图
 @property (nonatomic, strong) UITableView * aqiSugTableView;
 @property (nonatomic, strong) NSMutableArray * sugDataSource;
@@ -57,14 +53,16 @@
     formatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CH"];
     formatter.dateFormat = @"yyyy-MM-dd";
     NSString * data = [formatter stringFromDate:now];
+    
+    //  获取数据前
+    [self getDataFromLocalDB];
+    
     [self requestDayImageWithDate:data];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    
     NSDate * now = [NSDate date];
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     formatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CH"];
@@ -89,6 +87,37 @@
     _downLoadItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"downLoad"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleDone target:self action:@selector(downloadClick)];
     self.navigationItem.rightBarButtonItem = _downLoadItem;
 }
+
+#pragma mark - 从本地数据库找数据 如果有，就直接取，再做请求
+- (void)getDataFromLocalDB {
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+    NSString * FilePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/EverDayData"];
+    //  创建文件夹
+    [fileManager createDirectoryAtPath:FilePath withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    //  从文件夹中找相应的数据，如果有，就读取
+    NSArray * fileContents = [fileManager contentsOfDirectoryAtPath:FilePath error:nil];
+    if ((fileContents.count == 1 && [fileContents.firstObject isEqualToString:@".DS_Store"]) || fileContents.count == 0) {
+        //  没有数据，从网络请求
+        return;
+    }else {
+        //  结归档，设置
+        NSMutableData * readDataImage = [NSMutableData dataWithContentsOfFile:[NSString stringWithFormat:@"%@/EverDayImage.plist",FilePath]];
+        NSKeyedUnarchiver * unarchiverImage = [[NSKeyedUnarchiver alloc] initForReadingWithData:readDataImage];
+        UIImage * image = [unarchiverImage decodeObjectForKey:@"EverDayImage"];
+        //  设置
+        _backgroundImage.image = image;
+        
+        NSMutableData * readDataOneWord = [NSMutableData dataWithContentsOfFile:[NSString stringWithFormat:@"%@/EverDayOneWord.plist",FilePath]];
+        NSKeyedUnarchiver * unarchiverWord = [[NSKeyedUnarchiver alloc] initForReadingWithData:readDataOneWord];
+        NSString * oneWord = [unarchiverWord decodeObjectForKey:@"EverDayOneWord"];
+        
+        _oneWorld = oneWord;
+        
+    }
+    
+}
+
 
 #pragma mark - 下载图片
 - (void)downloadClick {
@@ -138,15 +167,38 @@
         //  解析每日图片的东西
         NSDictionary * tempDick = responseObject[@"data"];
         NSString * url = tempDick[@"largeImg"];
-        [_backgroundImage sd_setImageWithURL:[NSURL URLWithString:url]];
+        
+        NSString * FilePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/EverDayData"];
+        
+        
+        [_backgroundImage sd_setImageWithURL:[NSURL URLWithString:url] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            //  可以获取到image
+            //  存入本地
+            NSMutableData * data = [NSMutableData data];
+            NSKeyedArchiver * modelArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+            [modelArchiver encodeObject:image forKey:@"EverDayImage"];
+            [modelArchiver finishEncoding];
+            //  写入
+            [data writeToFile:[NSString stringWithFormat:@"%@/EverDayImage.plist",FilePath] atomically:NO];
+        }];
         //  添加一句话
+        
         _oneWorld = tempDick[@"s"];
+        //  将请求到的数据 - 照片+每日推荐的话，归档存入本地 如果没网的话，从本地获取
+        
+        NSMutableData * data = [NSMutableData data];
+        NSKeyedArchiver * modelArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+        [modelArchiver encodeObject:_oneWorld forKey:@"EverDayOneWord"];
+        [modelArchiver finishEncoding];
+        [data writeToFile:[NSString stringWithFormat:@"%@/EverDayOneWord.plist",FilePath] atomically:NO];
+        
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error);
     }];
-    
 }
+
+
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     //  隐藏上下的状态栏
@@ -214,110 +266,9 @@
         make.left.equalTo(self.view);
         make.size.mas_equalTo(CGSizeMake(Width, 160));
     }];
-    
-//    //  移除所有的视图
-//    for (UIView * tempView in self.view.subviews) {
-//        if ([tempView isKindOfClass:[UIImageView class]]) {
-//            
-//        }else {
-//            [tempView removeFromSuperview];
-//        }
-//        
-//    }
-//    
-//    //    _backgroundImage = [[UIImageView alloc] initWithFrame:self.view.bounds];
-//    //    _backgroundImage.image = [UIImage imageNamed:@"aqi_bg.jpg"];
-//    //    [self.view addSubview:_backgroundImage];
-//    //
-//    //    _blurBackImage = [[UIImageView alloc] initWithFrame:self.view.bounds];
-//    //    _blurBackImage.alpha = 0.4;
-//    //    [_blurBackImage setImageToBlur:_backgroundImage.image completionBlock:nil];
-//    //    [self.view addSubview:_blurBackImage];
-//    
-//    _aqiHeaderView = [[JYHomeAQIWeatherView alloc] initWithFrame:CGRectMake(0, 20, Width, 100) andModel:self.model];
-//    _aqiHeaderView.backgroundColor = [UIColor clearColor];
-//    [self.view addSubview:_aqiHeaderView];
-//    
-//    
-//    
-//    _aqiDataView = [[JYHomeAQIDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) andModel:self.model];
-//    [self.view addSubview:_aqiDataView];
-//    //  添加约束
-//    if (self.model.aqi.city.aqi.length == 0) {
-//        //  判断此时是否存在aqi
-//        //  如果不存在
-//        if (self.model.suggestion) {
-//            [self.sugDataSource removeAllObjects];
-//            //  如果存在suggestio
-//            NSArray * dataArray = @[self.model.suggestion.drsg, self.model.suggestion.flu, self.model.suggestion.sport, self.model.suggestion.comf, self.model.suggestion.uv, self.model.suggestion.trav];
-//            [self.sugDataSource addObjectsFromArray:dataArray];
-//            
-//            //  创建UITableView
-//            _aqiSugTableView = [[UITableView alloc] init];
-//            [self.view addSubview:_aqiSugTableView];
-//            
-//            //  设置相关属性
-//            _aqiSugTableView.delegate = self;
-//            _aqiSugTableView.dataSource = self;
-//            _aqiSugTableView.rowHeight = 80;
-//            _aqiSugTableView.backgroundColor = [UIColor clearColor];
-//            [_aqiSugTableView registerNib:[UINib nibWithNibName:@"JYHomeAQISugDetailCell" bundle:nil] forCellReuseIdentifier:@"sugCell"];
-//            //  约束
-//            [_aqiSugTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-//                make.top.equalTo(_aqiHeaderView.mas_bottom).offset(5);
-//                make.left.equalTo(self.view);
-//                make.size.mas_equalTo(CGSizeMake(Width, self.view.frame.size.height - _aqiHeaderView.frame.origin.y - _aqiHeaderView.frame.size.height - 100));
-//            }];
-//            
-//        }else {
-//            //  没有suggestion
-//        }
-//        
-//        
-//    }else {
-//        if (self.model.suggestion) {
-//            [self.sugDataSource removeAllObjects];
-//            //  如果存在suggestio
-//            NSArray * dataArray = @[self.model.suggestion.drsg, self.model.suggestion.flu, self.model.suggestion.sport, self.model.suggestion.comf, self.model.suggestion.uv, self.model.suggestion.trav];
-//            [self.sugDataSource addObjectsFromArray:dataArray];
-//            
-//            //  创建UITableView
-//            _aqiSugTableView = [[UITableView alloc] init];
-//            [self.view addSubview:_aqiSugTableView];
-//            
-//            //  设置相关属性
-//            _aqiSugTableView.delegate = self;
-//            _aqiSugTableView.dataSource = self;
-//            _aqiSugTableView.rowHeight = 80;
-//            _aqiSugTableView.backgroundColor = [UIColor clearColor];
-//            [_aqiSugTableView registerNib:[UINib nibWithNibName:@"JYHomeAQISugDetailCell" bundle:nil] forCellReuseIdentifier:@"sugCell"];
-//            //  约束
-//            [_aqiDataView mas_makeConstraints:^(MASConstraintMaker *make) {
-//                make.top.equalTo(_aqiHeaderView.mas_bottom).offset(5);
-//                make.left.equalTo(self.view);
-//                make.size.mas_equalTo(CGSizeMake(Width/4, 200));
-//            }];
-//            
-//            //  约束
-//            [_aqiSugTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-//                make.top.equalTo(_aqiDataView.mas_bottom).offset(5);
-//                make.left.equalTo(self.view);
-//                CGFloat aqiSugH = Height - 20 - 100 - 5 - 200 - 60;
-//                make.size.mas_equalTo(CGSizeMake(Width, aqiSugH));
-//            }];
-//            
-//        }else {
-//            //  没有suggestion
-//            [_aqiDataView mas_makeConstraints:^(MASConstraintMaker *make) {
-//                make.top.equalTo(_aqiHeaderView.mas_bottom).offset(5);
-//                make.left.equalTo(self.view);
-//                make.size.mas_equalTo(CGSizeMake(Width/3, 200));
-//            }];
-//        }
-//        
-//    }
-    
 }
+
+
 #pragma mark tanleView的代理方法
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.sugDataSource.count;

@@ -22,7 +22,7 @@
         imageName = @"wb_sunny.jpg";
     }else if (imageCode == 101) {
         //  多云
-        imageName = @"wb_coludy.jpg";
+        imageName = @"wb_coludy_1.jpg";
     }
     else if (imageCode == 102 || imageCode == 103) {
         //  少云

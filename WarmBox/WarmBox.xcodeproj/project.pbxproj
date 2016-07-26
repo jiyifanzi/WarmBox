@@ -54,9 +54,11 @@
 		6C825AEF1D3CDCA200679932 /* login_weixin.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C825AEC1D3CDCA200679932 /* login_weixin.png */; };
 		6CA1DED71D3F6BEC00C0FC79 /* JYMeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA1DED51D3F6BEC00C0FC79 /* JYMeDetailViewController.m */; };
 		6CA1DED81D3F6BEC00C0FC79 /* JYMeDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CA1DED61D3F6BEC00C0FC79 /* JYMeDetailViewController.xib */; };
-		6CA9F44B1D46EB2D004D04B6 /* wb_rain_1.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 6CA9F44A1D46EB2D004D04B6 /* wb_rain_1.JPG */; };
-		6CA9F44D1D46EB48004D04B6 /* wip_bk_moderate_rain_1.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 6CA9F44C1D46EB48004D04B6 /* wip_bk_moderate_rain_1.JPG */; };
-		6CA9F44F1D46EB59004D04B6 /* wip_bk_snow_rain_1.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 6CA9F44E1D46EB59004D04B6 /* wip_bk_snow_rain_1.JPG */; };
+		6CA9F44B1D46EB2D004D04B6 /* wb_rain_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6CA9F44A1D46EB2D004D04B6 /* wb_rain_1.jpg */; };
+		6CA9F44D1D46EB48004D04B6 /* wip_bk_moderate_rain_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6CA9F44C1D46EB48004D04B6 /* wip_bk_moderate_rain_1.jpg */; };
+		6CA9F44F1D46EB59004D04B6 /* wip_bk_snow_rain_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6CA9F44E1D46EB59004D04B6 /* wip_bk_snow_rain_1.jpg */; };
+		6CA9F4511D47225C004D04B6 /* wb_coludy_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6CA9F4501D47225C004D04B6 /* wb_coludy_1.jpg */; };
+		6CA9F4531D4725A8004D04B6 /* me_WeatherImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CA9F4521D4725A8004D04B6 /* me_WeatherImage.png */; };
 		6CABB2611D35CAA7009F70E9 /* books_SL.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CABB2591D35CAA7009F70E9 /* books_SL.png */; };
 		6CABB2621D35CAA7009F70E9 /* books.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CABB25A1D35CAA7009F70E9 /* books.png */; };
 		6CABB2631D35CAA7009F70E9 /* calendar_SL.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CABB25B1D35CAA7009F70E9 /* calendar_SL.png */; };
@@ -402,9 +404,11 @@
 		6CA1DED41D3F6BEC00C0FC79 /* JYMeDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYMeDetailViewController.h; sourceTree = "<group>"; };
 		6CA1DED51D3F6BEC00C0FC79 /* JYMeDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYMeDetailViewController.m; sourceTree = "<group>"; };
 		6CA1DED61D3F6BEC00C0FC79 /* JYMeDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYMeDetailViewController.xib; sourceTree = "<group>"; };
-		6CA9F44A1D46EB2D004D04B6 /* wb_rain_1.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wb_rain_1.JPG; sourceTree = "<group>"; };
-		6CA9F44C1D46EB48004D04B6 /* wip_bk_moderate_rain_1.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wip_bk_moderate_rain_1.JPG; sourceTree = "<group>"; };
-		6CA9F44E1D46EB59004D04B6 /* wip_bk_snow_rain_1.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wip_bk_snow_rain_1.JPG; sourceTree = "<group>"; };
+		6CA9F44A1D46EB2D004D04B6 /* wb_rain_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wb_rain_1.jpg; sourceTree = "<group>"; };
+		6CA9F44C1D46EB48004D04B6 /* wip_bk_moderate_rain_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wip_bk_moderate_rain_1.jpg; sourceTree = "<group>"; };
+		6CA9F44E1D46EB59004D04B6 /* wip_bk_snow_rain_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wip_bk_snow_rain_1.jpg; sourceTree = "<group>"; };
+		6CA9F4501D47225C004D04B6 /* wb_coludy_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wb_coludy_1.jpg; sourceTree = "<group>"; };
+		6CA9F4521D4725A8004D04B6 /* me_WeatherImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = me_WeatherImage.png; sourceTree = "<group>"; };
 		6CABB2591D35CAA7009F70E9 /* books_SL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = books_SL.png; sourceTree = "<group>"; };
 		6CABB25A1D35CAA7009F70E9 /* books.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = books.png; sourceTree = "<group>"; };
 		6CABB25B1D35CAA7009F70E9 /* calendar_SL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_SL.png; sourceTree = "<group>"; };
@@ -1688,6 +1692,7 @@
 		BCA7ADD81D23C802008D6DBB /* Weather */ = {
 			isa = PBXGroup;
 			children = (
+				6CA9F4521D4725A8004D04B6 /* me_WeatherImage.png */,
 				BCA7ADD91D23C81B008D6DBB /* Now */,
 			);
 			path = Weather;
@@ -1698,13 +1703,14 @@
 			children = (
 				BC6D42BC1D25456F002CE4E4 /* flag_red.png */,
 				BCC163EC1D26316400BEAA88 /* wb_coludy.jpg */,
+				6CA9F4501D47225C004D04B6 /* wb_coludy_1.jpg */,
 				BCC163ED1D26316400BEAA88 /* wb_fog.jpg */,
 				BCC163EE1D26316400BEAA88 /* wb_haze.jpg */,
 				BCC163EF1D26316400BEAA88 /* wb_heavy_rain.jpg */,
 				BCC163F01D26316400BEAA88 /* wb_heavy_snow.jpg */,
 				BCC163F11D26316400BEAA88 /* wb_na.jpg */,
 				BCC163F21D26316400BEAA88 /* wb_rain.jpg */,
-				6CA9F44A1D46EB2D004D04B6 /* wb_rain_1.JPG */,
+				6CA9F44A1D46EB2D004D04B6 /* wb_rain_1.jpg */,
 				BCC163F31D26316400BEAA88 /* wb_sandstorm.jpg */,
 				BCC163F41D26316400BEAA88 /* wb_snow.jpg */,
 				BCC163F51D26316400BEAA88 /* wb_storm_rain.jpg */,
@@ -1723,11 +1729,11 @@
 				BCC164021D26316400BEAA88 /* wip_bk_light_snow.jpg */,
 				BCC164031D26316400BEAA88 /* wip_bk_mask_50%.png */,
 				BCC164041D26316400BEAA88 /* wip_bk_moderate_rain.jpg */,
-				6CA9F44C1D46EB48004D04B6 /* wip_bk_moderate_rain_1.JPG */,
+				6CA9F44C1D46EB48004D04B6 /* wip_bk_moderate_rain_1.jpg */,
 				BCC164051D26316400BEAA88 /* wip_bk_moderate_snow_n.jpg */,
 				BCC164061D26316400BEAA88 /* wip_bk_overcast.jpg */,
 				BCC164071D26316400BEAA88 /* wip_bk_snow_rain.jpg */,
-				6CA9F44E1D46EB59004D04B6 /* wip_bk_snow_rain_1.JPG */,
+				6CA9F44E1D46EB59004D04B6 /* wip_bk_snow_rain_1.jpg */,
 				BCC164081D26316400BEAA88 /* wip_bk_storm_heavy_rain.jpg */,
 				BCC164091D26316400BEAA88 /* wip_bk_storm_snow_n.jpg */,
 				BCC1640A1D26316400BEAA88 /* wip_bk_sunny_n.jpg */,
@@ -2064,6 +2070,7 @@
 				BCB860F01D2FD78D0082A932 /* landscape_play_press.png in Resources */,
 				6CABB29A1D361D84009F70E9 /* f045.png in Resources */,
 				BC5956791D33BE4600AAEDE4 /* ZFPlayer_slider@3x.png in Resources */,
+				6CA9F4511D47225C004D04B6 /* wb_coludy_1.jpg in Resources */,
 				BC59565F1D33BE4600AAEDE4 /* ZFPlayer_download@3x.png in Resources */,
 				6C1935EB1D3CEA9D00BDA88F /* JYMeRegisterViewController.xib in Resources */,
 				6C71C4B51D4620A9001A2236 /* no_Note_1.png in Resources */,
@@ -2071,7 +2078,7 @@
 				BCC164451D26624800BEAA88 /* citylist.json in Resources */,
 				6CABB2951D361B37009F70E9 /* home142.png in Resources */,
 				BC59565E1D33BE4600AAEDE4 /* ZFPlayer_download@2x.png in Resources */,
-				6CA9F44D1D46EB48004D04B6 /* wip_bk_moderate_rain_1.JPG in Resources */,
+				6CA9F44D1D46EB48004D04B6 /* wip_bk_moderate_rain_1.jpg in Resources */,
 				BCC1641E1D26316400BEAA88 /* wip_bk_hailstone.jpg in Resources */,
 				BC59565C1D33BE4600AAEDE4 /* ZFPlayer_close@2x.png in Resources */,
 				6C7580601D34ECBE000579FB /* downLoadMe.png in Resources */,
@@ -2178,6 +2185,7 @@
 				BC5956781D33BE4600AAEDE4 /* ZFPlayer_slider@2x.png in Resources */,
 				BCB860EE1D2FCA530082A932 /* fullScreenIconHigh@3x.png in Resources */,
 				6C0C41311D39449200CCD378 /* Icon@2x.png in Resources */,
+				6CA9F4531D4725A8004D04B6 /* me_WeatherImage.png in Resources */,
 				BC83174E1D2A4EF900EFA9C5 /* Info.plist in Resources */,
 				BCC1643A1D264D8500BEAA88 /* JYMeCityCell.xib in Resources */,
 				6CBEC1141D34FD3C001004EC /* sina_login_btn.png in Resources */,
@@ -2202,12 +2210,12 @@
 				6CBEC1151D34FD3C001004EC /* share_qq.png in Resources */,
 				BC6D42BD1D25456F002CE4E4 /* flag_red.png in Resources */,
 				6C0C41301D39449200CCD378 /* Icon.png in Resources */,
-				6CA9F44B1D46EB2D004D04B6 /* wb_rain_1.JPG in Resources */,
+				6CA9F44B1D46EB2D004D04B6 /* wb_rain_1.jpg in Resources */,
 				BCC164161D26316400BEAA88 /* wb_storm_snow.jpg in Resources */,
 				BC07734D1D2E777200F5F0C6 /* auto_location_icon_img.png in Resources */,
 				BCC1641C1D26316400BEAA88 /* wip_bk_coludy_n.jpg in Resources */,
 				BCC164141D26316400BEAA88 /* wb_snow.jpg in Resources */,
-				6CA9F44F1D46EB59004D04B6 /* wip_bk_snow_rain_1.JPG in Resources */,
+				6CA9F44F1D46EB59004D04B6 /* wip_bk_snow_rain_1.jpg in Resources */,
 				BCB860CD1D2F88690082A932 /* W3.otf in Resources */,
 				6CAF13961D392F8E000398A2 /* b1.png in Resources */,
 				BC6D42AC1D24DDCB002CE4E4 /* JYWeatherHourCell.xib in Resources */,

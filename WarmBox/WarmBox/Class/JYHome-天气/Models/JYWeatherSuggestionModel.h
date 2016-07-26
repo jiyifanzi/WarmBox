@@ -11,7 +11,7 @@
 @class JYWeatherSugDescModel;
 
 
-@interface JYWeatherSuggestionModel : NSObject
+@interface JYWeatherSuggestionModel : NSObject <NSCoding>
 
 //  舒适程度
 @property (nonatomic, strong) JYWeatherSugDescModel * comf;
@@ -32,7 +32,7 @@
 @end
 
 
-@interface JYWeatherSugDescModel : NSObject
+@interface JYWeatherSugDescModel : NSObject <NSCoding>
 
 //  简介
 @property (nonatomic, strong) NSString * brf;
