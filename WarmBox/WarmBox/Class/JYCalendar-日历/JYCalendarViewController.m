@@ -68,6 +68,8 @@
     
     [self getDateFromSelectedDay:_jy_Calendar.selectedDate withCalendar:self.jy_Calendar];
     [_jy_Calendar reloadData];
+    
+    
 }
 
 - (void)viewDidLoad {
@@ -442,9 +444,9 @@
 - (void)addEventForDay {
     CGPoint point = CGPointMake(self.view.frame.size.width - 25,64);
     
-    self.popView = [[XTPopView alloc] initWithOrigin:point My_Width:115 My_Height:40 * 3 Type:XTTypeOfUpRight Color:[UIColor colorWithRed:0.2737 green:0.2737 blue:0.2737 alpha:1.0]];
-    self.popView.dataArray = @[@"记事",@"生日", @"提醒"];
-    self.popView.images = @[@"发起群聊",@"添加朋友", @"扫一扫"];
+    self.popView = [[XTPopView alloc] initWithOrigin:point My_Width:115 My_Height:40 * 2 Type:XTTypeOfUpRight Color:[UIColor colorWithRed:0.2737 green:0.2737 blue:0.2737 alpha:1.0]];
+    self.popView.dataArray = @[@"记事",@"生日"];
+    self.popView.images = @[@"发起群聊",@"添加朋友"];
     self.popView.fontSize = 13;
     self.popView.row_height = 40;
     self.popView.titleTextColor = [UIColor whiteColor];
@@ -496,23 +498,23 @@
             [self.navigationController pushViewController:BirthDay animated:YES];
         }
             break;
-        case 2:
-        {
-            //  提醒
-            NSDate  * temp = [_jy_Calendar selectedDate];
-            NSString * currentSelectedDate = [_jy_Calendar stringFromDate:temp];
-            
-            JYCalendarNoteViewController * note = [[JYCalendarNoteViewController alloc] init];
-            if (currentSelectedDate.length != 0) {
-                note.selectedDate = currentSelectedDate;
-            }else {
-                note.selectedDate = [_jy_Calendar stringFromDate:_jy_Calendar.today];
-            }
-            note.hidesBottomBarWhenPushed = YES;
-            NSLog(@"%@",currentSelectedDate);
-            [self.navigationController pushViewController:note animated:YES];
-        }
-            break;
+//        case 2:
+//        {
+//            //  提醒
+//            NSDate  * temp = [_jy_Calendar selectedDate];
+//            NSString * currentSelectedDate = [_jy_Calendar stringFromDate:temp];
+//            
+//            JYCalendarNoteViewController * note = [[JYCalendarNoteViewController alloc] init];
+//            if (currentSelectedDate.length != 0) {
+//                note.selectedDate = currentSelectedDate;
+//            }else {
+//                note.selectedDate = [_jy_Calendar stringFromDate:_jy_Calendar.today];
+//            }
+//            note.hidesBottomBarWhenPushed = YES;
+//            NSLog(@"%@",currentSelectedDate);
+//            [self.navigationController pushViewController:note animated:YES];
+//        }
+//            break;
         default:
             break;
     }

@@ -34,11 +34,15 @@
 //  题目数据源
 @property (nonatomic, strong) NSMutableArray * titleDataSource;
 
+
+@property (nonatomic, strong) NSString * nowData;
+
 @end
 
 
 @implementation JYSkinViewController
 - (void)viewWillAppear:(BOOL)animated {
+    
     [super viewWillAppear:animated];
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"tou"] forBarMetrics:UIBarMetricsDefault];
@@ -57,11 +61,63 @@
     
     UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.leftBarButtonItem = item;
+    
+   
+    
+//    [self requetstData];
+}
+
+- (NSString *)nowData {
+    if (!_nowData) {
+        NSDate * now = [NSDate date];
+        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+        formatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CH"];
+        formatter.dateFormat = @"yyyy-MM-dd";
+        NSString * data = [formatter stringFromDate:now];
+        
+        _nowData = data;
+    }
+    return _nowData;
 }
 
 - (void)back {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+#pragma mark - 从本地数据库找数据 如果有，就直接取，再做请求
+- (void)getDataFromLocalDB {
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+    NSString * FilePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/EverDayData"];
+    //  创建文件夹
+    [fileManager createDirectoryAtPath:FilePath withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    //  从文件夹中找相应的数据，如果有，就读取
+    NSArray * fileContents = [fileManager contentsOfDirectoryAtPath:FilePath error:nil];
+    if ((fileContents.count == 1 && [fileContents.firstObject isEqualToString:@".DS_Store"]) || fileContents.count == 0) {
+        //  没有数据，从网络请求
+        return;
+    }else {
+        //  有当天的数据
+        NSString * ImagePath = [NSString stringWithFormat:@"%@/EverDayImage+%@.plist",FilePath,  self.nowData];
+        NSString * oneWordPath = [NSString stringWithFormat:@"%@/EverDayOneWord+%@.plist",FilePath,  self.nowData];
+        
+        //  结归档，设置
+        NSMutableData * readDataImage = [NSMutableData dataWithContentsOfFile:ImagePath];
+        NSKeyedUnarchiver * unarchiverImage = [[NSKeyedUnarchiver alloc] initForReadingWithData:readDataImage];
+        UIImage * image = [unarchiverImage decodeObjectForKey:@"EverDayImage"];
+        //  设置
+        _iconBackImage.image = image;
+        
+        NSMutableData * readDataOneWord = [NSMutableData dataWithContentsOfFile:oneWordPath];
+        NSKeyedUnarchiver * unarchiverWord = [[NSKeyedUnarchiver alloc] initForReadingWithData:readDataOneWord];
+        NSString * oneWord = [unarchiverWord decodeObjectForKey:@"EverDayOneWord"];
+        
+        _oneWorldLabel.text = oneWord;
+        
+    }
+    
+}
+
 
 #pragma mark - 懒加载
 - (NSMutableArray *)skinDataSource {
@@ -190,48 +246,6 @@
       [self presentViewController:picker animated:YES completion:nil];
 }
 
-/*
- 
- //  创建文件管理器 -- 提供了一个单例方法 defaultManager
- NSFileManager * manager = [NSFileManager defaultManager];
- NSError * error = [NSError new];
- NSString * path = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@",self.selectedDate]];
- //  创建文件夹
- [manager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error];
- 
- //  保存前，先判断标题名称是否已经保存
- NSArray * contentsArray = [manager contentsOfDirectoryAtPath:path error:nil];
- int flag = 1;
- for (NSString * tempPath in contentsArray) {
- NSLog(@"====%@",tempPath);
- if ([tempPath isEqualToString:[NSString stringWithFormat:@"%@.plist",self.titleField.text]]) {
- [JYWeatherTools showMessageWithAlertView:@"标题重复，请重新填写"];
- flag = 0;
- break;
- }else {
- flag = 1;
- }
- }
- if (flag) {
- 
- NSString * filepath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.plist",self.selectedDate,self.titleField.text]];
- //  借助NSData中转存储
- 
- NSLog(@"path = %@",path);
- 
- NSMutableData *data = [NSMutableData data];
- 
- NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
- [archiver encodeObject:self.contentField.attributedText forKey:@"note"];
- //  完成归档    会将数组的数组 写到NSData中
- [archiver finishEncoding];
- //  NSLog(@"%@",data);
- //  将完成归档的二进制数据存储到本地 存储格式是字典 后缀为plist
- [data writeToFile:filepath atomically:NO];
- 
- [JYWeatherTools showMessageWithAlertView:@"添加成功"];
- }
- */
 
 #pragma mark - 获取相册代理方法
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
@@ -272,6 +286,42 @@
 }
 
 
+#pragma mark - 请求数据
+- (void)requetstData {
+    [self.requestManager GET:[NSString stringWithFormat:WB_DayImage,[JYWeatherTools getNowDataWithFormate:@"yyyy-MM-dd"]] parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        //  解析每日图片的东西
+        NSDictionary * tempDick = responseObject[@"data"];
+        NSString * url = tempDick[@"largeImg"];
+        
+        NSString * FilePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/EverDayData"];
+        
+        [_iconBackImage sd_setImageWithURL:[NSURL URLWithString:url] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            //  可以获取到image
+            //  存入本地
+            NSMutableData * data = [NSMutableData data];
+            NSKeyedArchiver * modelArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+            [modelArchiver encodeObject:image forKey:@"EverDayImage"];
+            [modelArchiver finishEncoding];
+            //  写入
+            [data writeToFile:[NSString stringWithFormat:@"%@/EverDayImage.plist",FilePath] atomically:NO];
+        }];
+        
+        //  添加一句话
+        _oneWorldLabel.text = tempDick[@"s"];
+        
+        
+        NSMutableData * data = [NSMutableData data];
+        NSKeyedArchiver * modelArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+        [modelArchiver encodeObject:_oneWorldLabel.text forKey:@"EverDayOneWord"];
+        [modelArchiver finishEncoding];
+        [data writeToFile:[NSString stringWithFormat:@"%@/EverDayOneWord.plist",FilePath] atomically:NO];
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+}
+
 
 #pragma mark - 创建顶部视图
 - (void)creatUserUI {
@@ -288,44 +338,12 @@
     _blueBackImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, Width, Height/4)];
     _blueBackImage.clipsToBounds = YES;
     _blueBackImage.contentMode = UIViewContentModeScaleAspectFill;
-    [_blueBackImage setImageToBlur:[UIImage imageNamed:@"ment"] completionBlock:nil];
     _blueBackImage.alpha = 0.5;
     
     [_iconView addSubview:_iconBackImage];
     
   
-    [self.requestManager GET:[NSString stringWithFormat:WB_DayImage,[JYWeatherTools getNowDataWithFormate:@"yyyy-MM-dd"]] parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        //  解析每日图片的东西
-        NSDictionary * tempDick = responseObject[@"data"];
-        NSString * url = tempDick[@"largeImg"];
-        
-        [_iconBackImage sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"2.jpg"]];
-//        [_iconBackImage sd_setImageWithPreviousCachedImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@""] options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-//            ;
-//        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-//            
-//        }];
-        //  添加一句话
-        _oneWorldLabel.text = tempDick[@"s"];
-        
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"%@",error);
-    }];
-//    
-//        
-//    //  创建用户头像
-//    _userIcon = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [_userIcon setBackgroundImage:[UIImage imageNamed:@"yunduo.jpg"] forState:UIControlStateNormal];
-//    _userIcon.layer.masksToBounds = YES;
-//    _userIcon.layer.cornerRadius = (_iconView.frame.size.height - 80)/2;
-//    [_iconView addSubview:_userIcon];
-//    //  添加约束
-//    [_userIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(_iconView.mas_top).offset(40);
-////        make.bottom.equalTo(_iconView.mas_bottom).offset(-40);
-//        make.left.equalTo(_iconView.mas_left).offset(5);
-//        make.size.mas_equalTo(CGSizeMake(_iconView.frame.size.height - 80, _iconView.frame.size.height - 80));
-//    }];
+
     
     //  一句话
     _oneWorldLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, Width, 30)];
@@ -336,11 +354,12 @@
     
     [_iconView addSubview:_oneWorldLabel];
     [_oneWorldLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(_userIcon.mas_bottom).offset(2);
         make.bottom.equalTo(_iconView.mas_bottom).offset(-2);
         make.left.equalTo(_iconView.mas_left).offset(5);
         make.right.equalTo(_iconView.mas_right).offset(-2);
     }];
+
+     [self getDataFromLocalDB];
 }
 
 #pragma mark - UICollectionView的代理方法

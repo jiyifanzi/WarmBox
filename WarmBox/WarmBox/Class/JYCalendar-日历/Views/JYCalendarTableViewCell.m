@@ -31,6 +31,10 @@
     _titlaLabel.text = model.title;
     if ([model.noteType isEqualToString:@"1"]) {
         _typeLabel.text = @"记事";
+        _typeLabel.backgroundColor = [UIColor colorWithRed:0 green:191/255.0 blue:1 alpha:1];
+    } else if ([model.noteType isEqualToString:@"2"]) {
+        _typeLabel.text = @"生日";
+        _typeLabel.backgroundColor = [UIColor orangeColor];
     }
     NSArray * timeArray = [model.nowTime componentsSeparatedByString:@"-"];
     _timeLabel.text = [NSString stringWithFormat:@"%@:%@",timeArray.firstObject, timeArray.lastObject];
@@ -45,7 +49,7 @@
     _backView.layer.cornerRadius = 15;
     
     _typeLabel.clipsToBounds = YES;
-    _typeLabel.backgroundColor = [UIColor colorWithRed:0 green:191/255.0 blue:1 alpha:1];
+    
     _typeLabel.layer.cornerRadius = 5;
 }
 

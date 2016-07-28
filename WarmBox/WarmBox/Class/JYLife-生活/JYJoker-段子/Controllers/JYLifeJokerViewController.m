@@ -25,6 +25,12 @@
 
 @implementation JYLifeJokerViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self willShowTheBGImgae:NO];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -94,9 +100,11 @@
 
         NSArray * modelArray = [NSArray yy_modelArrayWithClass:[JYLifeJokerModel class] json:dataArray];
 
+        
         if (self.videoDataSource.count == 0) {
-            [self.videoDataSource addObject:[modelArray firstObject]];
+            [self.videoDataSource addObjectsFromArray:modelArray];
         }
+        
         
         for (int i = 0; i < modelArray.count; i++) {
             JYLifeJokerModel * modelTemp = modelArray[i];

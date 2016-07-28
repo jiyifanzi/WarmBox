@@ -38,7 +38,7 @@
 //    [self.view addSubview:_backImage];
 //
     
-    _WholeBlueBackImage = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    _WholeBlueBackImage = [[UIImageView alloc] initWithFrame:self.view.frame];
     _WholeBlueBackImage.clipsToBounds = YES;
      _WholeBlueBackImage.alpha = 1;
     _WholeBlueBackImage.contentMode = UIViewContentModeScaleAspectFill;
@@ -87,7 +87,11 @@
 #pragma mark - 是否显示背景图
 - (void)willShowTheBGImgae:(BOOL)yesOrNo {
     _WholeBlueBackImage.hidden = !yesOrNo;
-    _backImage.hidden = !yesOrNo;
+    if (!yesOrNo) {
+        [_WholeBlueBackImage removeFromSuperview];
+    }else {
+        
+    }
 }
 
 #pragma mark - 懒加载

@@ -36,6 +36,8 @@
 
 @property (nonatomic, strong) UIBarButtonItem * downLoadItem;
 
+@property (nonatomic, strong) NSString * nowData;
+
 @end
 
 @implementation JYHomeAQIViewController
@@ -47,17 +49,19 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"tou"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"tou"]];
     
-    
-    NSDate * now = [NSDate date];
-    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-    formatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CH"];
-    formatter.dateFormat = @"yyyy-MM-dd";
-    NSString * data = [formatter stringFromDate:now];
-    
-    //  获取数据前
-    [self getDataFromLocalDB];
-    
-    [self requestDayImageWithDate:data];
+}
+
+- (NSString *)nowData {
+    if (!_nowData) {
+        NSDate * now = [NSDate date];
+        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+        formatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CH"];
+        formatter.dateFormat = @"yyyy-MM-dd";
+        NSString * data = [formatter stringFromDate:now];
+        
+        _nowData = data;
+    }
+    return _nowData;
 }
 
 - (void)viewDidLoad {
@@ -86,6 +90,9 @@
     
     _downLoadItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"downLoad"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleDone target:self action:@selector(downloadClick)];
     self.navigationItem.rightBarButtonItem = _downLoadItem;
+    
+    //  获取数据前
+    [self getDataFromLocalDB];
 }
 
 #pragma mark - 从本地数据库找数据 如果有，就直接取，再做请求
@@ -99,21 +106,45 @@
     NSArray * fileContents = [fileManager contentsOfDirectoryAtPath:FilePath error:nil];
     if ((fileContents.count == 1 && [fileContents.firstObject isEqualToString:@".DS_Store"]) || fileContents.count == 0) {
         //  没有数据，从网络请求
+        [self requestDayImageWithDate:self.nowData];
         return;
     }else {
-        //  结归档，设置
-        NSMutableData * readDataImage = [NSMutableData dataWithContentsOfFile:[NSString stringWithFormat:@"%@/EverDayImage.plist",FilePath]];
-        NSKeyedUnarchiver * unarchiverImage = [[NSKeyedUnarchiver alloc] initForReadingWithData:readDataImage];
-        UIImage * image = [unarchiverImage decodeObjectForKey:@"EverDayImage"];
-        //  设置
-        _backgroundImage.image = image;
+        //  进行判断
         
-        NSMutableData * readDataOneWord = [NSMutableData dataWithContentsOfFile:[NSString stringWithFormat:@"%@/EverDayOneWord.plist",FilePath]];
-        NSKeyedUnarchiver * unarchiverWord = [[NSKeyedUnarchiver alloc] initForReadingWithData:readDataOneWord];
-        NSString * oneWord = [unarchiverWord decodeObjectForKey:@"EverDayOneWord"];
+        int flag = 0;
         
-        _oneWorld = oneWord;
+        for (NSString * tempStr in fileContents) {
+            if ([tempStr rangeOfString:self.nowData].length == 0) {
+                [fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/%@",FilePath,tempStr] error:nil];
+                flag = 0;
+            }else {
+                flag = 1;
+            }
+        }
         
+        if (flag) {
+            //  有当天的数据
+            NSString * ImagePath = [NSString stringWithFormat:@"%@/EverDayImage+%@.plist",FilePath,  self.nowData];
+            NSString * oneWordPath = [NSString stringWithFormat:@"%@/EverDayOneWord+%@.plist",FilePath,  self.nowData];
+            
+            //  结归档，设置
+            NSMutableData * readDataImage = [NSMutableData dataWithContentsOfFile:ImagePath];
+            NSKeyedUnarchiver * unarchiverImage = [[NSKeyedUnarchiver alloc] initForReadingWithData:readDataImage];
+            UIImage * image = [unarchiverImage decodeObjectForKey:@"EverDayImage"];
+            //  设置
+            _backgroundImage.image = image;
+            
+            NSMutableData * readDataOneWord = [NSMutableData dataWithContentsOfFile:oneWordPath];
+            NSKeyedUnarchiver * unarchiverWord = [[NSKeyedUnarchiver alloc] initForReadingWithData:readDataOneWord];
+            NSString * oneWord = [unarchiverWord decodeObjectForKey:@"EverDayOneWord"];
+            
+            _oneWorld = oneWord;
+            
+
+        }else {
+            //  没有当天的数据
+            [self requestDayImageWithDate:self.nowData];
+        }
     }
     
 }
@@ -159,13 +190,10 @@
 #pragma mark - 获取每日推荐图片
 - (void)requestDayImageWithDate:(NSString *)date {
     
-    if (_oneWorld.length != 0 && _backgroundImage.image) {
-        return;
-    }
-    
     [self.requestManager GET:[NSString stringWithFormat:WB_DayImage,date] parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         //  解析每日图片的东西
         NSDictionary * tempDick = responseObject[@"data"];
+        
         NSString * url = tempDick[@"largeImg"];
         
         NSString * FilePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/EverDayData"];
@@ -179,7 +207,7 @@
             [modelArchiver encodeObject:image forKey:@"EverDayImage"];
             [modelArchiver finishEncoding];
             //  写入
-            [data writeToFile:[NSString stringWithFormat:@"%@/EverDayImage.plist",FilePath] atomically:NO];
+            [data writeToFile:[NSString stringWithFormat:@"%@/EverDayImage+%@.plist",FilePath, self.nowData] atomically:NO];
         }];
         //  添加一句话
         
@@ -190,8 +218,10 @@
         NSKeyedArchiver * modelArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
         [modelArchiver encodeObject:_oneWorld forKey:@"EverDayOneWord"];
         [modelArchiver finishEncoding];
-        [data writeToFile:[NSString stringWithFormat:@"%@/EverDayOneWord.plist",FilePath] atomically:NO];
+        [data writeToFile:[NSString stringWithFormat:@"%@/EverDayOneWord+%@.plist",FilePath, self.nowData] atomically:NO];
         
+        
+        //  将原有的数据闪现
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error);

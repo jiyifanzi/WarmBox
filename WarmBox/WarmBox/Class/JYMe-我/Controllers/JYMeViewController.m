@@ -48,6 +48,9 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"tou"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"tou"]];
+    
+    [self getDataFromLocalDB];
+    
     [self getDataFromDB];
     //  获取当前的登录对
     [self getCurrentUser];
@@ -152,11 +155,49 @@
     if (self.cityNameDataSource.count < dataArrFor.count) {
         //  只添加最后一个
         [self.cityNameDataSource addObject:[dataArrFor lastObject]];
+        
         [self requestDataWithCityName:[dataArrFor lastObject]];
     }
     
     [self.citysCollectionView reloadData];
 }
+
+#pragma mark - 从本地获取数组
+- (void)getDataFromLocalDB{
+    
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+    NSString * cityFilePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/WeatherData"];
+    //  创建文件夹
+    [fileManager createDirectoryAtPath:cityFilePath withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    //  从文件夹中找相应的数据，如果有，就读取
+    NSArray * fileContents = [fileManager contentsOfDirectoryAtPath:cityFilePath error:nil];
+    if ((fileContents.count == 1 && [fileContents.firstObject isEqualToString:@".DS_Store"]) || fileContents.count == 0) {
+        //  没有数据，从网络请求
+        return;
+    }else {
+        for (NSString * tempName in fileContents) {
+            //  遍历，根据cityName去找
+            if ([tempName isEqualToString:@".DS_Store"]) {
+                continue;
+            }
+            
+//            NSArray * tempNameArray = [tempName componentsSeparatedByString:@".plist"];
+            
+            NSLog(@"%@",[NSString stringWithFormat:@"%@/%@",cityFilePath, tempName]);
+                
+            NSMutableData * readData = [NSMutableData dataWithContentsOfFile:[NSString stringWithFormat:@"%@/%@",cityFilePath, tempName]];
+            NSKeyedUnarchiver * unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:readData];
+            JYWeatherModel * model = [unarchiver decodeObjectForKey:@"WeatherModel"];
+            
+            [self.cityDataSource addObject:model];
+        }
+         [self.citysCollectionView reloadData];
+    }
+}
+
+
+
 
 #pragma mark - 以城市名称获取数据
 
@@ -176,6 +217,7 @@
         NSArray * modelArray = [NSArray yy_modelArrayWithClass:[JYWeatherModel class] json:dataArray];
 
         [self.cityDataSource addObject:[modelArray firstObject]];
+        
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error);

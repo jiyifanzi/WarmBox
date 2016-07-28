@@ -63,7 +63,7 @@
     _titleField.returnKeyType = UIReturnKeyNext;
     _titleField.placeholder = @"请输入记事标题";
 
-    _contentField = [[UITextView alloc] initWithFrame:CGRectMake(0, 46 + 64, self.view.bounds.size.width, self.view.bounds.size.height - 64 - 44 - 44)];
+    _contentField = [[UITextView alloc] initWithFrame:CGRectMake(0, 46 + 64, self.view.bounds.size.width, self.view.bounds.size.height - 64 - 44)];
     [self.view addSubview:_contentField];
     _contentField.returnKeyType = UIReturnKeyDefault;
     _contentField.font = [UIFont systemFontOfSize:17.0];
@@ -255,6 +255,8 @@
 //                                //  用户保存以后，应该要进行
 //                            }
 //                        }];
+                        
+                        
                     }else {
                         for (AVObject * object in objects) {
                             NSLog(@"%@",object.objectId);
@@ -347,14 +349,14 @@
 //  选择图片
 - (void)selectImageBtnClick {
     UIImagePickerController * imagePicker =[[UIImagePickerController alloc] init];
-    imagePicker.allowsEditing = YES;
+    imagePicker.allowsEditing = NO;
     imagePicker.delegate = self;
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
 //  imagePicker的代理方法
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    UIImage * image = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+    UIImage * image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
     
     
     //  获取图片的大小
@@ -465,7 +467,7 @@
     [UIView animateWithDuration:0.3 animations:^{
         //  让整体视图往上移动
 //        self.toolBar.transform = CGAffineTransformMakeTranslation(0, -keyboardSize.height);
-        _contentField.frame =CGRectMake(0, 46 + 64, self.view.bounds.size.width, self.view.bounds.size.height - 64 - 44 - 44 - keyboardSize.height);
+        _contentField.frame =CGRectMake(0, 46 + 64, self.view.bounds.size.width, self.view.bounds.size.height - 64 - 44 - keyboardSize.height);
     }];
 }
 - (void) keyboardWasHidden:(NSNotification *) notif
@@ -480,7 +482,7 @@
     [UIView animateWithDuration:0.3 animations:^{
         //  让整体视图往下移动
 //        self.toolBar.transform = CGAffineTransformIdentity;
-        _contentField.frame =CGRectMake(0, 46 + 64, self.view.bounds.size.width, self.view.bounds.size.height - 64 - 44 - 44);
+        _contentField.frame =CGRectMake(0, 46 + 64, self.view.bounds.size.width, self.view.bounds.size.height - 64 - 44);
         
     }];
 }

@@ -400,6 +400,7 @@
                     JYUser * currentUser = [JYUser currentUser];
                     if (currentUser) {
                         AVQuery * query = [AVQuery queryWithClassName:@"_File"];
+                       
                         [query whereKey:@"name" equalTo:tempFile.name];
                         
                         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {

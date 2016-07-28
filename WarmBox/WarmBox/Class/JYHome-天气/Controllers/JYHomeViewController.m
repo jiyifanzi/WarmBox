@@ -85,7 +85,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView.contentOffset.x / Width == 1) {
 //        NSLog(@"第二");
-        [_homeAQI requestDayImageWithDate:[JYWeatherTools getNowDataWithFormate:@"yyyy-MM-dd"]];
+//        [_homeAQI requestDayImageWithDate:[JYWeatherTools getNowDataWithFormate:@"yyyy-MM-dd"]];
     }
 }
 
